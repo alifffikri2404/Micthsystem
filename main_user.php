@@ -157,6 +157,7 @@ if (empty($_SESSION['First_Name'])) {
   <!-- Favicons -->
   <link href="micthlogo.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -170,6 +171,9 @@ if (empty($_SESSION['First_Name'])) {
   <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -596,10 +600,64 @@ if (empty($_SESSION['First_Name'])) {
 
       <?php if ($_SESSION['access_imobile'] == "1") { ?>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="BookingSystem/user.php">
+          <a class="nav-link" data-bs-target="#booking-system-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-calendar-check-fill"></i>
-            <span>Booking System</span>
+            <span>Booking System</span><i class="bi bi-chevron-down ms-auto"></i>
           </a>
+          <ul id="booking-system-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <li class="nav-item">
+              <a href="BookingSystem/user.php" class="active">
+                <i class="bi bi-house-door-fill" style="font-size: 1em; background-color: transparent"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+          </ul>
+          <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#book-vehicle-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+              <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Book Vehicle</span>
+              <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+            </a>
+            <ul id="book-vehicle-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+              <li class="nav-item">
+                <a class="nav-link collapsed" href="user_booking_vehicle.php" style="padding-left: 60px">
+                  <i class="bi bi-caret-right-fill"></i></i>
+                  <span>Book</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" href="user_record.php" style="padding-left: 60px">
+                  <i class="bi bi-caret-right-fill"></i></i>
+                  <span>Usage Record</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#book-room-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+              <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Book Room</span>
+              <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+            </a>
+            <ul id="book-room-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+              <li class="nav-item">
+                <a class="nav-link collapsed" href="user_booking_Room.php" style="padding-left: 60px">
+                  <i class="bi bi-caret-right-fill"></i></i>
+                  <span>Book</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link collapsed" href="user_record_Room.php" style="padding-left: 60px">
+                  <i class="bi bi-caret-right-fill"></i></i>
+                  <span>Usage Record</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="feedback.php">
+              <i class="bi bi-chat-right-text-fill" style="font-size: 1em"></i></i>
+              <span>Feedback</span>
+            </a>
+          </li>
         </li>
       <?php } ?>
 
@@ -1346,6 +1404,18 @@ if (empty($_SESSION['First_Name'])) {
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <!-- data table for file exports -->
+  <link href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css">
+  <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
 
 </body>
 

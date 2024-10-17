@@ -3,7 +3,7 @@ include('db_conn.php');
 
 session_start();
 
-/*if (isset($_POST['approved']))
+/*if (isset($_POST['approveddd']))
 {
     $appUpdateQuery = "UPDATE bookings SET status= 'APPROVED' WHERE id='".$_POST['row_id']."'";
     $appUpdateResult = mysqli_query($db, $appUpdateQuery);
