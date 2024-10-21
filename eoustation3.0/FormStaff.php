@@ -343,6 +343,7 @@ if (isset($_POST['submit'])) {
   <!-- Favicons -->
   <link href="../micthlogo.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -357,6 +358,9 @@ if (isset($_POST['submit'])) {
   <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -620,72 +624,191 @@ if (isset($_POST['submit'])) {
 
   </header><!-- End Header -->
 
+  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-door-open-fill"></i><span>Outstation System</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="../main_user.php">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
+      </a>
+    </li>
 
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="dash2.php">
-              <i class="bi bi-house-door-fill" style="font-size: 1em"></i><span>Home</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="dashStaff.php">
-              <i class="bi bi-calendar-fill" style="font-size: 1em"></i><span>My Report</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="FormStaff.php" class="active">
-              <i class="bi bi-pencil-fill" style="font-size: 1em; background-color: transparent"></i><span>Check-Out</span>
-            </a>
-          </li>
-        </ul>
-        <?php
-        if ($Job_Title == "9" || $Job_Title == "14") {
-        ?>
-          <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-            <li>
-              <a href="pending_staff_check.php">
-                <i class="bi bi-clock-fill" style="font-size: 1em"></i><span>Pending Staff Check-In</span>
+    <?php if ($_SESSION['access_imobile'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#booking-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Booking System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="booking-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../BookingSystem/user.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+      
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-vehicle-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Book Vehicle</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-vehicle-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_booking_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_record.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Usage Record</span>
               </a>
             </li>
           </ul>
-        <?php
-        }
-        ?>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="feedback.php">
-              <i class="bi bi-chat-left-text-fill" style="font-size: 1em"></i><span>Feedback</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="../main_user.php">
-          <i class="bi bi-reply-fill"></i>
-          <span>Home Page</span>
-        </a>
-      </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-room-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Book Room</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-room-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_booking_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_record_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <?php } ?>
 
-      <!-- End Tables Nav -->
+
+    <?php if ($_SESSION['access_isurat'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#letter-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-envelope-fill"></i>
+        <span>Letter System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="letter-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratDaftarSuratKeluar.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Outgoing Letter</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratRekodSuratKeluar.php">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
+            <span>Outgoing Letter Record</span>
+          </a>
+        </li>
+        <?php if($_SESSION['admin_surat'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratDaftarSuratMasuk.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Incoming Letter</span>
+          </a>
+        </li>
+        <?php } ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratRekodSuratMasuk.php">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
+            <span>Incoming Letter Record</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <?php if ($_SESSION['access_eoutstation'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-target="#out-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-door-open-fill"></i>
+        <span>Outstation System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="out-system-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../eoustation3.0/dash2.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../eoustation3.0/dashStaff.php">
+            <i class="bi bi-calendar-fill" style="font-size: 1em"></i>
+            <span>My Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="active" href="../eoustation3.0/FormStaff.php">
+            <i class="bi bi-pencil-fill" style="font-size: 1em; background-color: transparent"></i>
+            <span>Check-Out</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+    <?php if ($_SESSION['access_aset'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#asset-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="asset-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/staffregaset.php">
+            <i class="bi bi-archive-fill" style="font-size: 1em"></i>
+            <span>Registered Asset</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
+            <span>Request Asset</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#settings-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-gear-fill"></i>
+        <span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="settings-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../setting.php">
+            <i class="bi bi-person-fill" style="font-size: 1em"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../feedback.php">
+            <i class="bi bi-chat-right-text-fill" style="font-size: 1em"></i>
+            <span>Feedback</span>
+          </a>
+        </li>
+      </ul>
+    </li>
 
     </ul>
-
-  </aside><!-- End Sidebar-->
-
-
-
+  </aside>
+  <!-- End Sidebar-->
 
   <!-- Content Wrapper -->
 

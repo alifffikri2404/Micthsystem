@@ -101,6 +101,7 @@ if (empty($_SESSION['First_Name'])) {
   <!-- Favicons -->
   <link href="../micthlogo.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -216,58 +217,187 @@ if (empty($_SESSION['First_Name'])) {
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-envelope-fill"></i><span>Letter System</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="SuratHome.php">
-              <i class="bi bi-house-door-fill" style="font-size: 1em"></i><span>Home</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="SuratDaftarSuratKeluar.php" class="active">
-              <i class="bi bi-pencil-square" style="font-size: 1em; background-color: transparent"></i><span>Register Outgoing Letter</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="SuratRekodSuratKeluar.php">
-              <i class="bi bi-file-earmark-text" style="font-size: 1em"></i><span>Outgoing Letter Record</span>
-            </a>
-          </li>
-        </ul>
-        <!--Sidebar for incoming letter-->
-        <?php if ($admin_surat == 1): ?>
-          <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-            <li>
-              <a href="SuratDaftarSuratMasuk.php">
-                <i class="bi bi-pencil-square" style="font-size: 1em"></i><span>Register Incoming Letter</span>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="../main_user.php">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
+      </a>
+    </li>
+
+    <?php if ($_SESSION['access_imobile'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#booking-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Booking System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="booking-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../BookingSystem/user.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+      
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-vehicle-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Book Vehicle</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-vehicle-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_booking_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_record.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Usage Record</span>
               </a>
             </li>
           </ul>
-          <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-            <li>
-              <a href="SuratRekodSuratMasuk.php">
-                <i class="bi bi-file-earmark-text" style="font-size: 1em"></i><span>Incoming Letter Record</span>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-room-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Book Room</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-room-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_booking_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_record_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Usage Record</span>
               </a>
             </li>
           </ul>
-        <?php endif; ?>
-        <!--End sidebar for incoming letter-->
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="../main_user.php">
-          <i class="bi bi-reply-fill"></i>
-          <span>Home Page</span>
-        </a>
-      </li>
+        </li>
+      </ul>
+    </li>
+    <?php } ?>
+
+
+    <?php if ($_SESSION['access_isurat'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-target="#letter-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-envelope-fill"></i>
+        <span>Letter System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="letter-system-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="active" href="../SuratLatest/SuratDaftarSuratKeluar.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em; background-color: transparent"></i>
+            <span>Register Outgoing Letter</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratRekodSuratKeluar.php">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
+            <span>Outgoing Letter Record</span>
+          </a>
+        </li>
+        <?php if($_SESSION['admin_surat'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratDaftarSuratMasuk.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Incoming Letter</span>
+          </a>
+        </li>
+        <?php } ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratRekodSuratMasuk.php">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
+            <span>Incoming Letter Record</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <?php if ($_SESSION['access_eoutstation'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#out-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-door-open-fill"></i>
+        <span>Outstation System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="out-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../eoustation3.0/dash2.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../eoustation3.0/dashStaff.php">
+            <i class="bi bi-calendar-fill" style="font-size: 1em"></i>
+            <span>My Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../eoustation3.0/FormStaff.php">
+            <i class="bi bi-pencil-fill" style="font-size: 1em"></i>
+            <span>Check-Out</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+    <?php if ($_SESSION['access_aset'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#asset-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="asset-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/staffregaset.php">
+            <i class="bi bi-archive-fill" style="font-size: 1em"></i>
+            <span>Registered Asset</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
+            <span>Request Asset</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#settings-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-gear-fill"></i>
+        <span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="settings-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../setting.php">
+            <i class="bi bi-person-fill" style="font-size: 1em"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../feedback.php">
+            <i class="bi bi-chat-right-text-fill" style="font-size: 1em"></i>
+            <span>Feedback</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    </ul>
   </aside><!-- End Sidebar-->
 
   <main id="main" class="main">
@@ -322,7 +452,7 @@ if (empty($_SESSION['First_Name'])) {
                       <form role="form" action="" method="post">
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Registration Date:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Registration Date:</label>
                             <div class="input-group">
                               <?php
                               date_default_timezone_set('Asia/Kuala_Lumpur');
@@ -336,7 +466,7 @@ if (empty($_SESSION['First_Name'])) {
                         </div>
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Applicant:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Applicant:</label>
                             <div class="input-group">
                               <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="InputNamaPemohon" name="InputNamaPemohon" value="<?php echo strtoupper($_SESSION['First_Name']); ?>" readonly><br>
                             </div>
@@ -344,7 +474,7 @@ if (empty($_SESSION['First_Name'])) {
                         </div>
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Reference No:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Reference No:</label>
                             <div class="input-group">
                               <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="InputNoRujukanSuratAwal" name="InputNoRujukanSuratAwal" value="MICTH/<?php echo strtoupper($user_info['nickname']); ?>/" readonly>
                             </div>
@@ -352,7 +482,7 @@ if (empty($_SESSION['First_Name'])) {
                         </div>
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Sub Unit:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Sub Unit:</label>
                             <div class="input-group">
                               <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="InputNoRujukanSuratTgh" name="InputNoRujukanSuratTgh" placeholder="Type subunit" oninput="checkInput()"><br>
                             </div>
@@ -389,7 +519,7 @@ if (empty($_SESSION['First_Name'])) {
 
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Recipient / Department / Agency:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Recipient / Department / Agency:</label>
                             <div class="input-group">
                               <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="InputNamaPenerima" name="InputNamaPenerima" placeholder="Recipient Name" required><br>
                             </div>
@@ -419,7 +549,7 @@ if (empty($_SESSION['First_Name'])) {
                         ?>
                           <div class="col-md-5">
                             <div class="form-group">
-                              <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Issuing Department</label>
+                              <label for="exampleInputEmail1" style="font-weight: 400">Issuing Department</label>
                               <select style="font-size: 1.4rem; line-height: 1.0; height: 34px; -webkit-appearance: menulist-button;
                        -moz-appearance: menulist-button; appearance: menulist-button;" class="form-control" id="department_pilihan" name="department_pilihan">
                                 <option value="" disabled selected>-- Department --</option>
@@ -438,7 +568,7 @@ if (empty($_SESSION['First_Name'])) {
 
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Subject / Title:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Subject / Title:</label>
                             <div class="input-group" style="flex-grow: 1;">
                               <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8" rows="3" cols="50" id="InputTajukSurat" name="InputTajukSurat" required></textarea>
                             </div>
@@ -446,7 +576,7 @@ if (empty($_SESSION['First_Name'])) {
                         </div>
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputPassword1" style="font-weight: 450; 'Nunito', sans-serif;">Delivery Method:</label>
+                            <label for="exampleInputPassword1" style="font-weight: 450">Delivery Method:</label>
                             <div class="radio">
                               <i style="font-size: 1.6rem; line-height: 1.0">
                                 <input type="checkbox" name="optionsRadios1[]" id="optionsRadios1" value="Email">

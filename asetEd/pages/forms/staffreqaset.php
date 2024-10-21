@@ -1,6 +1,9 @@
 <?php
 require('../../configAsetTPS.php');
 require('../../../db_conn.php');
+// include('../../../SuratLatest/functions.php');
+
+// $admin_surat = isset($_SESSION['admin_surat']) ? $_SESSION['admin_surat'] : null;
 
 // require('../../config.php');
 // session_start();
@@ -155,6 +158,7 @@ if(isset($_POST['btn-cancel']))
     <!-- Favicons -->
   <link href="../../assets/img/micthlogo.png" rel="icon">
   <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -259,42 +263,186 @@ if(isset($_POST['btn-cancel']))
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-briefcase-fill"></i><span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../homeasetstaff.php">
-              <i class="bi bi-house-door-fill" style="font-size: 1em"></i><span>Home</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/tables/staffregaset.php">
-              <i class="bi bi-archive-fill" style="font-size: 1em"></i><span>Registered Asset</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/forms/staffreqaset.php" class="active">
-              <i class="bi bi-clipboard2-check-fill" style="font-size: 1em; background-color: transparent"></i><span>Request Asset</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="../../../main_user.php">
-          <i class="bi bi-reply-fill"></i>
-          <span>Home Page</span>
-        </a>
-      </li>
-    
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="../../../main_user.php">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
+      </a>
+    </li>
+
+    <?php if ($_SESSION['access_imobile'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#booking-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Booking System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="booking-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../BookingSystem/user.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+      
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-vehicle-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Book Vehicle</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-vehicle-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_booking_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_record.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-room-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Book Room</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-room-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_booking_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_record_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <?php } ?>
+
+
+    <?php if ($_SESSION['access_isurat'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#letter-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-envelope-fill"></i>
+        <span>Letter System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="letter-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../SuratLatest/SuratDaftarSuratKeluar.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Outgoing Letter</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratKeluar.php">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
+            <span>Outgoing Letter Record</span>
+          </a>
+        </li>
+        <?php if($_SESSION['admin_surat'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../SuratLatest/SuratDaftarSuratMasuk.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Incoming Letter</span>
+          </a>
+        </li>
+        <?php } ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratMasuk.php">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
+            <span>Incoming Letter Record</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <?php if ($_SESSION['access_eoutstation'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#out-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-door-open-fill"></i>
+        <span>Outstation System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="out-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/dash2.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/dashStaff.php">
+            <i class="bi bi-calendar-fill" style="font-size: 1em"></i>
+            <span>My Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/FormStaff.php">
+            <i class="bi bi-pencil-fill" style="font-size: 1em"></i>
+            <span>Check-Out</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+    <?php if ($_SESSION['access_aset'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-target="#asset-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="asset-system-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../tables/staffregaset.php">
+            <i class="bi bi-archive-fill" style="font-size: 1em"></i>
+            <span>Registered Asset</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="active" href="../forms/staffreqaset.php">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em; background-color: transparent"></i>
+            <span>Request Asset</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#settings-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-gear-fill"></i>
+        <span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="settings-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../setting.php">
+            <i class="bi bi-person-fill" style="font-size: 1em"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../feedback.php">
+            <i class="bi bi-chat-right-text-fill" style="font-size: 1em"></i>
+            <span>Feedback</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
     </ul>
   </aside><!-- End Sidebar-->
 
@@ -333,7 +481,7 @@ if(isset($_POST['btn-cancel']))
                       <div class="row">
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;">Staff Name:</label>
+                            <label for="jenis" style="font-weight: 400">Staff Name:</label>
                               <?php
                                 $firstname = $_SESSION['First_Name'];
                                 $lastname = $_SESSION['Last_Name'];
@@ -346,7 +494,7 @@ if(isset($_POST['btn-cancel']))
                         </div>
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Department Location:</label>
+                            <label for="exampleInputPassword1" style="font-weight: 400">Department Location:</label>
                               <?php
                                 $staffID = $_SESSION['emp_number'];
                                 
@@ -399,7 +547,7 @@ if(isset($_POST['btn-cancel']))
                         <div class="col-md-5">
                           <form id="form2" role="form" action="" method="post">
                             <div class="form-group">
-                              <label for="Kategori" style="font-weight: 400; 'Nunito', sans-serif;">Category:</label>
+                              <label for="Kategori" style="font-weight: 400">Category:</label>
                               <div class="d-flex align-items-center">
                                 <select class="form-select flex-grow-1 me-3" id="kategori" name="kategori" 
                                   style="font-size: 1.4rem; line-height: 1.0; height: 34px" placeholder="CATEGORY NAME"
@@ -435,7 +583,7 @@ if(isset($_POST['btn-cancel']))
                         ?>
                           <div class="col-md-5">
                             <div class="form-group">
-                              <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;">Asset Type:</label>
+                              <label for="jenis" style="font-weight: 400">Asset Type:</label>
                                 <select type="text" style="text-transform:uppercase; font-size: 1.4rem; line-height: 1.0; height: 34px"
                                   class="form-select" id="jenis" name="jenis" placeholder="ASSET TYPE" required>
                                   <option value='-'>PLEASE SELECT ASSET TYPE</option>
@@ -471,7 +619,7 @@ if(isset($_POST['btn-cancel']))
                         </div> -->
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Justification:</label>
+                            <label for="exampleInputPassword1" style="font-weight: 400">Justification:</label>
                               <br>
                                 <input class="form-check-input" id="reason_req" name="reason_req" value="1" type="radio"> 
                                 <label class="form-check-label" for="reason_req" style="font-weight: 500; font-size: 1.6rem">Asset Replacement</label>
@@ -486,7 +634,7 @@ if(isset($_POST['btn-cancel']))
 
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Request Date:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Request Date:</label>
                             <div class="input-group">
                               <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
                                 class="form-control" id="tarikh_request" name="tarikh_request" value="<?php echo date("Y-m-d"); ?>" readonly>
@@ -498,7 +646,7 @@ if(isset($_POST['btn-cancel']))
                         <!-- hidden kategori field for posting to database -->
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;"> </label>
+                            <label for="jenis" style="font-weight: 400"> </label>
                               <input type="hidden" style="font-size: 1.4rem; line-height: 1.2; height: 34px"
                                 class="form-control" id="kategori" name="kategori" value="<?php echo $kategori_id ?>" readonly/>
                           </div>
