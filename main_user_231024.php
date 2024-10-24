@@ -720,6 +720,12 @@ if (empty($_SESSION['First_Name'])) {
                 <span>Register Outgoing Letter</span>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="SuratLatest/SuratRekodSuratKeluar.php">
+                <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
+                <span>Outgoing Letter Record</span>
+              </a>
+            </li>
             <?php if ($admin_surat == 1): ?>
             <li class="nav-item">
               <a class="nav-link collapsed" href="SuratLatest/SuratDaftarSuratMasuk.php">
@@ -729,24 +735,10 @@ if (empty($_SESSION['First_Name'])) {
             </li>
             <?php endif; ?>
             <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#record-letter-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-                <i class="bi bi-file-earmark-text" style="font-size: 1em"></i></i><span>Letter Record</span>
-                <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+              <a class="nav-link collapsed" href="SuratLatest/SuratRekodSuratMasuk.php">
+                <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
+                <span>Incoming Letter Record</span>
               </a>
-              <ul id="record-letter-nav" class="nav-content collapse" data-bs-parent="#letter-system-nav">
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="SuratLatest/SuratRekodSuratKeluar.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Outgoing Letter</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="SuratLatest/SuratRekodSuratMasuk.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Incoming Letter</span>
-                  </a>
-                </li>
-              </ul>
             </li>
           </ul>
         </li>
@@ -832,71 +824,11 @@ if (empty($_SESSION['First_Name'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#request-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-                <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Request Asset</span>
-                <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+              <a class="nav-link collapsed" href="asetEd/pages/forms/staffreqaset.php">
+                <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
+                <span>Request Asset</span>
               </a>
-              <ul id="request-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/forms/staffreqaset.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>New Asset</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Loan Asset</span>
-                  </a>
-                </li>
-              </ul>
             </li>
-            <?php if ($_SESSION['admin_asset'] == "1") { ?>
-            <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#admin-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-                <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Admin</span>
-                <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
-              </a>
-              <ul id="admin-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/forms/dafaset.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Register New Asset</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/tables/laporanas.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Asset & Inventory</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/tables/laporlupus.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Disposal Report</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/tables/staffrequest.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Staff Request</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/forms/uploadcsv.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Import Excel</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/hometetapan.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Asset Settings</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-            <?php } ?>
           </ul>
         </li>
 
@@ -920,46 +852,6 @@ if (empty($_SESSION['First_Name'])) {
               <span>Feedback</span>
             </a>
           </li>
-          <?php if ($_SESSION['func_admin'] == "1") { ?>
-          <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#access-user-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-              <i class="bi bi-person-badge-fill" style="font-size: 1em"></i></i><span>Access User</span>
-              <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
-            </a>
-            <ul id="access-user-nav" class="nav-content collapse" data-bs-parent="#settings-system-nav">
-              <li class="nav-item">
-                <a class="nav-link collapsed" href="SSO/accessSSO.php" style="padding-left: 60px">
-                  <i class="bi bi-caret-right-fill"></i></i>
-                  <span>Access View</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link collapsed" href="SSO/userSSO.php" style="padding-left: 60px">
-                  <i class="bi bi-caret-right-fill"></i></i>
-                  <span>Staff List</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link collapsed" href="eoustation3.0/editHR.php" style="padding-left: 60px">
-                  <i class="bi bi-caret-right-fill"></i></i>
-                  <span>Current HR</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link collapsed" href="eoustation3.0/editStaff.php" style="padding-left: 60px">
-                  <i class="bi bi-caret-right-fill"></i></i>
-                  <span>Current Staff</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link collapsed" href="eoustation3.0/register.php" style="padding-left: 60px">
-                  <i class="bi bi-caret-right-fill"></i></i>
-                  <span>Register User</span>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <?php } ?>
         </ul>
       </li>
     </ul>
@@ -1061,6 +953,10 @@ if (empty($_SESSION['First_Name'])) {
               </div>
             </div>
           </div>
+
+
+
+
 
           <?php if ($_SESSION['admin_outstation'] == "1" || $_SESSION['admin_booking'] == "1" || $_SESSION['admin_asset'] == "1") { ?>
 
@@ -1226,15 +1122,9 @@ if (empty($_SESSION['First_Name'])) {
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#vehicle-reservations">Vehicle
                     Reservations</button>
                 </li>
-
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#outletter-info">
                     Outgoing Letter</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#assetreg-info">
-                    Registered Asset</button>
                 </li>
 
               </ul>
@@ -1516,7 +1406,6 @@ if (empty($_SESSION['First_Name'])) {
                     </div>
                   </div>
                 </div>
-
                 <!-- Out Letter Tab -->
                 <div class="tab-pane fade pt-3" id="outletter-info">
                   <div class="row">
@@ -1576,67 +1465,6 @@ if (empty($_SESSION['First_Name'])) {
                     </div>
                   </div>
                 </div>
-
-                <!-- Registered Asset Tab -->
-                <div class="tab-pane fade pt-3" id="assetreg-info">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="card recent-sales overflow-auto">
-                        <div class="card-body">
-                          <h5 class="card-title">Registered Asset <span>| Current</span></h5>
-                          <table class="table table-borderless">
-                            <thead>
-                              <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Asset Number</th>
-                                <th scope="col">Handover Date</th>
-                                <th scope="col">Asset Name</th>
-                                <th scope="col">Status</th>
-                              </tr>
-                            </thead>
-                            <tbody id="asset-registered">
-                              <!-- PHP-generated content -->
-                              <?php
-                              include('asetEd/configAsetTPS.php');
-                              
-                              $sql2 = "SELECT * FROM tbl_daftar_aset
-                              WHERE nama_kakitangan = '$fullname'
-                              ORDER BY id DESC
-                              LIMIT 3";
-
-                              $result2 = mysqli_query($conn2, $sql2);
-                              if ($result2) {
-                                $counter = 1;
-                                while ($row = mysqli_fetch_assoc($result2)) {
-                                  $nombor_aset = $row['no_aset'];
-                                  $tarikh_serahan = $row['tarikh_serahan'];
-                                  $nama_aset = $row['nama_aset'];
-                                  $status_aset = $row['status_aset'];
-                              ?>
-                                  <tr>
-                                    <th scope="row"><?php echo $counter; ?></th>
-                                    <td><?php echo $nombor_aset;  ?></td>
-                                    <td><?php echo  date('Y-m-d', strtotime($tarikh_serahan)) ?></td>
-
-                                    <td><?php echo $nama_aset; ?></td>
-                                    <td><?php echo $status_aset; ?></td>
-                                  </tr>
-                              <?php
-                                  $counter++;
-                                }
-                                mysqli_free_result($result2);
-                              } else {
-                                echo "Error: " . mysqli_error($db);
-                              }
-                              ?>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
               </div><!-- End Bordered Tabs -->
 
             </div>
