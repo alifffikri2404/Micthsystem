@@ -270,14 +270,14 @@ if (empty($_SESSION['First_Name'])) {
             <li class="nav-item">
               <a class="nav-link collapsed" href="../BookingSystem/usage_record_monthly.php" style="padding-left: 60px">
                 <i class="bi bi-caret-right-fill"></i></i>
-                <span>Usage Record</span>
+                <span>All Usage Record</span>
               </a>
             </li>
             <?php } ?>
             <li class="nav-item">
               <a class="nav-link collapsed" href="../BookingSystem/user_record.php" style="padding-left: 60px">
                 <i class="bi bi-caret-right-fill"></i></i>
-                <span>Staff Usage</span>
+                <span>Staff Usage Record</span>
               </a>
             </li>
           </ul>
@@ -310,14 +310,14 @@ if (empty($_SESSION['First_Name'])) {
             <li class="nav-item">
               <a class="nav-link collapsed" href="../BookingSystem/room_record_monthly.php" style="padding-left: 60px">
                 <i class="bi bi-caret-right-fill"></i></i>
-                <span>Usage Record</span>
+                <span>All Usage Record</span>
               </a>
             </li>
             <?php } ?>
             <li class="nav-item">
               <a class="nav-link collapsed" href="../BookingSystem/user_record_Room.php" style="padding-left: 60px">
                 <i class="bi bi-caret-right-fill"></i></i>
-                <span>Staff Usage</span>
+                <span>Staff Usage Record</span>
               </a>
             </li>
           </ul>
@@ -340,13 +340,7 @@ if (empty($_SESSION['First_Name'])) {
             <span>Register Outgoing Letter</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="active" href="../SuratLatest/SuratRekodSuratKeluar.php">
-            <i class="bi bi-file-earmark-text" style="font-size: 1em; background-color: transparent"></i>
-            <span>Outgoing Letter Record</span>
-          </a>
-        </li>
-        <?php if($_SESSION['admin_surat'] == "1") { ?>
+        <?php if ($_SESSION['admin_surat'] == "1"){ ?>
         <li class="nav-item">
           <a class="nav-link collapsed" href="../SuratLatest/SuratDaftarSuratMasuk.php">
             <i class="bi bi-pencil-square" style="font-size: 1em"></i>
@@ -355,10 +349,24 @@ if (empty($_SESSION['First_Name'])) {
         </li>
         <?php } ?>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="../SuratLatest/SuratRekodSuratMasuk.php">
-            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
-            <span>Incoming Letter Record</span>
+          <a class="nav-link" data-bs-target="#record-letter-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i></i><span>Letter Record</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
           </a>
+          <ul id="record-letter-nav" class="nav-content collapse show" data-bs-parent="#letter-system-nav">
+            <li class="nav-item">
+              <a class="active" href="../SuratLatest/SuratRekodSuratKeluar.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill" style="background-color: transparent"></i></i>
+                <span>Outgoing Letter</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../SuratLatest/SuratRekodSuratMasuk.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Incoming Letter</span>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </li>
@@ -444,11 +452,71 @@ if (empty($_SESSION['First_Name'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php">
-            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
-            <span>Request Asset</span>
+          <a class="nav-link collapsed" data-bs-target="#request-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Request Asset</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
           </a>
+          <ul id="request-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>New Asset</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Loan Asset</span>
+              </a>
+            </li>
+          </ul>
         </li>
+        <?php if ($_SESSION['admin_asset'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#admin-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Admin</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="admin-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/forms/dafaset.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Register New Asset</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/tables/laporanas.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Asset & Inventory</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/tables/laporlupus.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Disposal Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/tables/staffrequest.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Request</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/forms/uploadcsv.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Import Excel</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/hometetapan.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Asset Settings</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php } ?>
       </ul>
     </li>
 

@@ -228,49 +228,89 @@ require('../../configAsetTPS.php');
         <span>Booking System</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="booking-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link collapsed" href="../../../BookingSystem/user.php">
             <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
             <span>Dashboard</span>
           </a>
-        </li>
+        </li> -->
       
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#book-vehicle-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-            <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Book Vehicle</span>
+            <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Vehicle</span>
             <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
           </a>
           <ul id="book-vehicle-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
             <li class="nav-item">
               <a class="nav-link collapsed" href="../../../BookingSystem/user_booking_vehicle.php" style="padding-left: 60px">
                 <i class="bi bi-caret-right-fill"></i></i>
-                <span>Book</span>
+                <span>Book Vehicle</span>
+              </a>
+            </li>
+            <?php if ($_SESSION['admin_booking'] == "1") { ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/list_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>List of Vehicle</span>
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/add_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Add Vehicle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/usage_record_monthly.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>All Usage Record</span>
+              </a>
+            </li>
+            <?php } ?>
+            <li class="nav-item">
               <a class="nav-link collapsed" href="../../../BookingSystem/user_record.php" style="padding-left: 60px">
                 <i class="bi bi-caret-right-fill"></i></i>
-                <span>Usage Record</span>
+                <span>Staff Usage Record</span>
               </a>
             </li>
           </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#book-room-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-            <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Book Room</span>
+            <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Room</span>
             <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
           </a>
           <ul id="book-room-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
             <li class="nav-item">
               <a class="nav-link collapsed" href="../../../BookingSystem/user_booking_Room.php" style="padding-left: 60px">
                 <i class="bi bi-caret-right-fill"></i></i>
-                <span>Book</span>
+                <span>Book Room</span>
+              </a>
+            </li>
+            <?php if ($_SESSION['admin_booking'] == "1") { ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/list_room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>List of Room</span>
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/add_room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Add Room</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/room_record_monthly.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>All Usage Record</span>
+              </a>
+            </li>
+            <?php } ?>
+            <li class="nav-item">
               <a class="nav-link collapsed" href="../../../BookingSystem/user_record_Room.php" style="padding-left: 60px">
                 <i class="bi bi-caret-right-fill"></i></i>
-                <span>Usage Record</span>
+                <span>Staff Usage Record</span>
               </a>
             </li>
           </ul>
@@ -293,13 +333,7 @@ require('../../configAsetTPS.php');
             <span>Register Outgoing Letter</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratKeluar.php">
-            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
-            <span>Outgoing Letter Record</span>
-          </a>
-        </li>
-        <?php if($_SESSION['admin_surat'] == "1") { ?>
+        <?php if ($_SESSION['admin_surat'] == "1"){ ?>
         <li class="nav-item">
           <a class="nav-link collapsed" href="../../../SuratLatest/SuratDaftarSuratMasuk.php">
             <i class="bi bi-pencil-square" style="font-size: 1em"></i>
@@ -308,10 +342,24 @@ require('../../configAsetTPS.php');
         </li>
         <?php } ?>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratMasuk.php">
-            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i>
-            <span>Incoming Letter Record</span>
+          <a class="nav-link collapsed" data-bs-target="#record-letter-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i></i><span>Letter Record</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
           </a>
+          <ul id="record-letter-nav" class="nav-content collapse" data-bs-parent="#letter-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratKeluar.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Outgoing Letter</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratMasuk.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Incoming Letter</span>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </li>
@@ -325,12 +373,12 @@ require('../../configAsetTPS.php');
         <span>Outstation System</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="out-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link collapsed" href="../../../eoustation3.0/dash2.php">
             <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
             <span>Dashboard</span>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item">
           <a class="nav-link collapsed" href="../../../eoustation3.0/dashStaff.php">
             <i class="bi bi-calendar-fill" style="font-size: 1em"></i>
@@ -343,6 +391,42 @@ require('../../configAsetTPS.php');
             <span>Check-Out</span>
           </a>
         </li>
+        <?php if ($_SESSION['admin_outstation'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-people" style="font-size: 1em"></i></i><span>Human Resources</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="hr-nav" class="nav-content collapse" data-bs-parent="#out-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/myreport.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>View Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/data.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Generate Report</span>
+              </a>
+            </li>
+            <?php
+            include('../../../eoustation3.0/db_conn.php');
+            $sql = "SELECT * FROM outstation WHERE timeIn ='00:00:00'";
+            $result = mysqli_query($conn, $sql);
+            $totalRows = mysqli_num_rows($result);
+            ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/SNC.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i>
+                <p style="margin-bottom: 0px">Pending Staff Check-In<span class="float-right badge bg-danger">
+                    <?php echo $totalRows ?? 'No data'; ?>
+                  </span></p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php } ?>
       </ul>
     </li>
 
@@ -361,11 +445,71 @@ require('../../configAsetTPS.php');
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="../forms/staffreqaset.php">
-            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
-            <span>Request Asset</span>
+          <a class="nav-link collapsed" data-bs-target="#request-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Request Asset</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
           </a>
+          <ul id="request-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../forms/staffreqaset.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>New Asset</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Loan Asset</span>
+              </a>
+            </li>
+          </ul>
         </li>
+        <?php if ($_SESSION['admin_asset'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#admin-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Admin</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="admin-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../forms/dafaset.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Register New Asset</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../tables/laporanas.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Asset & Inventory</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../tables/laporlupus.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Disposal Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../tables/staffrequest.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Request</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../forms/uploadcsv.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Import Excel</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="hometetapan.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Asset Settings</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php } ?>
       </ul>
     </li>
 
@@ -389,6 +533,41 @@ require('../../configAsetTPS.php');
             <span>Feedback</span>
           </a>
         </li>
+        <?php if ($_SESSION['func_admin'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="">
+            <i class="bi bi-chat-right-dots-fill" style="font-size: 1em"></i>
+            <span>Feedback Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#access-user-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-person-badge-fill" style="font-size: 1em"></i></i><span>Access User</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="access-user-nav" class="nav-content collapse" data-bs-parent="#settings-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/register.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Register New User</span>
+              </a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SSO/accessSSO.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Access View</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SSO/userSSO.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff List</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+        <?php } ?>
       </ul>
     </li>
 
@@ -448,10 +627,9 @@ require('../../configAsetTPS.php');
                               <tr>
                                 <th>No.</th>
                                 <th>Category</th>
-                                <th>Type</th>
+                                <th>Sub-Category</th>
                                 <th>Asset No.</th>
-                                <th>Name</th>
-                                <th>Serial No.</th>
+                                <th>Model</th>
                                 <th>Handover Date</th>
                                 <th>Status</th>
                                 <th>Detail</th>
@@ -478,19 +656,19 @@ require('../../configAsetTPS.php');
                                   // }
 
                                   $kategori_aset = $rowAA['kategori_aset'];
-                                  if (!empty($kategori_aset)){
-                                    $sqlAC = "SELECT * FROM kategoritps 
-                                      WHERE id_kategori = $kategori_aset";
-                                    $resultAC = mysqli_query($conn2, $sqlAC);
-                                    if ($resultAC){
-                                      $row = mysqli_fetch_assoc($resultAC);
-                                      $kategori_aset2 = $row['nama_kategori'];
-                                    } else {
-                                      $kategori_aset2 = "None";
-                                    }
-                                  } else {
-                                    $kategori_aset2 = "None";
-                                  }
+                                  // if (!empty($kategori_aset)){
+                                  //   $sqlAC = "SELECT * FROM kategoritps 
+                                  //     WHERE id_kategori = $kategori_aset";
+                                  //   $resultAC = mysqli_query($conn2, $sqlAC);
+                                  //   if ($resultAC){
+                                  //     $row = mysqli_fetch_assoc($resultAC);
+                                  //     $kategori_aset2 = $row['nama_kategori'];
+                                  //   } else {
+                                  //     $kategori_aset2 = "None";
+                                  //   }
+                                  // } else {
+                                  //   $kategori_aset2 = "None";
+                                  // }
 
                                   $status_aset = $rowAA['status_aset'];
                                   $statusStyle = 'color: green; font-weight: bold;';
@@ -502,11 +680,10 @@ require('../../configAsetTPS.php');
                                   echo '
                                     <tr role="row" class="odd">
                                     <td data-title="No." align="center">'.strtoupper($i).'</td>
-                                    <td data-title="Category">'.strtoupper($kategori_aset2).'</td>
-                                    <td data-title="Type">'.strtoupper($rowAA['jenis_aset']).'</td>
+                                    <td data-title="Category">'.strtoupper($rowAA['kategori_aset']).'</td>
+                                    <td data-title="Sub-Category">'.strtoupper($rowAA['jenis_aset']).'</td>
                                     <td data-title="Asset No.">'.strtoupper($rowAA['no_aset']).'</td>
-                                    <td data-title="Name">'.strtoupper($rowAA['nama_aset']).'</td>	
-                                    <td data-title="Serial No." >'.$rowAA['no_siri'].'</td>
+                                    <td data-title="Model">'.strtoupper($rowAA['nama_aset']).'</td>	
                                     <td data-title="Handover Date" >'.$rowAA['tarikh_serahan'].'</td>
                                     <td data-title="Status" style="'.$statusStyle.'">'.strtoupper($status_aset).'</td>
 

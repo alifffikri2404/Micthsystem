@@ -60,6 +60,7 @@ if (empty($_SESSION['First_Name'])) {
     <!-- Favicons -->
     <link href="../micthlogo.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -177,61 +178,369 @@ if (empty($_SESSION['First_Name'])) {
 
   </header><!-- End Header -->
 
+  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
+    <ul class="sidebar-nav" id="sidebar-nav">
 
-  <ul class="sidebar-nav" id="sidebar-nav">
-
-    <li class="nav-item">
-      <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-person-badge-fill"></i><span>Access User</span><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-
-      <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="accessSSO.php">
-            <i class="bi bi-grid-fill" style="font-size: 1em"></i><span>Access View</span>
-          </a>
-        </li>
-      </ul>
-      <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="userSSO.php" class="active">
-            <i class="bi bi-people-fill" style="font-size: 1em; background-color: transparent"></i><span>Staff List</span>
-          </a>
-        </li>
-      </ul>
-      <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="../eoustation3.0/editHR.php">
-            <i class="bi bi-file-person-fill" style="font-size: 1em"></i><span>Current HR</span>
-          </a>
-        </li>
-      </ul>
-      <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="../eoustation3.0/editStaff.php">
-            <i class="bi bi-person-lines-fill" style="font-size: 1em"></i><span>Current Staff</span>
-          </a>
-        </li>
-      </ul>
-      <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="../eoustation3.0/register.php">
-            <i class="bi bi-person-plus-fill" style="font-size: 1em"></i><span>Register</span>
-          </a>
-        </li>
-      </ul>
-    </li>
     <li class="nav-item">
       <a class="nav-link collapsed" href="../main_user.php">
-        <i class="bi bi-reply-fill"></i>
-        <span>Home Page</span>
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
       </a>
     </li>
-  </ul>
 
-</aside><!-- End Sidebar-->
+    <?php if ($_SESSION['access_imobile'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#booking-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Booking System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="booking-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <!-- <li class="nav-item">
+          <a class="nav-link collapsed" href="BookingSystem/user.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li> -->
+      
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-vehicle-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Vehicle</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-vehicle-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_booking_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book Vehicle</span>
+              </a>
+            </li>
+            <?php if ($_SESSION['admin_booking'] == "1") { ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/list_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>List of Vehicle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/add_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Add Vehicle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/usage_record_monthly.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>All Usage Record</span>
+              </a>
+            </li>
+            <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_record.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-room-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Room</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-room-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_booking_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book Room</span>
+              </a>
+            </li>
+            <?php if ($_SESSION['admin_booking'] == "1") { ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/list_room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>List of Room</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/add_room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Add Room</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/room_record_monthly.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>All Usage Record</span>
+              </a>
+            </li>
+            <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../BookingSystem/user_record_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <?php } ?>
 
+
+    <?php if ($_SESSION['access_isurat'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#letter-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-envelope-fill"></i>
+        <span>Letter System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="letter-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratDaftarSuratKeluar.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Outgoing Letter</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['admin_surat'] == "1"){ ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../SuratLatest/SuratDaftarSuratMasuk.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Incoming Letter</span>
+          </a>
+        </li>
+        <?php } ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#record-letter-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i></i><span>Letter Record</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="record-letter-nav" class="nav-content collapse" data-bs-parent="#letter-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../SuratLatest/SuratRekodSuratKeluar.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Outgoing Letter</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../SuratLatest/SuratRekodSuratMasuk.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Incoming Letter</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <?php if ($_SESSION['access_eoutstation'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#out-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-door-open-fill"></i>
+        <span>Outstation System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="out-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <!-- <li class="nav-item">
+          <a class="nav-link collapsed" href="eoustation3.0/dash2.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../eoustation3.0/dashStaff.php">
+            <i class="bi bi-calendar-fill" style="font-size: 1em"></i>
+            <span>My Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../eoustation3.0/FormStaff.php">
+            <i class="bi bi-pencil-fill" style="font-size: 1em"></i>
+            <span>Check-Out</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['admin_outstation'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-people" style="font-size: 1em"></i></i><span>Human Resources</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="hr-nav" class="nav-content collapse" data-bs-parent="#out-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../eoustation3.0/myreport.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>View Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../eoustation3.0/data.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Generate Report</span>
+              </a>
+            </li>
+            <?php
+            include('../eoustation3.0/db_conn.php');
+            $sql = "SELECT * FROM outstation WHERE timeIn ='00:00:00'";
+            $result = mysqli_query($conn, $sql);
+            $totalRows = mysqli_num_rows($result);
+            ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../eoustation3.0/SNC.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i>
+                <p style="margin-bottom: 0px">Pending Staff Check-In<span class="float-right badge bg-danger">
+                    <?php echo $totalRows ?? 'No data'; ?>
+                  </span></p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+
+    <?php } ?>
+    <?php if ($_SESSION['access_aset'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#asset-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="asset-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/staffregaset.php">
+            <i class="bi bi-archive-fill" style="font-size: 1em"></i>
+            <span>Registered Asset</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#request-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Request Asset</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="request-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>New Asset</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Loan Asset</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php if ($_SESSION['admin_asset'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#admin-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Admin</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="admin-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/forms/dafaset.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Register New Asset</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/tables/laporanas.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Asset & Inventory</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/tables/laporlupus.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Disposal Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/tables/staffrequest.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Request</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/pages/forms/uploadcsv.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Import Excel</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../asetEd/hometetapan.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Asset Settings</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <li class="nav-item">
+      <a class="nav-link" data-bs-target="#settings-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-gear-fill"></i>
+        <span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="settings-system-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../setting.php">
+            <i class="bi bi-person-fill" style="font-size: 1em"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../feedback.php">
+            <i class="bi bi-chat-right-text-fill" style="font-size: 1em"></i>
+            <span>Feedback</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['func_admin'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="">
+            <i class="bi bi-chat-right-dots-fill" style="font-size: 1em"></i>
+            <span>Feedback Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-target="#access-user-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-person-badge-fill" style="font-size: 1em"></i></i><span>Access User</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="access-user-nav" class="nav-content collapse show" data-bs-parent="#settings-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../eoustation3.0/register.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Register New User</span>
+              </a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../SSO/accessSSO.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Access View</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="active" href="../SSO/userSSO.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill" style="background-color: transparent"></i></i>
+                <span>Staff List</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+
+    </ul>
+  </aside><!-- End Sidebar-->
 
  <main id="main" class="main">
 
@@ -270,6 +579,7 @@ if (empty($_SESSION['First_Name'])) {
     <div class="box-body" style="margin-top: 10px">
         <?php
         //$sqlAP = mysql_query("SELECT * FROM jenis_aset ORDER BY id ASC");
+        include('../db_conn.php');
         $sqlAP = "SELECT `Internal_Id`,CONCAT(`First_Name`, ' ', `Last_Name`) AS `Full_Name`,`Email`,`Mobile_phone`,`Department`,`user_name`,`Active_Inactive` 
         FROM `empmaininfo` 
         ORDER BY `Department` ASC, `Internal_Id` ASC ";	
@@ -287,27 +597,27 @@ if (empty($_SESSION['First_Name'])) {
                   <i class="fa fa-sort-alpha-desc"></i>
                 </th>
 
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="First_Name + Last_Name: activate to sort column ascending" style="width: 300px;text-align:center">NAME
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="First_Name + Last_Name: activate to sort column ascending" style="width: 300px;text-align:center">Name
                   <i class="fa fa-sort-alpha-desc"></i>
                 </th>
 
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Status : activate to sort column ascending" style="width: 300px;text-align:center">STATUS
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Status : activate to sort column ascending" style="width: 300px;text-align:center">Status
                   <i class="fa fa-sort-alpha-desc"></i>
                 </th>
 
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Department: activate to sort column ascending" style="width: 300px;text-align:center">DEPARTMENT
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Department: activate to sort column ascending" style="width: 300px;text-align:center">Department
                   <i class="fa fa-sort-alpha-desc"></i>
                 </th>
 
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Username: activate to sort column ascending" style="width: 300px;text-align:center">USERNAME
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Username: activate to sort column ascending" style="width: 300px;text-align:center">Username
                   <i class="fa fa-sort-alpha-desc"></i>
                 </th>
 
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 300px;text-align:center">EMAIL
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending" style="width: 300px;text-align:center">Email Address
                   <i class="fa fa-sort-alpha-desc"></i>
                 </th>
 
-                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="No telefon: activate to sort column ascending" style="width: 300px;text-align:center">MOBILE PHONE
+                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="No telefon: activate to sort column ascending" style="width: 300px;text-align:center">Mobile Phone
                   <i class="fa fa-sort-alpha-desc"></i>
                 </th>
                 
@@ -324,8 +634,9 @@ if (empty($_SESSION['First_Name'])) {
 $off = 0;
 $i = 1 + $off;
 while($rowAP = mysqli_fetch_array($resultAP)) {
+    include("db_conn.php");
     $sql = "SELECT * FROM empdept WHERE dept_id = '" . $rowAP['Department'] . "'";
-    $result = mysqli_query($conn, $sql);
+    $result = mysqli_query($db, $sql);
 
     // Check if the query was successful
     if ($result) {
@@ -341,7 +652,7 @@ while($rowAP = mysqli_fetch_array($resultAP)) {
         
         <td data-title="Department" >'.(isset($row['name']) ? $row['name'] : 'N/A').'</td>
         <td data-title="Username" >'.$rowAP['user_name'].'</td>
-        <td data-title="Email" >'.$rowAP['Email'].'</td>
+        <td data-title="Email Address" >'.$rowAP['Email'].'</td>
         <td data-title="Mobile Phone" >'.$rowAP['Mobile_phone'].'</td>
 
         <td data-title="Update" style="text-align:center">

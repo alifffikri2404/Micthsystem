@@ -650,14 +650,14 @@ if (empty($_SESSION['First_Name'])) {
                 <li class="nav-item">
                   <a class="nav-link collapsed" href="BookingSystem/usage_record_monthly.php" style="padding-left: 60px">
                     <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Usage Record</span>
+                    <span>All Usage Record</span>
                   </a>
                 </li>
                 <?php } ?>
                 <li class="nav-item">
                   <a class="nav-link collapsed" href="BookingSystem/user_record.php" style="padding-left: 60px">
                     <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Staff Usage</span>
+                    <span>Staff Usage Record</span>
                   </a>
                 </li>
               </ul>
@@ -690,14 +690,14 @@ if (empty($_SESSION['First_Name'])) {
                 <li class="nav-item">
                   <a class="nav-link collapsed" href="BookingSystem/room_record_monthly.php" style="padding-left: 60px">
                     <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Usage Record</span>
+                    <span>All Usage Record</span>
                   </a>
                 </li>
                 <?php } ?>
                 <li class="nav-item">
                   <a class="nav-link collapsed" href="BookingSystem/user_record_Room.php" style="padding-left: 60px">
                     <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Staff Usage</span>
+                    <span>Staff Usage Record</span>
                   </a>
                 </li>
               </ul>
@@ -922,11 +922,23 @@ if (empty($_SESSION['First_Name'])) {
           </li>
           <?php if ($_SESSION['func_admin'] == "1") { ?>
           <li class="nav-item">
+            <a class="nav-link collapsed" href="">
+              <i class="bi bi-chat-right-dots-fill" style="font-size: 1em"></i>
+              <span>Feedback Report</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#access-user-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
               <i class="bi bi-person-badge-fill" style="font-size: 1em"></i></i><span>Access User</span>
               <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
             </a>
             <ul id="access-user-nav" class="nav-content collapse" data-bs-parent="#settings-system-nav">
+              <li class="nav-item">
+                <a class="nav-link collapsed" href="eoustation3.0/register.php" style="padding-left: 60px">
+                  <i class="bi bi-caret-right-fill"></i></i>
+                  <span>Register New User</span>
+                </a>
+              </li>  
               <li class="nav-item">
                 <a class="nav-link collapsed" href="SSO/accessSSO.php" style="padding-left: 60px">
                   <i class="bi bi-caret-right-fill"></i></i>
@@ -939,7 +951,7 @@ if (empty($_SESSION['First_Name'])) {
                   <span>Staff List</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="eoustation3.0/editHR.php" style="padding-left: 60px">
                   <i class="bi bi-caret-right-fill"></i></i>
                   <span>Current HR</span>
@@ -950,13 +962,8 @@ if (empty($_SESSION['First_Name'])) {
                   <i class="bi bi-caret-right-fill"></i></i>
                   <span>Current Staff</span>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link collapsed" href="eoustation3.0/register.php" style="padding-left: 60px">
-                  <i class="bi bi-caret-right-fill"></i></i>
-                  <span>Register User</span>
-                </a>
-              </li>
+              </li> -->
+              
             </ul>
           </li>
           <?php } ?>
@@ -1236,6 +1243,13 @@ if (empty($_SESSION['First_Name'])) {
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#assetreg-info">
                     Registered Asset</button>
                 </li>
+
+                <?php if ($_SESSION['admin_asset'] == "1") { ?>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#assetreg-info">
+                    Asset Approval</button>
+                </li>
+                <?php } ?>
 
               </ul>
               <div class="tab-content pt-2">
