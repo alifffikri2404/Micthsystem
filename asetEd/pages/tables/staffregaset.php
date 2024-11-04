@@ -580,7 +580,7 @@ require('../../configAsetTPS.php');
     <h1>View Registered Asset</strong></h1>
     <nav>
       <ol class="breadcrumb" style="background-color: transparent; margin-bottom: 16px">
-        <li class="breadcrumb-item"><a href="../../homeasetstaff.php">Home Page</a></li>
+        <li class="breadcrumb-item"><a href="../../../main_user.php">Home Page</a></li>
         <li class="breadcrumb-item active">Registered Asset</li>
       </ol>
     </nav>
