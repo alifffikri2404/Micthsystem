@@ -104,6 +104,7 @@ if (empty($_SESSION['First_Name'])) {
   <!-- Favicons -->
   <link href="../../assets/img/micthlogo.png" rel="icon">
   <link href="../../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -137,6 +138,16 @@ if (empty($_SESSION['First_Name'])) {
 
   .card-title span {
     color: black;
+  }
+
+  .title-label {
+    font-weight: 400;
+  }
+
+  .placeholder-label {
+    font-size: 1.4rem;
+    line-height: 1.0;
+    height: 34px;
   }
 </style>
 
@@ -214,41 +225,364 @@ if (empty($_SESSION['First_Name'])) {
 
   <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-briefcase-fill"></i><span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../homeasetstaff.php">
-              <i class="bi bi-house-door-fill" style="font-size: 1em"></i><span>Home</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/tables/staffregaset.php" class="active">
-              <i class="bi bi-archive-fill" style="font-size: 1em; background-color: transparent"></i><span>Registered Asset</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/forms/staffreqaset.php">
-              <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i><span>Request Asset</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="../../../main_user.php">
-          <i class="bi bi-reply-fill"></i>
-          <span>Home Page</span>
-        </a>
-      </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="../../../main_user.php">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
+      </a>
+    </li>
+
+    <?php if ($_SESSION['access_imobile'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#booking-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Booking System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="booking-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <!-- <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../BookingSystem/user.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li> -->
+      
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-vehicle-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Vehicle</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-vehicle-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_booking_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book Vehicle</span>
+              </a>
+            </li>
+            <?php if ($_SESSION['admin_booking'] == "1") { ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/list_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>List of Vehicle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/add_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Add Vehicle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/usage_record_monthly.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>All Usage Record</span>
+              </a>
+            </li>
+            <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_record.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-room-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Room</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-room-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_booking_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book Room</span>
+              </a>
+            </li>
+            <?php if ($_SESSION['admin_booking'] == "1") { ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/list_room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>List of Room</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/add_room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Add Room</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/room_record_monthly.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>All Usage Record</span>
+              </a>
+            </li>
+            <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_record_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <?php } ?>
+
+
+    <?php if ($_SESSION['access_isurat'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#letter-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-envelope-fill"></i>
+        <span>Letter System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="letter-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../SuratLatest/SuratDaftarSuratKeluar.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Outgoing Letter</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['admin_surat'] == "1"){ ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../SuratLatest/SuratDaftarSuratMasuk.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Incoming Letter</span>
+          </a>
+        </li>
+        <?php } ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#record-letter-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i></i><span>Letter Record</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="record-letter-nav" class="nav-content collapse" data-bs-parent="#letter-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratKeluar.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Outgoing Letter</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratMasuk.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Incoming Letter</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <?php if ($_SESSION['access_eoutstation'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#out-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-door-open-fill"></i>
+        <span>Outstation System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="out-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <!-- <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/dash2.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/dashStaff.php">
+            <i class="bi bi-calendar-fill" style="font-size: 1em"></i>
+            <span>My Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/FormStaff.php">
+            <i class="bi bi-pencil-fill" style="font-size: 1em"></i>
+            <span>Check-Out</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['admin_outstation'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-people" style="font-size: 1em"></i></i><span>Human Resources</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="hr-nav" class="nav-content collapse" data-bs-parent="#out-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/myreport.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>View Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/data.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Generate Report</span>
+              </a>
+            </li>
+            <?php
+            include('../../../eoustation3.0/db_conn.php');
+            $sql = "SELECT * FROM outstation WHERE timeIn ='00:00:00'";
+            $result = mysqli_query($conn, $sql);
+            $totalRows = mysqli_num_rows($result);
+            ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/SNC.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i>
+                <p style="margin-bottom: 0px">Pending Staff Check-In<span class="float-right badge bg-danger">
+                    <?php echo $totalRows ?? 'No data'; ?>
+                  </span></p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+
+    <?php } ?>
+    <?php if ($_SESSION['access_aset'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-target="#asset-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="asset-system-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="active" href="../tables/staffregaset.php">
+            <i class="bi bi-archive-fill" style="font-size: 1em; background-color: transparent"></i>
+            <span>Registered Asset</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#request-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Request Asset</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="request-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../forms/staffreqaset.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>New Asset</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Loan Asset</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php if ($_SESSION['admin_asset'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#admin-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Admin</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="admin-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../forms/dafaset.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Register New Asset</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../tables/laporanas.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Asset & Inventory</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../tables/laporlupus.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Disposal Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../tables/staffrequest.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Request</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../forms/uploadcsv.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Import Excel</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="hometetapan.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Asset Settings</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#settings-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-gear-fill"></i>
+        <span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="settings-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../setting.php">
+            <i class="bi bi-person-fill" style="font-size: 1em"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../feedback.php">
+            <i class="bi bi-chat-right-text-fill" style="font-size: 1em"></i>
+            <span>Feedback</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['func_admin'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="">
+            <i class="bi bi-chat-right-dots-fill" style="font-size: 1em"></i>
+            <span>Feedback Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#access-user-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-person-badge-fill" style="font-size: 1em"></i></i><span>Access User</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="access-user-nav" class="nav-content collapse" data-bs-parent="#settings-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/register.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Register New User</span>
+              </a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SSO/accessSSO.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Access View</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SSO/userSSO.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff List</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
 
     </ul>
   </aside><!-- End Sidebar-->
@@ -259,7 +593,7 @@ if (empty($_SESSION['First_Name'])) {
       <h1>View Details</strong></h1>
       <nav>
         <ol class="breadcrumb" style="background-color: transparent; margin-bottom: 16px">
-          <li class="breadcrumb-item"><a href="../../homeasetstaff.php">Home Page</a></li>
+          <li class="breadcrumb-item"><a href="../../../main_user.php">Home Page</a></li>
           <li class="breadcrumb-item"><a href="../../pages/tables/staffregaset.php">Registered Asset</a></li>
           <li class="breadcrumb-item active">Asset Details</li>
         </ol>
@@ -314,7 +648,7 @@ if (empty($_SESSION['First_Name'])) {
                                         $statusStyle .= 'color: green;';
                                       }
                                       ?>
-                                      <label for="status" style="font-weight: 400; 'Nunito', sans-serif;">Status:</label><br>
+                                      <label for="status" class="title-label">Status:</label><br>
                                       <h5 style="<?php echo $statusStyle; ?>"><strong><?php echo strtoupper($status_aset); ?></strong></h5>
                                     </div>
                                   </div>
@@ -323,19 +657,19 @@ if (empty($_SESSION['First_Name'])) {
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
-                                      <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;">Asset Type:</label>
+                                      <label for="jenis" class="title-label">Asset Type:</label>
                                       <input type="text" style="text-transform:uppercase; font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="jenis" name="jenis" placeholder="ASSET TYPE" value="<?php echo $fetched_row['jenis_aset']; ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
-                                      <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Asset Number:</label>
+                                      <label for="exampleInputPassword1" class="title-label">Asset Number:</label>
                                       <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="InputNoSiriAwal" name="InputNoSiriAwal" placeholder="ASSET NUMBER" value="<?php echo $fetched_row['no_aset']; ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
-                                      <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Registration Date:</label>
+                                      <label for="exampleInputEmail1" class="title-label">Registration Date:</label>
                                       <div class="input-group">
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tarikh_daftar" name="tarikh_daftar" value="<?php echo $fetched_row['tarikh_daftar']; ?>" readonly>
                                         <span class="input-group-text"><i class="bi bi-calendar"></i></span>
@@ -344,7 +678,7 @@ if (empty($_SESSION['First_Name'])) {
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
-                                      <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Department Owner:</label>
+                                      <label for="exampleInputPassword1" class="title-label">Department Owner:</label>
                                       <?php
                                       $current_jab = $fetched_row['pemilik_jabatan'];
                                       echo $current_jab;
@@ -375,7 +709,7 @@ if (empty($_SESSION['First_Name'])) {
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
-                                      <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Handover Date:</label>
+                                      <label for="exampleInputEmail1" class="title-label">Handover Date:</label>
                                       <div class="input-group">
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tarikh_serahan" name="tarikh_serahan" value="<?php echo $fetched_row['tarikh_serahan']; ?>" readonly>
                                         <span class="input-group-text"><i class="bi bi-calendar"></i></span>
@@ -404,43 +738,43 @@ if (empty($_SESSION['First_Name'])) {
                                   <div class="row">
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Asset Name:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Serial Number:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Purchase Price:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Warranty Period:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Warranty Period:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Colour:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Year of Purchase:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
                                       </div>
                                     </div>
@@ -464,31 +798,31 @@ if (empty($_SESSION['First_Name'])) {
                                   <div class="row">
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Asset Name:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Purchase Price:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Colour:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Year of Purchase:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
                                       </div>
                                     </div>
@@ -512,37 +846,37 @@ if (empty($_SESSION['First_Name'])) {
                                   <div class="row">
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Asset Name:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Serial Number:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Purchase Price:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Colour:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Year of Purchase:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
                                       </div>
                                     </div>
@@ -566,43 +900,43 @@ if (empty($_SESSION['First_Name'])) {
                                   <div class="row">
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Asset Name:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Serial Number:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Purchase Price:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Warranty Period:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Warranty Period:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Colour:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Year of Purchase:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
                                       </div>
                                     </div>
@@ -626,43 +960,43 @@ if (empty($_SESSION['First_Name'])) {
                                   <div class="row">
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Asset Name:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Serial Number:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Purchase Price:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Warranty Period:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Warranty Period:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Colour:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Year of Purchase:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
                                       </div>
                                     </div>
@@ -686,37 +1020,37 @@ if (empty($_SESSION['First_Name'])) {
                                   <div class="row">
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Asset Name:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Plate Number:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Plate Number:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Purchase Price:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Colour:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Year of Purchase:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
                                       </div>
                                     </div>
@@ -741,43 +1075,43 @@ if (empty($_SESSION['First_Name'])) {
                                   <div class="row">
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Asset Name:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Serial Number:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Purchase Price:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Warranty Period:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Warranty Period:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Colour:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
-                                        <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Year of Purchase:</label>
+                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
                                         <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
                                       </div>
                                     </div>
@@ -800,7 +1134,7 @@ if (empty($_SESSION['First_Name'])) {
                               <div class="row">
                                 <div class="col-md-5">
                                   <div class="form-group">
-                                    <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;">Staff Name:</label>
+                                    <label for="jenis" class="title-label">Staff Name:</label>
                                     <?php
                                     $nama_kakitangan = $fetched_row['nama_kakitangan'];
                                     if (!empty($nama_kakitangan)) {
@@ -814,7 +1148,7 @@ if (empty($_SESSION['First_Name'])) {
                                 </div>
                                 <div class="col-md-5">
                                   <div class="form-group">
-                                    <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif;">Department Location:</label>
+                                    <label for="exampleInputPassword1" class="title-label">Department Location:</label>
                                     <?php
                                     
                                     
@@ -875,25 +1209,25 @@ if (empty($_SESSION['First_Name'])) {
                                 ?>
                                 <div class="col-md-5">
                                   <div class="form-group">
-                                    <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;">Supplier Name:</label>
+                                    <label for="jenis" class="title-label">Supplier Name:</label>
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="nama_pembekal" name="nama_pembekal" value="<?php echo $NamaPembekal; ?>" readonly>
                                   </div>
                                 </div>
                                 <div class="col-md-5">
                                   <div class="form-group">
-                                    <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;">Supplier Address:</label>
+                                    <label for="jenis" class="title-label">Supplier Address:</label>
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="alamat_pembekal" name="alamat_pembekal" value="<?php echo $emel_pembekal; ?>" readonly>
                                   </div>
                                 </div>
                                 <div class="col-md-5">
                                   <div class="form-group">
-                                    <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;">Supplier Email:</label>
+                                    <label for="jenis" class="title-label">Supplier Email:</label>
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="email_pembekal" name="email_pembekal" value="<?php echo $alamat_pembekal; ?>" readonly>
                                   </div>
                                 </div>
                                 <div class="col-md-5">
                                   <div class="form-group">
-                                    <label for="jenis" style="font-weight: 400; 'Nunito', sans-serif;">Supplier Phone No.:</label>
+                                    <label for="jenis" class="title-label">Supplier Phone No.:</label>
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="notel_pembekal" name="notel_pembekal" value="<?php echo $notel_pembekal; ?>" readonly>
                                   </div>
                                 </div>

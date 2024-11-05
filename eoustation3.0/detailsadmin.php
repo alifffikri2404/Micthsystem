@@ -43,6 +43,7 @@ if (empty($_SESSION['First_Name'])) {
     <!-- Favicons -->
     <link href="../micthlogo.png" rel="icon">
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -652,6 +653,10 @@ if (empty($_SESSION['First_Name'])) {
 <script src="assets/vendor/chart.js/chart.min.js"></script>
 <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
 <script src="assets/vendor/echarts/echarts.min.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
 </body>
 
 </html>
