@@ -574,69 +574,47 @@ Label the data
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#request-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Request Asset</span>
-            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
+            <span>Request New Asset</span>
           </a>
-          <ul id="request-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>New Asset</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Loan Asset</span>
-              </a>
-            </li>
-          </ul>
         </li>
         <?php if ($_SESSION['admin_asset'] == "1") { ?>
         <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#admin-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Admin</span>
-            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          <a class="nav-link collapsed" href="../asetEd/pages/forms/dafaset.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register New Asset</span>
           </a>
-          <ul id="admin-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/forms/dafaset.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Register New Asset</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/tables/laporanas.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Asset & Inventory</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/tables/laporlupus.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Disposal Report</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/tables/staffrequest.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Staff Request</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/forms/uploadcsv.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Import Excel</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/hometetapan.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Asset Settings</span>
-              </a>
-            </li>
-          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/laporanas.php">
+            <i class="bi bi-file-earmark-text-fill" style="font-size: 1em"></i>
+            <span>Asset & Inventory</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/laporlupus.php">
+            <i class="bi bi-file-earmark-x-fill" style="font-size: 1em"></i>
+            <span>Disposal Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/staffrequest.php">
+            <i class="bi bi-check-circle-fill" style="font-size: 1em"></i>
+            <span>Staff Request</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/forms/uploadcsv.php">
+            <i class="bi bi-file-excel-fill" style="font-size: 1em"></i>
+            <span>Import Excel</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/hometetapan.php">
+            <i class="bi bi-gear-fill" style="font-size: 1em"></i>
+            <span>Asset Settings</span>
+          </a>
         </li>
         <?php } ?>
       </ul>
@@ -664,7 +642,7 @@ Label the data
         </li>
         <?php if ($_SESSION['func_admin'] == "1") { ?>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="">
+          <a class="nav-link collapsed" href="../feedback_report.php">
             <i class="bi bi-chat-right-dots-fill" style="font-size: 1em"></i>
             <span>Feedback Report</span>
           </a>
@@ -796,40 +774,12 @@ Label the data
                           </div>
                           <div class="col-md-4">
                             <div class="form-group">
-                              <label for="exampleInputPassword1" class="title-label">Manager:</label>
-                              <?php
-                                $manager = $fetched_row['Manager'];
-                              ?>
-                              <select type="text" class="form-select placeholder-label" id="manager" name="manager" placeholder="Manager"
-                                value="<?php echo $manager; ?>">
-                                <option value='-'>Choose Manager</option>
-                                <?php
-                                  include("db_conn.php");
-                                  $sql = "SELECT * FROM empmanager ORDER BY manager_id ASC";
-                                  
-                                  $result = mysqli_query($db, $sql);
-                                  $count = mysqli_num_rows($result);
-                                  if ($count > 0) {
-                                    $off = 0;
-                                    $i = 1 + $off;
-                                    while ($row = mysqli_fetch_array($result)) {
-                                      $selected = ($row['manager_id'] == $manager) ? 'selected' : '';
-                                      echo '<option value="' . $row['name'] . '" ' . $selected . '>' . $row['name'] . '</option>';
-                                      $i++;
-                                    }
-                                  }
-                                ?>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-group">
                               <label for="exampleInputPassword1" class="title-label">Department:</label>
                               <?php
                                 $department = $fetched_row['Department'];
                               ?>
-                              <select type="text" class="form-select placeholder-label" id="department" name="department" placeholder="Department"
-                                value="<?php echo $department; ?>">
+                              <select type="text" class="form-select placeholder-label" id="department" onchange="updateManager()"
+                                name="department" placeholder="Department" value="<?php echo $department; ?>">
                                 <option value='-'>Choose Staff Department</option>
                                 <?php
                                   include("db_conn.php");
@@ -842,12 +792,64 @@ Label the data
                                     $i = 1 + $off;
                                     while ($row = mysqli_fetch_array($result)) {
                                       $selected = ($row['dept_id'] == $department) ? 'selected' : '';
-                                      echo '<option value="' . $row['name'] . '" ' . $selected . '>' . $row['name'] . '</option>';
+                                      echo '<option value="' . $row['name'] . '" data-deptid="' . $row['dept_id'] . '" ' . $selected . '>' . $row['name'] . '</option>';
                                       $i++;
                                     }
                                   }
                                 ?>
                               </select>
+                            </div>
+                          </div>
+
+                          <script>
+                            function updateManager() {
+                              var deptID = $("#department").find(":selected").data("deptid");
+                              var managerTextBox = $("#manager");
+
+                              // Map department IDs to manager names
+                              var deptToManager = {
+                                  1: "Datuk Seri Utama Ab Rauf Bin Yusoh",
+                                  2: "Dr Nazdiana Binti Ab.Wahab",
+                                  3: "Mohamad Hod Bin Rabu",
+                                  4: "Ahmad Safwan Bin Yusof",
+                                  5: "Muhammad Farid Bin Ariffin",
+                                  6: "Zulliana Binti Muhammad",
+                                  7: "Nur Amalina Binti Abd Rahman",
+                                  8: "Norwajunizam Bin Abd Wahab",
+                                  9: "Dr Nazdiana Binti Ab.Wahab"
+                              };
+
+                              // Set the manager field based on the selected department
+                              if (deptToManager[deptID]) {
+                                  managerTextBox.val(deptToManager[deptID]);
+                              } else {
+                                  managerTextBox.val(""); // Clear if no manager is found
+                              }
+                            }
+                            
+                          </script>
+                          
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="exampleInputPassword1" class="title-label">Manager:</label>
+                              <?php
+                                include("db_conn.php");
+                                $manager = $fetched_row['Manager'];
+                                $sqlMan = "SELECT * FROM empmanager
+                                WHERE manager_id = '$manager'";
+                                $resultCA = mysqli_query($db, $sqlMan);
+                                if ($resultCA && mysqli_num_rows($resultCA) > 0) {
+                                  $rowCA = mysqli_fetch_assoc($resultCA);
+                                  $manager_name = $rowCA['name'];
+                                } else {
+                                  $manager_name = '';
+                                }
+                              ?>
+                              <input type="text" class="form-control placeholder-label" id="manager" name="manager" readonly 
+                                value="<?php echo isset($manager_name) ? $manager_name : ''; ?>">
+                              <?php
+                                
+                              ?>
                             </div>
                           </div>
                           <div class="col-md-2">

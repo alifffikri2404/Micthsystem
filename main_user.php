@@ -832,69 +832,47 @@ if (empty($_SESSION['First_Name'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#request-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-                <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Request Asset</span>
-                <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+              <a class="nav-link collapsed" href="asetEd/pages/forms/staffreqaset.php">
+                <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
+                <span>Request New Asset</span>
               </a>
-              <ul id="request-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/forms/staffreqaset.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>New Asset</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Loan Asset</span>
-                  </a>
-                </li>
-              </ul>
             </li>
             <?php if ($_SESSION['admin_asset'] == "1") { ?>
             <li class="nav-item">
-              <a class="nav-link collapsed" data-bs-target="#admin-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-                <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Admin</span>
-                <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+              <a class="nav-link collapsed" href="asetEd/pages/forms/dafaset.php">
+                <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+                <span>Register New Asset</span>
               </a>
-              <ul id="admin-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/forms/dafaset.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Register New Asset</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/tables/laporanas.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Asset & Inventory</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/tables/laporlupus.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Disposal Report</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/tables/staffrequest.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Staff Request</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/pages/forms/uploadcsv.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Import Excel</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link collapsed" href="asetEd/hometetapan.php" style="padding-left: 60px">
-                    <i class="bi bi-caret-right-fill"></i></i>
-                    <span>Asset Settings</span>
-                  </a>
-                </li>
-              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="asetEd/pages/tables/laporanas.php">
+                <i class="bi bi-file-earmark-text-fill" style="font-size: 1em"></i>
+                <span>Asset & Inventory</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="asetEd/pages/tables/laporlupus.php">
+                <i class="bi bi-file-earmark-x-fill" style="font-size: 1em"></i>
+                <span>Disposal Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="asetEd/pages/tables/staffrequest.php">
+                <i class="bi bi-check-circle-fill" style="font-size: 1em"></i>
+                <span>Staff Request</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="asetEd/pages/forms/uploadcsv.php">
+                <i class="bi bi-file-excel-fill" style="font-size: 1em"></i>
+                <span>Import Excel</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="asetEd/hometetapan.php">
+                <i class="bi bi-gear-fill" style="font-size: 1em"></i>
+                <span>Asset Settings</span>
+              </a>
             </li>
             <?php } ?>
           </ul>
@@ -922,7 +900,7 @@ if (empty($_SESSION['First_Name'])) {
           </li>
           <?php if ($_SESSION['func_admin'] == "1") { ?>
           <li class="nav-item">
-            <a class="nav-link collapsed" href="">
+            <a class="nav-link collapsed" href="feedback_report.php">
               <i class="bi bi-chat-right-dots-fill" style="font-size: 1em"></i>
               <span>Feedback Report</span>
             </a>
@@ -1029,13 +1007,27 @@ if (empty($_SESSION['First_Name'])) {
                         if ($timeIn === '00:00:00') {
                           $checkInMessage = "<b> Pending Check-In !</b>";
                           $checkInColor = "red";
+                          $checkInButton = "<form method='POST' style='margin-top: 10px;'>
+                            <input type='hidden' name='action' value='Update'>
+                            <input type='hidden' name='update' value='$id'>
+                            <hr>
+                            <div class='d-grid gap-2 mt-3'>
+                                <button class='btn btn-warning btn-block' type='submit' name='updateBtn' id='updateBtn' value='$id'>
+                                    Check-In
+                                </button>
+                            </div>
+                          </form>";
                         } else {
-                          $checkInMessage = "<b>No Activity </b>";
+                          $checkInMessage = "<b> Click here to check-out </b>";
                           $checkInColor = "black";
+                          $checkOutButton = "<a href='eoustation3.0/FormStaff.php' 
+                            class='btn btn-success btn-block w-100'>Check-Out</a>";
                         }
                       } else {
-                        $checkInMessage = "<b>No data found.</b>";
-                        $checkInColor = "black";
+                        $checkInMessage = "<b> Click here to check-out </b>";
+                          $checkInColor = "black";
+                          $checkOutButton = "<a href='eoustation3.0/FormStaff.php' 
+                            class='btn btn-success btn-block w-100'>Check-Out</a>";
                       }
                     } else {
                       echo "Error executing query: " . mysqli_error($conn);
@@ -1043,28 +1035,41 @@ if (empty($_SESSION['First_Name'])) {
                     ?>
 
                     <div style="color: <?= $checkInColor ?>; text-align: center;">
-                      <h4>
-                        <p><?= $checkInMessage ?? 'No data'; ?></p>
-                      </h4>
+                        <h4>
+                            <p><?= $checkInMessage ?? 'No data'; ?></p>
+                        </h4>
                     </div>
 
+                    <!-- Check-In Button (only if timeIn is '00:00:00') -->
+                    <?php if (isset($checkInButton)) { echo $checkInButton; } ?>
 
-                    <form method='POST' style="margin-top: 10px;">
-                      <input type='hidden' name='action' value='Update'>
-                      <input type='hidden' name='update' value='<?= $id ?>'>
-                      <?php if (isset($timeIn) && $timeIn == '00:00:00') : ?>
-                        <hr>
-                        <div class="d-grid gap-2 mt-3">
-                          <button class='btn btn-warning btn-block' type='submit' name='updateBtn' id='updateBtn' value='<?= $id ?>'>
-                            Check-In
-                          </button>
-
-                        </div>
-
-                      <?php endif; ?>
-                    </form>
+                    <!-- Check-Out Button (only if timeIn is not '00:00:00') -->
+                    <?php if (isset($checkOutButton)) { echo $checkOutButton; } ?>
                   </div>
                 </div>
+
+                <!-- Last Check-Out and Last Check-In times -->
+                <ul class="box-info" style="padding-left: 10px">
+                  <li>
+                      <div class='bx bxs-calendar'></div>
+                      <div class="text">
+                          <h3>
+                              <?php echo $timeOut ?? 'No data'; ?>
+                          </h3>
+                          <p>Last Check-Out</p>
+                      </div>
+                  </li>
+
+                  <li>
+                      <div class='bx bxs-calendar-check'></div>
+                      <div class="text">
+                          <h3>
+                              <?php echo $timeIn ?? 'No data'; ?>
+                          </h3>
+                          <p>Last Check-In</p>
+                      </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
