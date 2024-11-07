@@ -345,69 +345,47 @@ if (empty($_SESSION['First_Name'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#request-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Request Asset</span>
-            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
+            <span>Request New Asset</span>
           </a>
-          <ul id="request-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/forms/staffreqaset.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>New Asset</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Loan Asset</span>
-              </a>
-            </li>
-          </ul>
         </li>
         <?php if ($_SESSION['admin_asset'] == "1") { ?>
         <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#admin-asset-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
-            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i></i><span>Admin</span>
-            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          <a class="nav-link collapsed" href="../asetEd/pages/forms/dafaset.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register New Asset</span>
           </a>
-          <ul id="admin-asset-nav" class="nav-content collapse" data-bs-parent="#asset-system-nav">
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/forms/dafaset.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Register New Asset</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/tables/laporanas.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Asset & Inventory</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/tables/laporlupus.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Disposal Report</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/tables/staffrequest.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Staff Request</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/pages/forms/uploadcsv.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Import Excel</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link collapsed" href="../asetEd/hometetapan.php" style="padding-left: 60px">
-                <i class="bi bi-caret-right-fill"></i></i>
-                <span>Asset Settings</span>
-              </a>
-            </li>
-          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/laporanas.php">
+            <i class="bi bi-file-earmark-text-fill" style="font-size: 1em"></i>
+            <span>Asset & Inventory</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/laporlupus.php">
+            <i class="bi bi-file-earmark-x-fill" style="font-size: 1em"></i>
+            <span>Disposal Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/tables/staffrequest.php">
+            <i class="bi bi-check-circle-fill" style="font-size: 1em"></i>
+            <span>Staff Request</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/pages/forms/uploadcsv.php">
+            <i class="bi bi-file-excel-fill" style="font-size: 1em"></i>
+            <span>Import Excel</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../asetEd/hometetapan.php">
+            <i class="bi bi-gear-fill" style="font-size: 1em"></i>
+            <span>Asset Settings</span>
+          </a>
         </li>
         <?php } ?>
       </ul>
@@ -435,7 +413,7 @@ if (empty($_SESSION['First_Name'])) {
         </li>
         <?php if ($_SESSION['func_admin'] == "1") { ?>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="">
+          <a class="nav-link collapsed" href="../feedback_report.php">
             <i class="bi bi-chat-right-dots-fill" style="font-size: 1em"></i>
             <span>Feedback Report</span>
           </a>
