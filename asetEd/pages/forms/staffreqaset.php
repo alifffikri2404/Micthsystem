@@ -535,7 +535,7 @@ if(isset($_POST['btn-cancel']))
         <li class="nav-item">
           <a class="nav-link collapsed" href="../hometetapan.php">
             <i class="bi bi-gear-fill" style="font-size: 1em"></i>
-            <span>Asset Settingsss</span>
+            <span>Asset Settings</span>
           </a>
         </li>
         <?php } ?>
