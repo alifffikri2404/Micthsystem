@@ -1,8 +1,7 @@
 <?php 
 $host = "localhost";
 $user = "root";
-$pswd = "mysqlform1c7h";
-//$password = "mysqlform1c7h";
+$pswd = "";
 $dbname = "dbaset";
 
 /*$host = "localhost";

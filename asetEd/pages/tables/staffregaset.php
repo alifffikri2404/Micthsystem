@@ -482,7 +482,7 @@ require('../../configAsetTPS.php');
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="../hometetapan.php">
+          <a class="nav-link collapsed" href="../../hometetapan.php">
             <i class="bi bi-gear-fill" style="font-size: 1em"></i>
             <span>Asset Settings</span>
           </a>

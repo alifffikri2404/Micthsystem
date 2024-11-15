@@ -1,8 +1,15 @@
 <?php
 require('../../configAsetTPS.php');
 
-if (isset($_POST["submit"])) {
 
+
+
+?>
+
+
+
+<?php
+if (isset($_POST["submit"])) {
     if (isset($_FILES['file']) && $_FILES['file']['error'] == 0) {
         $file = $_FILES['file']['tmp_name'];
 
@@ -10,42 +17,110 @@ if (isset($_POST["submit"])) {
             $handle = fopen($file, "r");
 
             if ($handle !== FALSE) {
-                fgetcsv($handle, 1000, ",");
+                fgetcsv($handle, 1000, ","); // Skip header row
 
                 while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                    $category = $data[0];
-                    $category_id = $data[1];
-                    $sub_category = $data[2];
-                    $sub_category_id = $data[3];
-                    $model = $data[4];
-                    $model_id = $data[5];
-                    $running_no = $data[6];
-                    $full_id = $data[7];
-                    $barcode = $data[8];
-                    $serial_no = $data[9];
-                    $date_of_purchase = $data[10];
-                    $supplier = $data[11];
+                    // Assign default values of 'N/A' if data is empty
+                    $category = !empty($data[0]) ? $data[0] : '';
+                    $category_id = !empty($data[1]) ? $data[1] : '';
+                    $sub_category = !empty($data[2]) ? $data[2] : '';
+                    $sub_category_id = !empty($data[3]) ? $data[3] : '';
+                    $model = !empty($data[4]) ? $data[4] : '';
+                    $model_id = !empty($data[5]) ? $data[5] : '';
+                    $running_no = !empty($data[6]) ? $data[6] : '';
+                    $full_id = !empty($data[7]) ? $data[7] : '';
+                    $barcode = !empty($data[8]) ? $data[8] : '';
+                    $qrcode = !empty($data[9]) ? $data[9] : '';
+                    $serial_no = !empty($data[10]) ? $data[10] : '';
+                    $date_of_purchase = !empty($data[11]) ? $data[11] :'';
+                    $supplier = !empty($data[12]) ? $data[12] : '';
+                    $lokasi = !empty($data[13]) ? $data[13] : '';
+                    $harga = !empty($data[14]) ? $data[14] : '';
+                    $status = !empty($data[15]) ? $data[15] : '';
 
-                    $stmt = $conn2->prepare("INSERT INTO asset_management_vba (`Category`, `Category_ID`, `Sub_Category`, `Sub_Category_ID`, `Model`, `Model_ID`, `Running_No`, `Full_ID (Concatenated ID)`, `Barcode`, `SERIAL_NO`, `DATE_OF_PURCHASE`, `SUPPLIER`) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                    ON DUPLICATE KEY UPDATE
-                    `Category`=VALUES(`Category`),
-                    `Category_ID`=VALUES(`Category_ID`),
-                    `Sub_Category`=VALUES(`Sub_Category`),
-                    `Sub_Category_ID`=VALUES(`Sub_Category_ID`),
-                    `Model`=VALUES(`Model`),
-                    `Model_ID`=VALUES(`Model_ID`),
-                    `Running_No`=VALUES(`Running_No`),
-                    `Barcode`=VALUES(`Barcode`),
-                    `SERIAL_NO`=VALUES(`SERIAL_NO`),
-                    `DATE_OF_PURCHASE`=VALUES(`DATE_OF_PURCHASE`),
-                    `SUPPLIER`=VALUES(`SUPPLIER`)");
+                    // Step 1: Insert or update into `jenis_aset`
+                    $result_jenis = $conn2->query("SELECT MAX(id) AS max_id FROM jenis_aset");
+                    $row_jenis = $result_jenis->fetch_assoc();
+                    $next_id_jenis = $row_jenis['max_id'] + 1;
 
-                    $stmt->bind_param("ssssssssssss", $category, $category_id, $sub_category, $sub_category_id, $model, $model_id, $running_no, $full_id, $barcode, $serial_no, $date_of_purchase, $supplier);
+                    $stmt_jenis = $conn2->prepare(
+                        "INSERT INTO jenis_aset (id, id_kategori, type_aset, idsubcategory) 
+                         VALUES (?, ?, ?, ?) 
+                         ON DUPLICATE KEY UPDATE type_aset = VALUES(type_aset)"
+                    );
+                    $stmt_jenis->bind_param("isss", $next_id_jenis, $category_id, $sub_category, $sub_category_id);
 
-                    if ($stmt->execute() === FALSE) {
-                        echo "Error: " . $stmt->error . "<br>";
+                    if (!$stmt_jenis->execute()) {
+                        echo "Error inserting into jenis_aset: " . $stmt_jenis->error . "<br>";
                     }
+                    $stmt_jenis->close();
+
+                    // Step 2: Insert or update into `sub_sub_category`
+                    $result_sub = $conn2->query("SELECT MAX(id_sub) AS max_id FROM sub_sub_category");
+                    $row_sub = $result_sub->fetch_assoc();
+                    $next_id_sub = $row_sub['max_id'] + 1;
+
+                    $stmt_sub = $conn2->prepare(
+                        "INSERT INTO sub_sub_category (id_sub, id_sub_sub_category, idsubcategory, jenis_sub_sub_category) 
+                         VALUES (?, ?, ?, ?) 
+                         ON DUPLICATE KEY UPDATE jenis_sub_sub_category = VALUES(jenis_sub_sub_category)"
+                    );
+                    $stmt_sub->bind_param("isss", $next_id_sub, $model_id, $sub_category, $model);
+
+                    if (!$stmt_sub->execute()) {
+                        echo "Error inserting into sub_sub_category: " . $stmt_sub->error . "<br>";
+                    }
+                    $stmt_sub->close();
+
+                    // Step 3: Insert or update into `asset_management_vba`
+                    $stmt_asset = $conn2->prepare(
+                        "INSERT INTO asset_management_vba 
+                        (`Category`, `Category_ID`, `Sub_Category`, `Sub_Category_ID`, `Model`, 
+                         `Model_ID`, `Running_No`, `Full_ID (Concatenated ID)`, `Barcode`, `QRCode`, `lokasi`, 
+                         `SERIAL_NO`, `DATE_OF_PURCHASE`, `SUPPLIER`, `harga`, `status`) 
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                         ON DUPLICATE KEY UPDATE
+                         `Category` = VALUES(`Category`),
+                         `Category_ID` = VALUES(`Category_ID`),
+                         `Sub_Category` = VALUES(`Sub_Category`),
+                         `Sub_Category_ID` = VALUES(`Sub_Category_ID`),
+                         `Model` = VALUES(`Model`),
+                         `Model_ID` = VALUES(`Model_ID`),
+                         `Running_No` = VALUES(`Running_No`),
+                         `Full_ID (Concatenated ID)` = VALUES(`Full_ID (Concatenated ID)`),
+                         `Barcode` = VALUES(`Barcode`),
+                         `QRCode` = VALUES(`QRCode`),
+                         `lokasi` = VALUES(`lokasi`),
+                         `SERIAL_NO` = VALUES(`SERIAL_NO`),
+                         `DATE_OF_PURCHASE` = VALUES(`DATE_OF_PURCHASE`),
+                         `SUPPLIER` = VALUES(`SUPPLIER`),
+                         `harga` = VALUES(`harga`),
+                         `status` = VALUES(`status`)"
+                    );
+                    $stmt_asset->bind_param(
+                        "ssssssssssssssss",
+                        $category,
+                        $category_id,
+                        $sub_category,
+                        $sub_category_id,
+                        $model,
+                        $model_id,
+                        $running_no,
+                        $full_id,
+                        $barcode,
+                        $qrcode,
+                        $lokasi,
+                        $serial_no,
+                        $date_of_purchase,
+                        $supplier,
+                        $harga,
+                        $status
+                    );
+
+                    if (!$stmt_asset->execute()) {
+                        echo "Error inserting into asset_management_vba: " . $stmt_asset->error . "<br>";
+                    }
+                    $stmt_asset->close();
                 }
 
                 fclose($handle);
@@ -67,9 +142,9 @@ if (isset($_POST["submit"])) {
     }
 }
 
+
+
 ?>
-
-
 
 
 <?php
@@ -164,7 +239,8 @@ if (empty($_SESSION['First_Name'])) {
     <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
     <!-- DataTable CSS  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha3/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0-alpha3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css">
 
@@ -176,7 +252,8 @@ if (empty($_SESSION['First_Name'])) {
   <![endif]-->
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <!-- Favicons -->
     <link href="../../assets/img/micthlogo.png" rel="icon">
@@ -184,7 +261,9 @@ if (empty($_SESSION['First_Name'])) {
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
     <!-- Vendor CSS Files -->
     <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -290,7 +369,8 @@ if (empty($_SESSION['First_Name'])) {
             <!-- Asset System / iAset -->
             <li class="nav-item">
                 <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-briefcase-fill"></i><span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-briefcase-fill"></i><span>Asset System</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
                 </a>
 
                 <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
@@ -331,7 +411,8 @@ if (empty($_SESSION['First_Name'])) {
                 <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="../../pages/forms/uploadcsv.php" class="active">
-                            <i class="bi bi-file-excel" style="font-size: 1em; background-color: transparent"></i><span>Import Excel</span>
+                            <i class="bi bi-file-excel"
+                                style="font-size: 1em; background-color: transparent"></i><span>Import Excel</span>
                         </a>
                     </li>
                 </ul>
@@ -390,8 +471,11 @@ if (empty($_SESSION['First_Name'])) {
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="kategori" style="font-weight: 400; font-family: 'Nunito', sans-serif;">Select Category:</label>
-                                                <select class="form-select" id="kategori" name="kategori" style="font-size: 1.4rem; line-height: 1.0; height: 34px">
+                                                <label for="kategori"
+                                                    style="font-weight: 400; font-family: 'Nunito', sans-serif;">Select
+                                                    Category:</label>
+                                                <select class="form-select" id="kategori" name="kategori"
+                                                    style="font-size: 1.4rem; line-height: 1.0; height: 34px">
                                                     <?php
                                                     $sqlL = "SELECT * FROM kategoritps ORDER BY id_kategori ASC";
                                                     require('../../configAsetTPS.php');
@@ -400,7 +484,7 @@ if (empty($_SESSION['First_Name'])) {
                                                     if ($result) {
                                                         while ($rowL = mysqli_fetch_array($result)) {
                                                             $selected = isset($_POST['kategori']) && $_POST['kategori'] == $rowL['id_kategori'] ? 'selected' : '';
-                                                            echo  '<option value="' . $rowL['nama_kategori'] . '" ' . $selected . '>' . $rowL['nama_kategori'] . '</option>';
+                                                            echo '<option value="' . $rowL['nama_kategori'] . '" ' . $selected . '>' . $rowL['nama_kategori'] . '</option>';
                                                         }
                                                     }
                                                     ?>
@@ -411,8 +495,10 @@ if (empty($_SESSION['First_Name'])) {
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success btn-lg" style="font-size: 15px">Search</button>
-                                        <button type="submit" name="reset" id="reset" class="btn btn-danger btn-lg" style="font-size: 15px">Reset</button>
+                                        <button type="submit" name="submit1" id="submit1" class="btn btn-success btn-lg"
+                                            style="font-size: 15px">Search</button>
+                                        <button type="submit" name="reset" id="reset" class="btn btn-danger btn-lg"
+                                            style="font-size: 15px">Reset</button>
                                     </div>
                                 </div>
                             </form>
@@ -495,7 +581,8 @@ if (empty($_SESSION['First_Name'])) {
 
     <footer id="footer" class="footer">
         <div class="copyright">
-            Copyright &copy; <script>
+            Copyright &copy;
+            <script>
                 document.write(new Date().getFullYear())
             </script>
             <strong><span>MICTH SYSTEM</span></strong>. All Rights Reserved

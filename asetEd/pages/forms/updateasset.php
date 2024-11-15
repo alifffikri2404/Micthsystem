@@ -306,6 +306,7 @@ if (empty($_SESSION['First_Name'])) {
 
         <?php
 if (isset($_GET['Full_ID'])) {
+    // Prepare a query to fetch the asset details
     $sqlA_query = $conn2->prepare("SELECT * FROM asset_management_vba WHERE `Full_ID (Concatenated ID)` = ?");
     $sqlA_query->bind_param("s", $_GET['Full_ID']);
     $sqlA_query->execute();
@@ -313,163 +314,210 @@ if (isset($_GET['Full_ID'])) {
     $fetched_row = $result_set->fetch_array(MYSQLI_ASSOC);
 
     if (isset($_POST['btn-update'])) {
+        // Capture form input
         $supplier = $_POST['supplier'];
         $serialno = $_POST['serialno'];
         $dopurchase = $_POST['dopurchase'];
+        $staffname = $_POST['staffname']; // Capture staff name input
 
+        // Correct SQL query without trailing comma
         $sql_query = $conn2->prepare("UPDATE asset_management_vba 
-                                      SET SERIAL_NO = ?, DATE_OF_PURCHASE = ?, SUPPLIER = ? 
-                                      WHERE `Full_ID (Concatenated ID)` = ?");
-        $sql_query->bind_param("ssss", $serialno, $dopurchase, $supplier, $_GET['Full_ID']);
+                                SET SERIAL_NO = ?, DATE_OF_PURCHASE = ?, SUPPLIER = ?, nama_kakitangan = ?
+                                WHERE `Full_ID (Concatenated ID)` = ?");
+        $sql_query->bind_param("sssss", $serialno, $dopurchase, $supplier, $staffname, $_GET['Full_ID']); // Bind parameters
+
+        // Execute the update and handle the result
         if ($sql_query->execute()) {
             echo "
-                <script>
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Record has been successfully updated.',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = '../tables/laporanas.php'; // Redirect to the desired page
-                        }
-                    });
-                </script>
+            <script>
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Record has been successfully updated.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '../tables/laporanas.php'; // Redirect to the desired page
+                    }
+                });
+            </script>
             ";
         } else {
             echo "
-                <script>
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'There was an issue updating the record.',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                </script>
+            <script>
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'There was an issue updating the record: " . htmlspecialchars($sql_query->error) . "',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            </script>
             ";
         }
+    }
+
+    if (isset($_POST['btn-cancel'])) {
+        header("Location: ../tables/laporanas.php"); // Redirect on cancel
+        exit();
     }
 }
 ?>
 
-
-            <section class="section dashboard">
-                <div class="row">
-                    <div class="col-lg-20">
-                        <div class="row">
-                            <!-- Recent Sales -->
-                        </div>
+        <section class="section dashboard">
+            <div class="row">
+                <div class="col-lg-20">
+                    <div class="row">
+                        <!-- Recent Sales -->
                     </div>
-                    <div class="col-12">
-                        <div class="card top-selling">
-                            <div class="sb">
-                                <div class="card-body">
-                                    <h5 class="card-title"><strong>ASSET DETAILS</strong><br />
-                                        <!-- List all related field form for asset according to the category and ID -->
-
-                                        <div class="col-lg-20" style="margin-top: 10px">
-                                            <div class="col-md-12">
-                                                <form role="form" action="" method="post">
-                                                    <div class="box-body">
+                </div>
+                <div class="col-12">
+                    <div class="card top-selling">
+                        <div class="sb">
+                            <div class="card-body">
+                                <h5 class="card-title"><strong>ASSET DETAILS</strong><br />
+                                    <div class="col-lg-20" style="margin-top: 10px">
+                                        <div class="col-md-12">
+                                            <form role="form" action="" method="post">
+                                                <div class="box-body">
+                                                    <div class="row">
+                                                        <div class="col-md-5">
+                                                            <div class="form-group" style="display: flex; align-items: center;">
+                                                                <label for="assetnumber" style="font-weight: 400; 'Nunito', sans-serif;">Asset Number: </label><br>
+                                                                <h5 class="card-title">
+                                                                    <strong><?php echo htmlspecialchars($fetched_row['Full_ID (Concatenated ID)']); ?></strong>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5"></div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="category" style="font-weight: 400; 'Nunito', sans-serif;">Category:</label>
+                                                                <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="category" name="category" value="<?php echo htmlspecialchars($fetched_row['Category']); ?>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="subcategory" style="font-weight: 400; 'Nunito', sans-serif;">Sub Category:</label>
+                                                                <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="subcategory" name="subcategory" value="<?php echo htmlspecialchars($fetched_row['Sub_Category']); ?>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="model" style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
+                                                                <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" value="<?php echo htmlspecialchars($fetched_row['Model']); ?>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="runningno" style="font-weight: 400; 'Nunito', sans-serif;">Running No:</label>
+                                                                <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="runningno" name="runningno" value="<?php echo htmlspecialchars($fetched_row['Running_No']); ?>" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="serialno" style="font-weight: 400; 'Nunito', sans-serif;">Serial Number:</label>
+                                                                <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="serialno" name="serialno" value="<?php echo htmlspecialchars($fetched_row['SERIAL_NO']); ?>">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <label for="dopurchase" style="font-weight: 400; 'Nunito', sans-serif;">Date of Purchase:</label>
+                                                                <input type="date" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="dopurchase" name="dopurchase" value="<?php echo htmlspecialchars($fetched_row['DATE_OF_PURCHASE']); ?>">
+                                                            </div>
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-md-5">
-                                                                <div class="form-group"
-                                                                    style="display: flex; align-items: center;">
-                                                                    <label for="assetnumber"
-                                                                        style="font-weight: 400; 'Nunito', sans-serif;">Asset
-                                                                        Number: </label><br>
-                                                                    <h5 class="card-title">
-                                                                        <strong><?php echo $fetched_row['Full_ID (Concatenated ID)']; ?></strong>
-                                                                    </h5>
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputEmail1" style="font-weight: 400; 'Nunito', sans-serif;">Registration Date:</label>
+                                                                    <div class="input-group">
+                                                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tarikh_daftar" name="tarikh_daftar" value="<?php echo date("j/n/Y"); ?>" readonly>
+                                                                        <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-5">
-                                                                <!-- spare some space -->
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label for="category"
-                                                                        style="font-weight: 400; 'Nunito', sans-serif;">Category:</label>
-                                                                    <input type="text"
-                                                                        style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                                                        class="form-control" id="category" name="category"
-                                                                        value="<?php echo $fetched_row['Category']; ?>"
-                                                                        readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label for="subcategory"
-                                                                        style="font-weight: 400; 'Nunito', sans-serif;">Sub
-                                                                        Category:</label>
-                                                                    <input type="text"
-                                                                        style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                                                        class="form-control" id="subcategory"
-                                                                        name="subcategory"
-                                                                        value="<?php echo $fetched_row['Sub_Category']; ?>"
-                                                                        readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label for="model"
-                                                                        style="font-weight: 400; 'Nunito', sans-serif;">Model:</label>
-                                                                    <input type="text"
-                                                                        style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                                                        class="form-control" id="model" name="model"
-                                                                        value="<?php echo $fetched_row['Model']; ?>"
-                                                                        readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label for="runningno"
-                                                                        style="font-weight: 400; 'Nunito', sans-serif;">Running
-                                                                        No:</label>
-                                                                    <input type="text"
-                                                                        style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                                                        class="form-control" id="runningno" name="runningno"
-                                                                        value="<?php echo $fetched_row['Running_No']; ?>"
-                                                                        readonly>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label for="serialno"
-                                                                        style="font-weight: 400; 'Nunito', sans-serif;">Serial
-                                                                        Number:</label>
-                                                                    <input type="text"
-                                                                        style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                                                        class="form-control" id="serialno" name="serialno"
-                                                                        value="<?php echo $fetched_row['SERIAL_NO']; ?>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label for="dopurchase"
-                                                                        style="font-weight: 400; 'Nunito', sans-serif;">Date
-                                                                        of Purchase:</label>
-                                                                    <input type="date"
-                                                                        style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                                                        class="form-control" id="dopurchase"
-                                                                        name="dopurchase"
-                                                                        value="<?php echo $fetched_row['DATE_OF_PURCHASE']; ?>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="form-group">
-                                                                    <label for="supplier"
-                                                                        style="font-weight: 400; 'Nunito', sans-serif;">Supplier:</label>
 
-                                                                    <select type="text"
-                                                                        style="font-size: 1.4rem; line-height: 1.2; height: 34px"
-                                                                        class="form-select" id="nama_pembekal"
-                                                                        name="supplier" placeholder="SUPPLIER NAME"
-                                                                        onchange="updatePembekal()">
-                                                                        <option value='-'><?php echo $fetched_row['SUPPLIER']; ?>
-                                                                        
+                                                            <div class="col-md-5">
+                                                        <div class="form-group">
+                                                            <label for="staffname" style="font-weight: 400; 'Nunito', sans-serif;">Staff Name:</label>
+                                                            <input type="text" id="staffname" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" placeholder="Staff Name" name="staffname" oninput="filterStaff()" />
+                                                            <div id="suggestions" class="suggestions" style="display: none;"></div>
+                                                        </div>
+                                                    </div>
+                                                    <script>
+                                                        const staffData = [
+                                                            <?php
+                                                            $sqlAS = "SELECT * FROM empmaininfo
+                                                                        INNER JOIN empdept ON empmaininfo.Department = empdept.dept_id
+                                                                        ORDER BY CAST(Department AS UNSIGNED) ASC";
+                                                            require('../../../db_conn.php');
 
-                                                                        </option>
+                                                            $resultA = mysqli_query($conn, $sqlAS);
+                                                            $staffNames = [];
+
+                                                            while ($rowL = mysqli_fetch_array($resultA)) {
+                                                                $fullname = $rowL['First_Name'] . ' ' . $rowL['Last_Name'];
+                                                                $staffID = $rowL['Internal_Id'];
+                                                                $staffNames[] = json_encode(['name' => $fullname, 'id' => $staffID]);
+                                                            }
+                                                            echo implode(',', $staffNames);
+                                                            ?>
+                                                        ];
+
+                                                        function filterStaff() {
+                                                            const input = document.getElementById('staffname');
+                                                            const filter = input.value.toLowerCase();
+                                                            const suggestions = document.getElementById('suggestions');
+                                                            suggestions.innerHTML = '';
+
+                                                            if (filter) {
+                                                                const filteredStaff = staffData.filter(staff => staff.name.toLowerCase().includes(filter));
+
+                                                                if (filteredStaff.length) {
+                                                                    suggestions.style.display = 'block';
+                                                                    filteredStaff.forEach(staff => {
+                                                                        const div = document.createElement('div');
+                                                                        div.innerText = staff.name;
+                                                                        div.onclick = () => selectStaff(staff);
+                                                                        suggestions.appendChild(div);
+                                                                    });
+                                                                } else {
+                                                                    suggestions.style.display = 'none';
+                                                                }
+                                                            } else {
+                                                                suggestions.style.display = 'none';
+                                                            }
+                                                        }
+
+                                                        function selectStaff(staff) {
+                                                            document.getElementById('staffname').value = staff.name;
+                                                            document.getElementById('suggestions').style.display = 'none';
+                                                        }
+                                                    </script>
+                                                </div>
+                                                <style>
+                                                                .suggestions {
+                                                                    border: 1px solid #ccc;
+                                                                    max-height: 150px;
+                                                                    overflow-y: auto;
+                                                                    background-color: white;
+                                                                    position: absolute;
+                                                                    z-index: 1000;
+                                                                }
+
+                                                                .suggestions div {
+                                                                    padding: 8px;
+                                                                    cursor: pointer;
+                                                                }
+
+                                                                .suggestions div:hover {
+                                                                    background-color: #f0f0f0;
+                                                                }
+                                                            </style>
+                                                            <div class="col-md-5">
+                                                                <div class="form-group">
+                                                                    <label for="supplier" style="font-weight: 400; 'Nunito', sans-serif;">Supplier:</label>
+                                                                    <select style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-select" id="nama_pembekal" name="supplier" onchange="updatePembekal()">
+                                                                        <option value='-'><?php echo htmlspecialchars($fetched_row['SUPPLIER']); ?></option>
                                                                         <?php
                                                                         $sqlP = "SELECT * FROM tbl_pembekal ORDER BY nama_pembekal ASC";
                                                                         require('../../configAsetTPS.php');
@@ -478,57 +526,38 @@ if (isset($_GET['Full_ID'])) {
                                                                         $countP = mysqli_num_rows($result2);
 
                                                                         if ($countP > 0) {
-                                                                            $off = 0;
-                                                                            $i = 1 + $off;
-
                                                                             while ($rowP = mysqli_fetch_array($result2)) {
-                                                                                echo ' 
-                                            <option value="' . $rowP['id_pembekal'] . '" data-alamat="' . $rowP['alamat_pembekal'] . '" data-email="' . $rowP['emel_pembekal'] . '" data-notel="' . $rowP['notel_pembekal'] . '" ' . $rowP['id_pembekal'] . '>' . $rowP['nama_pembekal'] . '</option>
-                                          ';
-                                                                                $i++;
+                                                                                echo '<option value="' . htmlspecialchars($rowP['id_pembekal']) . '" data-alamat="' . htmlspecialchars($rowP['alamat_pembekal']) . '" data-email="' . htmlspecialchars($rowP['emel_pembekal']) . '" data-notel="' . htmlspecialchars($rowP['notel_pembekal']) . '">' . htmlspecialchars($rowP['nama_pembekal']) . '</option>';
                                                                             }
                                                                         }
                                                                         ?>
                                                                     </select>
                                                                 </div>
+
                                                             </div>
-                                                            <div class="col-md-2">
-                                                                <!-- Adjust the width of the button column -->
-                                                                <div class="form-group">
-                                                                    <button type="submit" name="btn-update"
-                                                                        class="btn btn-success btn-lg"
-                                                                        style="font-size: 15px">Update</button>
-                                                                    <button type="submit" name="btn-cancel"
-                                                                        class="btn btn-danger btn-lg"
-                                                                        style="font-size: 15px">Cancel</button>
-                                                                </div>
+
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <div class="form-group">
+                                                                <button type="submit" name="btn-update" class="btn btn-primary btn-lg" style="font-size: 15px" >Update</button>
+                                                                <button type="submit" name="btn-cancel" class="btn btn-danger" style="font-size: 15px" >Cancel</button>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </form>
-                                                <!-- button row -->
-                                                <div class="col-md-2">
-                                                    <div class="form-group" style="margin-top: 10px">
-                                                        <button type="button" class="btn btn-info btn-lg"
-                                                            style="font-size: 15px" onclick="printPage()">Print</button>
-                                                    </div></br></br>
                                                 </div>
-                                                <script>
-                                                    function printPage() {
-                                                        window.print(); // Print the current page
-                                                    }
-                                                </script>
-                                            </div>
+                                            </form>
                                         </div>
-                                </div>
+                                    </div>
+                                </h5>
                             </div>
                         </div>
                     </div>
                 </div>
-                </div>
-            </section>
+            </div>
+        </section>
 
-        
+
+
 
     </main><!-- End #main -->
 

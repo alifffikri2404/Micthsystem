@@ -335,12 +335,25 @@ require('../../configAsetTPS.php');
                 <div class="small-box" style="margin-top: 20px; border-radius: 20px 20px;
                   background-color: #7077A1; color: #fff">
                   <div class="inner">
-                    <h3 style="font-family: 'Poppins', sans-serif; font-size: 32px;">Asset Type</h3>
+                    <h3 style="font-family: 'Poppins', sans-serif; font-size: 32px;">Sub-Category </h3>
                   </div>
                   <div class="icon">
                     <i class="bi bi-tools" style="font-size: 0.75em"></i>
                   </div>
-                  <a href="#modalType" data-bs-toggle="modal" data-bs-target="#modalType" class="small-box-footer" style="background-color: transparent; padding: 10px">Register New Type <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="#modalType" data-bs-toggle="modal" data-bs-target="#modalType" class="small-box-footer" style="background-color: transparent; padding: 10px">Register New Sub <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+              </div>
+              <div class="col-lg-11 col-xs-6" style="padding-left: 0px">
+              <!-- small box for asset type -->
+                <div class="small-box" style="margin-top: 20px; border-radius: 20px 20px;
+                  background-color: #7077A1; color: #fff">
+                  <div class="inner">
+                    <h3 style="font-family: 'Poppins', sans-serif; font-size: 32px;">Model</h3>
+                  </div>
+                  <div class="icon">
+                    <i class="bi bi-tools" style="font-size: 0.75em"></i>
+                  </div>
+                  <a href="#sub" data-bs-toggle="modal" data-bs-target="#sub" class="small-box-footer" style="background-color: transparent; padding: 10px">Register New Model<i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div>
               
@@ -383,11 +396,63 @@ require('../../configAsetTPS.php');
               </div><!-- End modal-->
 
               <!-- modal for register new asset type -->
+              <div class="modal fade" id="sub" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Insert New Model</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form role="form" action="" method="post">
+                      <div class="modal-body">
+                        <div class="box-body">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="Kategori" style="font-weight: 400; 'Nunito', sans-serif; margin-bottom: 10px"> Sub Category:</label>
+                                  <select class="form-select" id="Sub_subcategory" name="Sub_subcategory" 
+                                    style="font-size: 1.0rem; line-height: 1.0; height: 34px" placeholder="CATEGORY NAME" required>
+                                    <?php
+                                      $sqlL = "SELECT * FROM jenis_aset ORDER BY id ASC";
+                                      $result = mysqli_query($conn2,$sqlL);
+                                      $countL = mysqli_num_rows($result);
+                                      if($countL > 0)
+                                      {
+                                      
+                                      $off = 0;
+                                      $i = 1 + $off;
+                                      while($rowL = mysqli_fetch_array($result)) {
+                                      echo '<option value='.$rowL['type_aset'].'>'.$rowL['type_aset'].'</option>';				 
+                                      $i++;
+                                      }
+                                      }
+                                    ?>
+                                  </select>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="exampleInputPassword1" style="font-weight: 400; 'Nunito', sans-serif; margin-bottom: 10px"> Model :</label>
+                                <input type="text" style="text-transform:uppercase; font-size: 1.0rem; line-height: 1.0; height: 34px"
+                                  class="form-control" id="jenis_aset" name="Model" placeholder="Model" required>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" name="submit3" id="submit3" class="btn btn-primary">Register</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div><!-- End modal-->
               <div class="modal fade" id="modalType" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Insert New Asset Type</h5>
+                      <h5 class="modal-title">Insert New Sub-Category </h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form role="form" action="" method="post">
@@ -527,16 +592,13 @@ require('../../configAsetTPS.php');
       ?>
       
 
-      <!-- Notification dan insert ke dalam asset type table -->
       <?php
-      //Keluarkan notification untuk mesej berjaya
       function paparMesejBerjayaAsetB($idasetFF){
         
         echo '<script type="text/javascript">alert("Asset successfully added!");
               window.location="tetapanAset.php";</script>';
       }
 
-      //Keluarkan notification untuk mesej GAGAL
       function paparMesejGagal1B(){
         
           echo "<script type='text/javascript'>\n";
@@ -547,61 +609,112 @@ require('../../configAsetTPS.php');
       }
 
 
-      //post setiap id didalam form
+      if (isset($_POST['submit2'])) {
+        $inputKategori = isset($_POST['kategori']) ? $_POST['kategori'] : '';
+        $inputJenis = isset($_POST['jenis_aset']) ? $_POST['jenis_aset'] : '';
+    
+        try {
+            // Sanitize inputs to prevent SQL injection
+            $inputKategori = mysqli_real_escape_string($conn2, $inputKategori);
+            $inputJenis = mysqli_real_escape_string($conn2, $inputJenis);
+            
+            $inputJenisUpper = strtoupper($inputJenis);
+    
+            // Check if the asset already exists
+            $sqlCheck = "SELECT * FROM jenis_aset WHERE UPPER(type_aset) LIKE '%$inputJenisUpper%'";
+            $result1B = $conn2->query($sqlCheck);
+    
+            if ($result1B->num_rows > 0) {
+                echo "<script type='text/javascript'>
+                        alert('Asset already exists! Please insert another new asset name.');
+                        history.go(-1);
+                      </script>";
+                exit();
+            } else {
+              $inputKategori = str_pad($inputKategori, 2, '0', STR_PAD_LEFT);
 
-      //insert into database penumpang	
-      if(isset($_POST['submit2']))
-      {		
-        $InputKategori = isset ($_POST['kategori']) ? $_POST['kategori'] : '';
-        //$dropdown = isset($_POST['dropdown']) ? $_POST['dropdown'] : '';
-        $InputJenis = isset($_POST['jenis_aset']) ? $_POST['jenis_aset'] : '';
-        
-      //$IDKategori = $_SESSION['namerole'];
+$sqlMaxID = "SELECT * 
+             FROM jenis_aset 
+             WHERE id_kategori = '$inputKategori' 
+             ORDER BY idsubcategory DESC 
+             LIMIT 1";
+$resultBO = $conn2->query($sqlMaxID);
+$fetchedBO = $resultBO->fetch_assoc();
 
-        try
-        {				
-          $sqlB = "SELECT * FROM jenis_aset WHERE upper(jenis_aset) LIKE '%$InputJenis%' ";
-          
-          $result1B = mysqli_query($conn2, $sqlB);
-          if(mysqli_num_rows($result1B) > 0)
-          {
-            //echo $idasetFF =" Kategori sudah ada...!" ;
-            echo "<script type='text/javascript'>\n";
-            echo "alert('Asset already exist! Please insert other new asset name.');\n";
-            echo "history.go(-1);\n";
-            echo "</script>";	
-            exit();		    
-          }else{
-          try
-            {
-              $sql1B = "INSERT INTO jenis_aset (id_kategori,jenis_aset) 
-              VALUES ('$InputKategori','$InputJenis')";				
-              
-              $query1B = mysqli_query($conn2, $sql1B) or die("Error: " . mysqli_error($conn2));
-              $sql11B = "SELECT * FROM jenis_aset WHERE jenis_aset = '$InputJenis'";
-              $result3B = mysqli_query($conn2, $sql11B);
-              if(mysqli_num_rows($result3B) > 0)
-              {
-                paparMesejBerjayaAsetB("Asset successfully added!");
-              }
-              else
-              {
-                paparMesejGagal1B();
-              }
-          
+// Periksa jika $fetchedBO['idsubcategory'] kosong, jika ya, mulai dari 1
+$idsubcategory_no = isset($fetchedBO['idsubcategory']) ? str_pad($fetchedBO['idsubcategory'] + 1, 2, '0', STR_PAD_LEFT) : '01';
+
+$inputJenis = str_pad($inputJenis, 2, '0', STR_PAD_LEFT);
+
+// Insert the new asset
+$sqlInsert = "INSERT INTO jenis_aset (id_kategori, type_aset, idsubcategory) 
+              VALUES ('$inputKategori', '$inputJenis', '$idsubcategory_no')";
+
+                
+                if ($conn2->query($sqlInsert) === TRUE) {
+                    echo "<script>alert('Asset successfully added!');</script>";
+                } else {
+                    echo "<script>alert('Failed to add asset!');</script>";
+                }
             }
-            catch(Exception $e){
-              echo 'Caught exception check condition applied: ',  $e->getMessage(), "\n";
-            }
-          
-          }
-
+        } catch (Exception $e) {
+            echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        catch(Exception $e){
-          echo 'Caught exception insert: ',  $e->getMessage(), "\n";
-        }
+    }
+    
+    
+    if (isset($_POST['submit3'])) {		
+      $Sub_subcategory = $_POST['Sub_subcategory'] ?? ''; 
+      $Model = $_POST['Model'] ?? ''; 
+  
+      // Query to fetch the latest record from sub_sub_category
+      $sqlSubCategory = "SELECT * 
+                         FROM sub_sub_category 
+                         WHERE idsubcategory = '$Sub_subcategory' 
+                         ORDER BY id_sub_sub_category DESC 
+                         LIMIT 1";
+  
+      $resultCategory = mysqli_query($conn2, $sqlSubCategory);
+      $ro3 = mysqli_fetch_assoc($resultCategory);
+  
+      // Check if $ro3['id_sub_sub_category'] is empty, if so set to 1, otherwise increment
+      if (empty($ro3['id_sub_sub_category'])) {
+          $Sub_subcategory23 = '01';
+      } else {
+          $Sub_subcategory23 = str_pad($ro3['id_sub_sub_category'] + 1, 2, '0', STR_PAD_LEFT);
       }
+  
+      try {
+          // Insert a new sub_sub_category record
+          $sql1B = "INSERT INTO sub_sub_category (id_sub_sub_category, idsubcategory, jenis_sub_sub_category) 
+                    VALUES ('$Sub_subcategory23', '$Sub_subcategory', '$Model')";
+                    
+          $query1B = mysqli_query($conn2, $sql1B);
+  
+          if (!$query1B) {
+              throw new Exception("Database Error: " . mysqli_error($conn2));
+          }
+  
+          // Verify if the insert was successful
+          $sql11B = "SELECT * FROM sub_sub_category WHERE jenis_sub_sub_category = '$Model'";
+          $result3B = mysqli_query($conn2, $sql11B);
+  
+          if (mysqli_num_rows($result3B) > 0) {
+              paparMesejBerjayaAsetB("Asset successfully added!");
+          } else {
+              paparMesejGagal1B();
+          }
+      } catch (Exception $e) {
+          echo 'Caught exception: ', $e->getMessage(), "\n";
+      }
+  }
+  
+  
+
+       
+      
       ?>
+    
 
       <!-- table for category record -->
       <div class="col-lg-9">
@@ -689,14 +802,15 @@ require('../../configAsetTPS.php');
         <div class="card top-selling">
           <div class="sb">
             <div class="card-body">
-              <h5 class="card-title"><strong>ASSET TYPE RECORD</strong><br/>
+              <h5 class="card-title"><strong>SUB-CATEGORY
+              RECORD</strong><br/>
 
               <!-- View register asset type record field form -->
               <div class="row">
 
               <?php
                 $sqlAP = "SELECT * FROM jenis_aset
-                ORDER BY jenis_aset ASC";					
+                ORDER BY type_aset ASC";					
               ?>
               <div class="box-header with-border">
                 <div class="col-md-12">
@@ -707,7 +821,7 @@ require('../../configAsetTPS.php');
                       //$sqlAP = mysql_query("SELECT * FROM jenis_aset ORDER BY id ASC");
                       $sqlAB = "SELECT * FROM jenis_aset 
                       INNER JOIN kategoritps 
-                      ON jenis_aset.id_kategori = kategoritps.id_kategori";
+                      ";
                       $resultAB = mysqli_query($conn2, $sqlAB);
                       if ($resultAB !== false && mysqli_num_rows($resultAB) > 0) {
                       ?>
@@ -738,7 +852,7 @@ require('../../configAsetTPS.php');
                                 <tr>
                                   <td data-title="Bil" style="text-align:center">'.$i.'</td>
                                   <td data-title="Kategori Aset" >'.$rowAB['nama_kategori'].'</td>
-                                  <td data-title="Jenis Aset" style="text-transform:uppercase">'.$rowAB['jenis_aset'].'</td>
+                                  <td data-title="Jenis Aset" style="text-transform:uppercase">'.$rowAB['type_aset'].'</td>
                                   <td data-title="Kemaskini" style="text-align:center"><a href="updatejenisaset.php?id=' . $rowAB['id'] . '"><i class="fa fa-pencil"></i></a></td> 
                                   <td style="text-align:center"><a href="deletejenisaset.php?id='.$rowAB['id'].'" title="Padam" class="fa fa-trash" Onclick="return ConfirmDelete()"></a>
                                 </tr>';
@@ -846,6 +960,7 @@ require('../../configAsetTPS.php');
             </div>
           </div>
         </div>
+        
       </div>
 
     </div>

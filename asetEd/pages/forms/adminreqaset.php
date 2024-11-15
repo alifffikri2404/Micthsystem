@@ -14,7 +14,7 @@ require('../../../db_conn.php');
 // $namerole = $_SESSION['namerole'];
 
 
-// //Check role test 123
+// //Check role
 // if($lvl == "1")
 // {
 // 	$firstname = "Admin";

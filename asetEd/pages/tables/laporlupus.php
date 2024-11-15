@@ -313,9 +313,9 @@ require('../../configAsetTPS.php');
                         <div class="row">
                           <form action="" name="form2" method="post" target="_blank">
                             <?php
-                              $sqlAA = "SELECT DISTINCT disposal_aset.*
+                              $sqlAA = "SELECT *
                                 FROM disposal_aset
-                                INNER JOIN tbl_daftar_aset ON tbl_daftar_aset.id = disposal_aset.aset_id";
+                              ";
                               $resultAA = mysqli_query($conn2, $sqlAA);
                               $countAP = mysqli_num_rows($resultAA);
 

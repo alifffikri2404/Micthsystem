@@ -48,6 +48,7 @@ if (empty($_SESSION['First_Name'])) {
 }
 // if(($idp<>'')&&($lvl<>'')){					  
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -128,20 +129,30 @@ if (empty($_SESSION['First_Name'])) {
 
 </head>
 <style>
-  .sb {
-    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
-    height: 100%;
-    width: 100%;
-    background-color: white;
-    border: 1px solid white;
-    overflow: auto;
-    white-space: nowrap;
+.sb {
+  box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  border: 1px solid white;
+  overflow: auto;
+  white-space: nowrap;
 
-  }
+}
 
-  .card-title span {
-    color: black;
-  }
+.card-title span {
+  color: black;
+}
+
+.title-label {
+  font-weight: 400;
+}
+
+.placeholder-label {
+  font-size: 1.4rem;
+  line-height: 1.0;
+  height: 34px;
+}
 </style>
 
 <body>
@@ -215,74 +226,344 @@ if (empty($_SESSION['First_Name'])) {
   </header>
   <!-- End Header -->
 
+  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="../../../main_user.php">
+        <i class="bi bi-house-door-fill"></i>
+        <span>Home</span>
+      </a>
+    </li>
+
+    <?php if ($_SESSION['access_imobile'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#booking-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-calendar-check-fill"></i>
+        <span>Booking System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="booking-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <!-- <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../BookingSystem/user.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li> -->
+      
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-vehicle-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-car-front-fill" style="font-size: 1em"></i></i><span>Vehicle</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-vehicle-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_booking_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book Vehicle</span>
+              </a>
+            </li>
+            <?php if ($_SESSION['admin_booking'] == "1") { ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/list_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>List of Vehicle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/add_vehicle.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Add Vehicle</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/usage_record_monthly.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>All Usage Record</span>
+              </a>
+            </li>
+            <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_record.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#book-room-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-door-closed-fill" style="font-size: 1em"></i></i><span>Room</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="book-room-nav" class="nav-content collapse" data-bs-parent="#booking-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_booking_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Book Room</span>
+              </a>
+            </li>
+            <?php if ($_SESSION['admin_booking'] == "1") { ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/list_room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>List of Room</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/add_room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Add Room</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/room_record_monthly.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>All Usage Record</span>
+              </a>
+            </li>
+            <?php } ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../BookingSystem/user_record_Room.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff Usage Record</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <?php } ?>
 
 
-      <!-- Asset System / iAset -->
-      <li class="nav-item">
-        <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-briefcase-fill"></i><span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
+    <?php if ($_SESSION['access_isurat'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#letter-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-envelope-fill"></i>
+        <span>Letter System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="letter-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../SuratLatest/SuratDaftarSuratKeluar.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Outgoing Letter</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['admin_surat'] == "1"){ ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../SuratLatest/SuratDaftarSuratMasuk.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register Incoming Letter</span>
+          </a>
+        </li>
+        <?php } ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#record-letter-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-file-earmark-text" style="font-size: 1em"></i></i><span>Letter Record</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="record-letter-nav" class="nav-content collapse" data-bs-parent="#letter-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratKeluar.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Outgoing Letter</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SuratLatest/SuratRekodSuratMasuk.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Incoming Letter</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
 
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../homeaset.php">
-              <i class="bi bi-house-door-fill" style="font-size: 1em"></i><span>Home</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/forms/dafaset.php">
-              <i class="bi bi-pencil-square" style="font-size: 1em"></i><span>Asset Register</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/tables/laporanas.php" class="active">
-              <i class="bi bi-file-earmark-text" style="font-size: 1em; background-color: transparent"></i><span>Asset Report</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/tables/laporlupus.php">
-              <i class="bi bi-file-earmark-x" style="font-size: 1em"></i><span>Disposal Report</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/tables/staffrequest.php">
-              <i class="bi bi-card-checklist" style="font-size: 1em"></i><span>Staff Request</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../pages/forms/uploadcsv.php">
-              <i class="bi bi-file-excel" style="font-size: 1em"></i><span>Import Excel</span>
-            </a>
-          </li>
-        </ul>
-        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="../../hometetapan.php">
-              <i class="bi bi-gear-fill" style="font-size: 1em"></i><span>Settings</span>
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="../../../main_user.php">
-          <i class="bi bi-reply-fill"></i>
-          <span>Home Page</span>
-        </a>
-      </li>
+    <?php } ?>
+
+    <?php if ($_SESSION['access_eoutstation'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#out-system-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-door-open-fill"></i>
+        <span>Outstation System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="out-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <!-- <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/dash2.php">
+            <i class="bi bi-house-door-fill" style="font-size: 1em"></i>
+            <span>Dashboard</span>
+          </a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/dashStaff.php">
+            <i class="bi bi-calendar-fill" style="font-size: 1em"></i>
+            <span>My Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../eoustation3.0/FormStaff.php">
+            <i class="bi bi-pencil-fill" style="font-size: 1em"></i>
+            <span>Check-Out</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['admin_outstation'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-people" style="font-size: 1em"></i></i><span>Human Resources</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="hr-nav" class="nav-content collapse" data-bs-parent="#out-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/myreport.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>View Report</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/data.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Generate Report</span>
+              </a>
+            </li>
+            <?php
+            include('../../../eoustation3.0/db_conn.php');
+            $sql = "SELECT * FROM outstation WHERE timeIn ='00:00:00'";
+            $result = mysqli_query($conn, $sql);
+            $totalRows = mysqli_num_rows($result);
+            ?>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/SNC.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i>
+                <p style="margin-bottom: 0px">Pending Staff Check-In<span class="float-right badge bg-danger">
+                    <?php echo $totalRows ?? 'No data'; ?>
+                  </span></p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+
+    <?php } ?>
+    <?php if ($_SESSION['access_aset'] == "1") { ?>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-target="#asset-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>Asset System</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="asset-system-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../tables/staffregaset.php">
+            <i class="bi bi-archive-fill" style="font-size: 1em"></i>
+            <span>Registered Asset</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../forms/staffreqaset.php">
+            <i class="bi bi-clipboard2-check-fill" style="font-size: 1em"></i>
+            <span>Request New Asset</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['admin_asset'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../forms/dafaset.php">
+            <i class="bi bi-pencil-square" style="font-size: 1em"></i>
+            <span>Register New Asset</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="active" href="../tables/laporanas.php">
+            <i class="bi bi-file-earmark-text-fill" style="font-size: 1em; background-color: transparent"></i>
+            <span>Asset & Inventory</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../tables/laporlupus.php">
+            <i class="bi bi-file-earmark-x-fill" style="font-size: 1em"></i>
+            <span>Disposal Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../tables/staffrequest.php">
+            <i class="bi bi-check-circle-fill" style="font-size: 1em"></i>
+            <span>Staff Request</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../forms/uploadcsv.php">
+            <i class="bi bi-file-excel-fill" style="font-size: 1em"></i>
+            <span>Import Excel</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../hometetapan.php">
+            <i class="bi bi-gear-fill" style="font-size: 1em"></i>
+            <span>Asset Settings</span>
+          </a>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
+
+    <?php } ?>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#settings-system-nav" data-bs-toggle="collapse" href="#" href="">
+        <i class="bi bi-gear-fill"></i>
+        <span>Settings</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="settings-system-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../setting.php">
+            <i class="bi bi-person-fill" style="font-size: 1em"></i>
+            <span>Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../feedback.php">
+            <i class="bi bi-chat-right-text-fill" style="font-size: 1em"></i>
+            <span>Feedback</span>
+          </a>
+        </li>
+        <?php if ($_SESSION['func_admin'] == "1") { ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="../../../feedback_report.php">
+            <i class="bi bi-chat-right-dots-fill" style="font-size: 1em"></i>
+            <span>Feedback Report</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#access-user-nav" data-bs-toggle="collapse" href="#" style="padding: 10px 15px 10px 40px">
+            <i class="bi bi-person-badge-fill" style="font-size: 1em"></i></i><span>Access User</span>
+            <i class="bi bi-chevron-down ms-auto" style="font-size: 1em"></i>
+          </a>
+          <ul id="access-user-nav" class="nav-content collapse" data-bs-parent="#settings-system-nav">
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../eoustation3.0/register.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Register New User</span>
+              </a>
+            </li>  
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SSO/accessSSO.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Access View</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="../../../SSO/userSSO.php" style="padding-left: 60px">
+                <i class="bi bi-caret-right-fill"></i></i>
+                <span>Staff List</span>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+        <?php } ?>
+      </ul>
+    </li>
 
     </ul>
   </aside><!-- End Sidebar-->
@@ -293,7 +574,7 @@ if (empty($_SESSION['First_Name'])) {
       <h1>View Asset Record</h1>
       <nav>
         <ol class="breadcrumb" style="background-color: transparent; margin-bottom: 16px">
-          <li class="breadcrumb-item"><a href="../../homeaset.php">Home Page</a></li>
+          <li class="breadcrumb-item"><a href="../../../main_user.php">Home Page</a></li>
           <li class="breadcrumb-item active">Asset Report</li>
         </ol>
       </nav>
@@ -309,7 +590,7 @@ if (empty($_SESSION['First_Name'])) {
                   <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#asset-list">Asset List</button>
                 </li>
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#reg-asset">Registered Asset</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#inventory-list">Inventory List</button>
                 </li>
               </ul>
 
@@ -319,23 +600,17 @@ if (empty($_SESSION['First_Name'])) {
                   <h5 class="card-title">List of Imported Assets</h5>
                   <form action="" method="post" style="margin-bottom: 10px;">
                     <div style="display: flex; align-items: center; gap: 10px;">
-                      <input 
-                        type="text" 
-                        id="filterInput" 
-                        class="form-control" 
-                        placeholder="Search Asset Number" 
-                        onkeyup="filterTable('filterInput', 'datatable1', 4)" 
-                        style="width: 300px;" 
-                      />
+                      <input type="text" id="filterInputAsset" class="form-control" placeholder="Search Asset Number"
+                        onkeyup="filterTable('filterInputAsset', 'datatableAsset', 4)" style="width: 300px;" />
                       <select name="category" class="form-control" style="width: 300px;">
                         <option value="">-- Filter by Category --</option>
                         <?php
-                          $selectedCategory = $_POST['category'] ?? '';
-                          $sqlCategories = "SELECT DISTINCT Category FROM asset_management_vba";
-                          $resultCategories = mysqli_query($conn2, $sqlCategories);
-                          while ($category = mysqli_fetch_array($resultCategories)) { 
+                        $selectedCategory = $_POST['category'] ?? '';
+                        $sqlCategories = "SELECT DISTINCT Category FROM asset_management_vba";
+                        $resultCategories = mysqli_query($conn2, $sqlCategories);
+                        while ($category = mysqli_fetch_array($resultCategories)) {
                         ?>
-                          <option value="<?= $category['Category'] ?>" 
+                          <option value="<?= $category['Category'] ?>"
                             <?= $selectedCategory == $category['Category'] ? 'selected' : '' ?>>
                             <?= strtoupper($category['Category']) ?>
                           </option>
@@ -345,7 +620,7 @@ if (empty($_SESSION['First_Name'])) {
                     </div>
                   </form>
 
-                  <table id="datatable1" class="table table-bordered table-striped">
+                  <table id="datatableAsset" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>No.</th>
@@ -353,62 +628,61 @@ if (empty($_SESSION['First_Name'])) {
                         <th>Sub-Category</th>
                         <th>Model</th>
                         <th>Asset Number</th>
+                        <th>Owner</th>
+
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                        $sqlPP = "SELECT * FROM asset_management_vba";
-                        if ($selectedCategory !== '') {
-                          $sqlPP .= " WHERE Category = '" . mysqli_real_escape_string($conn2, $selectedCategory) . "'";
-                        }
-                        $resultPP = mysqli_query($conn2, $sqlPP);
-                        $i = 1;
-
-                        while ($rowPP = mysqli_fetch_array($resultPP)) {
-                          echo "<tr>
-                            <td align='center'>{$i}</td>
-                            <td>" . strtoupper($rowPP['Category']) . "</td>
-                            <td>" . strtoupper($rowPP['Sub_Category']) . "</td>
-                            <td>" . strtoupper($rowPP['Model']) . "</td>
-                            <td class='filter-id'>" . strtoupper($rowPP['Full_ID (Concatenated ID)']) . "</td>
-                            <td align='center'>
-                              <a href='../forms/updateasset.php?Full_ID=" . urlencode($rowPP['Full_ID (Concatenated ID)']) . "' title='Update' class='fa fa-pencil'></a>
-                              <a href='get_asset_data.php?id=" . urlencode($rowPP['Full_ID (Concatenated ID)']) . "' title='Info Detail' class='fa fa-info-circle'></a>
-                              <a href='detailsLupusasset.php?id=" . urlencode($rowPP['Full_ID (Concatenated ID)']) . "' title='Disposal' class='fa fa-recycle'></a>
-                            </td>
-                          </tr>";
-                          $i++;
-                        }
+                      require('../../../db_conn.php');
+                      $sqlPP = "SELECT * FROM asset_management_vba WHERE status = 'Active' AND harga > 1000";
+                      if ($selectedCategory !== '') {
+                        $selectedCategoryEscaped = mysqli_real_escape_string($conn2, $selectedCategory);
+                        $sqlPP .= " AND Category = '$selectedCategoryEscaped'";
+                      }
+                      $resultPP = mysqli_query($conn2, $sqlPP);
+                      $i = 1;
+                      while ($rowPP = mysqli_fetch_array($resultPP)) {
+                        $assetID = $rowPP['Full_ID (Concatenated ID)'];
+                        echo "<tr>
+                                        <td align='center'>{$i}</td>
+                                        <td>" . strtoupper($rowPP['Category']) . "</td>
+                                        <td>" . strtoupper($rowPP['Sub_Category']) . "</td>
+                                        <td>" . strtoupper($rowPP['Model']) . "</td>
+                                        <td class='filter-id'>" . strtoupper($assetID) . "</td>
+                                        <td class='filter-Owner'>" . strtoupper($rowPP['nama_kakitangan'] ?? 'N/A') . "</td>
+                                        <td align='center'>
+                                            <a href='../forms/updateasset.php?Full_ID=" . urlencode($assetID) . "' title='Update' class='fa fa-pencil'></a>
+                                            <a href='get_asset_data.php?id=" . urlencode($assetID) . "' title='Info Detail' class='fa fa-info-circle'></a>
+                                            <a href='detailsLupusasset.php?id=" . urlencode($assetID) . "' title='Disposal' class='fa fa-recycle'></a>
+                                        </td>
+                                    </tr>";
+                        $i++;
+                      }
                       ?>
                     </tbody>
                   </table>
                 </div>
 
-                <!-- Registered Asset Tab -->
-                <div class="tab-pane fade" id="reg-asset">
-                  <h5 class="card-title">List of Registered Assets</h5>
+                <!-- Inventory List Tab -->
+                <div class="tab-pane fade" id="inventory-list">
+                  <h5 class="card-title">List of Imported Inventory</h5>
                   <form action="" method="post" style="margin-bottom: 10px;">
                     <div style="display: flex; align-items: center; gap: 10px;">
-                      <input 
-                        type="text" 
-                        id="filterInputReg" 
-                        class="form-control" 
-                        placeholder="Search Asset Number" 
-                        onkeyup="filterTable('filterInputReg', 'datatable2', 3)" 
-                        style="width: 300px;" 
-                      />
-                      <select name="reg_category" class="form-control" style="width: 300px;">
+                      <input type="text" id="filterInputInventory" class="form-control" placeholder="Search Inventory Number"
+                        onkeyup="filterTable('filterInputInventory', 'datatableInventory', 4)" style="width: 300px;" />
+                      <select name="category" class="form-control" style="width: 300px;">
                         <option value="">-- Filter by Category --</option>
                         <?php
-                          $selectedRegCategory = $_POST['reg_category'] ?? '';
-                          $sqlRegCategories = "SELECT DISTINCT kategori_aset FROM tbl_daftar_aset";
-                          $resultRegCategories = mysqli_query($conn2, $sqlRegCategories);
-                          while ($category = mysqli_fetch_array($resultRegCategories)) { 
+                        $selectedCategory = $_POST['category'] ?? '';
+                        $sqlCategories = "SELECT DISTINCT Category FROM asset_management_vba";
+                        $resultCategories = mysqli_query($conn2, $sqlCategories);
+                        while ($category = mysqli_fetch_array($resultCategories)) {
                         ?>
-                          <option value="<?= $category['kategori_aset'] ?>" 
-                            <?= $selectedRegCategory == $category['kategori_aset'] ? 'selected' : '' ?>>
-                            <?= strtoupper($category['kategori_aset']) ?>
+                          <option value="<?= $category['Category'] ?>"
+                            <?= $selectedCategory == $category['Category'] ? 'selected' : '' ?>>
+                            <?= strtoupper($category['Category']) ?>
                           </option>
                         <?php } ?>
                       </select>
@@ -416,48 +690,83 @@ if (empty($_SESSION['First_Name'])) {
                     </div>
                   </form>
 
-                  <table id="datatable2" class="table table-bordered table-striped">
+                  <table id="datatableInventory" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>No.</th>
                         <th>Category</th>
-                        <th>Type</th>
-                        <th>Asset Number</th>
-                        <th>Asset Name</th>
+                        <th>Sub-Category</th>
+                        <th>Model</th>
+                        <th>Inventory Number</th>
                         <th>Owner</th>
-                        <th>Status</th>
+                        <th>Price</th>
+
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                        $sqlAB = "SELECT * FROM tbl_daftar_aset";
-                        if ($selectedRegCategory !== '') {
-                          $sqlAB .= " WHERE kategori_aset = '" . mysqli_real_escape_string($conn2, $selectedRegCategory) . "'";
-                        }
-                        $sqlAB .= " ORDER BY id DESC";
-                        $resultAB = mysqli_query($conn2, $sqlAB);
-                        $i = 1;
+                      require('../../../db_conn.php');
+                      $sqlPP = "SELECT * FROM asset_management_vba WHERE status = 'Active' AND harga < 1000";
+                      if ($selectedCategory !== '') {
+                        $selectedCategoryEscaped = mysqli_real_escape_string($conn2, $selectedCategory);
+                        $sqlPP .= " AND Category = '$selectedCategoryEscaped'";
+                      }
+                      $resultPP = mysqli_query($conn2, $sqlPP);
+                      $i = 1;
+                      while ($rowPP = mysqli_fetch_array($resultPP)) {
+                        $inventoryID = $rowPP['Full_ID (Concatenated ID)'];
+                        echo "<tr>
+                                        <td align='center'>{$i}</td>
+                                        <td>" . strtoupper($rowPP['Category']) . "</td>
+                                        <td>" . strtoupper($rowPP['Sub_Category']) . "</td>
+                                        <td>" . strtoupper($rowPP['Model']) . "</td>
+                                        <td class='filter-id'>" . strtoupper($inventoryID) . "</td>
+                                        <td class='filter-Owner'>" . strtoupper($rowPP['nama_kakitangan'] ?? 'N/A') . "</td>
+                                                                                  <td>" . strtoupper($rowPP['hargaakhir']) . "</td>
 
-                        while ($rowAB = mysqli_fetch_array($resultAB)) {
-                          $statusStyle = ($rowAB['status_aset'] == 'Inactive') ? 'color: red;' : 'color: green;';
-                          echo "<tr>
-                            <td align='center'>{$i}</td>
-                            <td>" . strtoupper($rowAB['kategori_aset']) . "</td>
-                            <td>" . strtoupper($rowAB['jenis_aset']) . "</td>
-                            <td>" . strtoupper($rowAB['no_aset']) . "</td>
-                            <td>" . strtoupper($rowAB['nama_aset']) . "</td>
-                            <td>" . strtoupper($rowAB['nama_kakitangan']) . "</td>
-                            <td style='{$statusStyle}'>" . strtoupper($rowAB['status_aset']) . "</td>
-                            <td align='center'>
-                              <a href='../forms/dafasetKemaskini.php?id={$rowAB['id']}' class='fa fa-pencil'></a>
-                              <a href='details.php?id={$rowAB['id']}' class='fa fa-info-circle'></a>
-                              <a href='log.php?id={$rowAB['id']}' class='fa fa-file-text-o'></a>
-                              <a href='padamaset.php?id={$rowAB['id']}' class='fa fa-trash-o' onclick='return ConfirmDelete();'></a>
-                            </td>
-                          </tr>";
-                          $i++;
+                                        <td align='center'>
+                                            <a href='../forms/updateasset.php?Full_ID=" . urlencode($inventoryID) . "' title='Update' class='fa fa-pencil'></a>
+                                            <a href='get_asset_data.php?id=" . urlencode($inventoryID) . "' title='Info Detail' class='fa fa-info-circle'></a>
+                                            <a href='detailsLupusasset.php?id=" . urlencode($inventoryID) . "' title='Disposal' class='fa fa-recycle'></a>
+                                        </td>
+                                    </tr>";
+                        $i++;
+                      }
+                      ?>
+                      <?php
+
+
+                      date_default_timezone_set('Asia/Kuala_Lumpur');
+
+                      $today = new DateTime();
+
+                      if ($today->format('m-d') === '01-01') {
+                        $sql = "SELECT `Full_ID (Concatenated ID)`, hargaakhir, percent FROM asset_management_vba";
+                        $result = $conn->query($sql);
+
+                        if ($result && $result->num_rows > 0) {
+                          $updateSql = $conn->prepare("UPDATE asset_management_vba SET hargaakhir = ? WHERE `Full_ID (Concatenated ID)` = ?");
+
+                          while ($row = $result->fetch_assoc()) {
+                            $currentPrice = $row['hargaakhir'];
+                            $discountPercent = $row['percent'];
+                            $discountAmount = $currentPrice * ($discountPercent / 100);
+                            $newPrice = $currentPrice - $discountAmount;
+
+                            $updateSql->bind_param("ds", $newPrice, $row['Full_ID (Concatenated ID)']);
+                            $updateSql->execute();
+                          }
+
+                          $updateSql->close();
+                          echo "Harga dikemas kini untuk semua item.";
+                        } else {
+                          echo "Tiada rekod untuk dikemas kini.";
                         }
+                      }
+
+                      $conn->close();
+
                       ?>
                     </tbody>
                   </table>
@@ -467,20 +776,21 @@ if (empty($_SESSION['First_Name'])) {
           </div>
         </div>
       </div>
+
     </section>
-</main>
+  </main>
 
-<script>
-  function filterTable(inputId, tableId, columnIndex) {
-    const input = document.getElementById(inputId).value.toUpperCase();
-    const rows = document.querySelectorAll(`#${tableId} tbody tr`);
+  <script>
+    function filterTable(inputId, tableId, columnIndex) {
+      const input = document.getElementById(inputId).value.toUpperCase();
+      const rows = document.querySelectorAll(`#${tableId} tbody tr`);
 
-    rows.forEach(row => {
-      const cell = row.cells[columnIndex]?.textContent || '';
-      row.style.display = cell.toUpperCase().includes(input) ? '' : 'none';
-    });
-  }
-</script>
+      rows.forEach(row => {
+        const cell = row.cells[columnIndex]?.textContent || '';
+        row.style.display = cell.toUpperCase().includes(input) ? '' : 'none';
+      });
+    }
+  </script>
 
 
   <footer id="footer" class="footer">
@@ -594,40 +904,36 @@ if (empty($_SESSION['First_Name'])) {
 
   <script>
     $(document).ready(function() {
-        $('#datatable1').DataTable({
-            'responsive': true,
-            'paging': true,
-            'lengthChange': false,
-            'searching': true,
-            'ordering': true,
-            'info': true,
-            'autoWidth': false,
-            'pageLength': 20,  // Tetapkan bilangan baris per halaman kepada 20
-            layout: {
-                topStart: {
-                    buttons: ['print']
-                }
-            }
-        });
-
-        $('#datatable2').DataTable({
-            'responsive': true,
-            'paging': true,
-            'lengthChange': false,
-            'searching': true,
-            'ordering': true,
-            'info': true,
-            'autoWidth': false,
-            'pageLength': 20,  // Tetapkan bilangan baris per halaman kepada 20
-            layout: {
-                topStart: {
-                    buttons: ['print']
-                }
-            }
-        });
+      $('#datatableAsset').DataTable({
+        'responsive': true,
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false,
+        layout: {
+          topStart: {
+            buttons: ['print']
+          }
+        }
+      });
+      $('#datatableInventory').DataTable({
+        'responsive': true,
+        'paging': true,
+        'lengthChange': false,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': false,
+        layout: {
+          topStart: {
+            buttons: ['print']
+          }
+        }
+      });
     });
-</script>
-
+  </script>
 
 
 </body>

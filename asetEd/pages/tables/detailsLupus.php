@@ -339,11 +339,17 @@ if (empty($_SESSION['First_Name'])) {
     <?php
     if (isset($_GET['id'])) {
 
-      $sqlA_query = "SELECT * FROM disposal_aset
-  WHERE aset_id = " . $_GET['id'];
+      $id = intval($_GET['id']);
 
+      $sqlA_query = "SELECT * FROM disposal_aset WHERE aset_id = $id";
+      
       $result_set = mysqli_query($conn2, $sqlA_query);
-      $fetched_row = mysqli_fetch_array($result_set);
+      
+      if ($result_set) {
+          $fetched_row = mysqli_fetch_array($result_set);
+      } else {
+          echo "Error: " . mysqli_error($conn2);
+      }
     ?>
 
       <section class="section dashboard">

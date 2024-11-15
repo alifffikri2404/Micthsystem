@@ -189,6 +189,16 @@ if(isset($_POST['btn-cancel']))
 	white-space: nowrap;
 	
 }
+
+.title-label {
+  font-weight: 400;
+}
+
+.placeholder-label {
+  font-size: 1.4rem;
+  line-height: 1.0;
+  height: 34px;
+}
 </style>
 <body>
 
@@ -533,7 +543,7 @@ if(isset($_POST['btn-cancel']))
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="../hometetapan.php">
+          <a class="nav-link collapsed" href="../../hometetapan.php">
             <i class="bi bi-gear-fill" style="font-size: 1em"></i>
             <span>Asset Settings</span>
           </a>
@@ -638,20 +648,19 @@ if(isset($_POST['btn-cancel']))
                       <div class="row">
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="jenis" style="font-weight: 400">Staff Name:</label>
+                            <label for="jenis" class="title-label">Staff Name:</label>
                               <?php
                                 $firstname = $_SESSION['First_Name'];
                                 $lastname = $_SESSION['Last_Name'];
                                 $fullname = $firstname . " " . $lastname;
                               ?>
-                              <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px"
-                                class="form-control" id="nama_kakitangan" name="nama_kakitangan" placeholder="STAFF NAME"
+                              <input type="text" class="form-control placeholder-label" id="nama_kakitangan" name="nama_kakitangan" placeholder="STAFF NAME"
                                 value="<?php echo $fullname; ?>" readonly>
                           </div>
                         </div>
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputPassword1" style="font-weight: 400">Department Location:</label>
+                            <label for="exampleInputPassword1" class="title-label">Department Location:</label>
                               <?php
                                 $staffID = $_SESSION['emp_number'];
                                 
@@ -674,8 +683,7 @@ if(isset($_POST['btn-cancel']))
                                   $lokasi_jabatan2 = "None";
                                 }
                                 ?>
-                              <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px"
-                                  class="form-control" id="lokasi_jabatan" name="lokasi_jabatan" placeholder="DEPARTMENT LOCATION"
+                              <input type="text" class="form-control placeholder-label" id="lokasi_jabatan" name="lokasi_jabatan" placeholder="DEPARTMENT LOCATION"
                                   value="<?php echo $lokasi_jabatan2; ?>" readonly>
                           </div>
                         </div>
@@ -704,10 +712,9 @@ if(isset($_POST['btn-cancel']))
                         <div class="col-md-5">
                           <form id="form2" role="form" action="" method="post">
                             <div class="form-group">
-                              <label for="Kategori" style="font-weight: 400">Category:</label>
+                              <label for="Kategori" class="title-label">Category:</label>
                               <div class="d-flex align-items-center">
-                                <select class="form-select flex-grow-1 me-3" id="kategori" name="kategori" 
-                                  style="font-size: 1.4rem; line-height: 1.0; height: 34px" placeholder="CATEGORY NAME"
+                                <select class="form-select flex-grow-1 me-3 placeholder-label" id="kategori" name="kategori" placeholder="CATEGORY NAME"
                                   <?php echo isset($_POST['submitA']) ? 'disabled' : ''; ?>>
                                   <?php
                                     $sqlL = "SELECT * FROM kategoritps ORDER BY id_kategori ASC";
@@ -740,9 +747,8 @@ if(isset($_POST['btn-cancel']))
                         ?>
                           <div class="col-md-5">
                             <div class="form-group">
-                              <label for="jenis" style="font-weight: 400">Asset Type:</label>
-                                <select type="text" style="text-transform:uppercase; font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                  class="form-select" id="jenis" name="jenis" placeholder="ASSET TYPE" required>
+                              <label for="jenis" class="title-label">Asset Type:</label>
+                                <select type="text" class="form-select placeholder-label" id="jenis" name="jenis" placeholder="ASSET TYPE" required>
                                   <option value='-'>PLEASE SELECT ASSET TYPE</option>
                                     <?php
                                       $sqlL = "SELECT * FROM jenis_aset
@@ -776,7 +782,7 @@ if(isset($_POST['btn-cancel']))
                         </div> -->
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputPassword1" style="font-weight: 400">Justification:</label>
+                            <label for="exampleInputPassword1" class="title-label">Justification:</label>
                               <br>
                                 <input class="form-check-input" id="reason_req" name="reason_req" value="1" type="radio"> 
                                 <label class="form-check-label" for="reason_req" style="font-weight: 500; font-size: 1.6rem">Asset Replacement</label>
@@ -791,10 +797,9 @@ if(isset($_POST['btn-cancel']))
 
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400">Request Date:</label>
+                            <label for="exampleInputEmail1" class="title-label">Request Date:</label>
                             <div class="input-group">
-                              <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                class="form-control" id="tarikh_request" name="tarikh_request" value="<?php echo date("Y-m-d"); ?>" readonly>
+                              <input type="text" class="form-control placeholder-label" id="tarikh_request" name="tarikh_request" value="<?php echo date("Y-m-d"); ?>" readonly>
                               <span class="input-group-text"><i class="bi bi-calendar"></i></span>
                             </div>
                           </div>

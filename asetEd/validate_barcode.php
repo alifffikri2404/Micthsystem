@@ -11,10 +11,8 @@ if ($conn2->connect_error) {
 $barcode = $_POST['barcode'];
 
 $stmt = $conn2->prepare("SELECT * 
-FROM tbl_daftar_aset
-INNER JOIN asset_management_vba
-ON tbl_daftar_aset.no_aset = asset_management_vba.`Full ID (Concatenated ID)` 
-WHERE tbl_daftar_aset.no_aset = ?");
+FROM asset_management_vba
+WHERE `Full_ID (Concatenated ID)` = ?");
 $stmt->bind_param("s", $barcode);
 $stmt->execute();
 $result = $stmt->get_result();

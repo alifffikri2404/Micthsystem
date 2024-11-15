@@ -495,7 +495,7 @@ if (empty($_SESSION['First_Name'])) {
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="../hometetapan.php">
+          <a class="nav-link collapsed" href="../../hometetapan.php">
             <i class="bi bi-gear-fill" style="font-size: 1em"></i>
             <span>Asset Settings</span>
           </a>
@@ -636,20 +636,20 @@ if (empty($_SESSION['First_Name'])) {
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label for="jenis" class="title-label">Asset Type:</label>
-                                      <input type="text" style="text-transform:uppercase; font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="jenis" name="jenis" placeholder="ASSET TYPE" value="<?php echo $fetched_row['jenis_aset']; ?>" readonly>
+                                      <input type="text" class="form-control placeholder-label" id="jenis" name="jenis" placeholder="ASSET TYPE" value="<?php echo $fetched_row['jenis_aset']; ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label for="exampleInputPassword1" class="title-label">Asset Number:</label>
-                                      <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="InputNoSiriAwal" name="InputNoSiriAwal" placeholder="ASSET NUMBER" value="<?php echo $fetched_row['no_aset']; ?>" readonly>
+                                      <input type="text" class="form-control placeholder-label" id="InputNoSiriAwal" name="InputNoSiriAwal" placeholder="ASSET NUMBER" value="<?php echo $fetched_row['no_aset']; ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label for="exampleInputEmail1" class="title-label">Registration Date:</label>
                                       <div class="input-group">
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tarikh_daftar" name="tarikh_daftar" value="<?php echo $fetched_row['tarikh_daftar']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="tarikh_daftar" name="tarikh_daftar" value="<?php echo $fetched_row['tarikh_daftar']; ?>" readonly>
                                         <span class="input-group-text"><i class="bi bi-calendar"></i></span>
                                       </div>
                                     </div>
@@ -682,14 +682,14 @@ if (empty($_SESSION['First_Name'])) {
                                       }
                                       ?>
 
-                                      <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="pemilik_jabatan" name="pemilik_jabatan" placeholder="DEPARTMENT" value="<?php echo $lokasi_jabatan2; ?>" readonly>
+                                      <input type="text" class="form-control placeholder-label" id="pemilik_jabatan" name="pemilik_jabatan" placeholder="DEPARTMENT" value="<?php echo $lokasi_jabatan2; ?>" readonly>
                                     </div>
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
                                       <label for="exampleInputEmail1" class="title-label">Handover Date:</label>
                                       <div class="input-group">
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tarikh_serahan" name="tarikh_serahan" value="<?php echo $fetched_row['tarikh_serahan']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="tarikh_serahan" name="tarikh_serahan" value="<?php echo $fetched_row['tarikh_serahan']; ?>" readonly>
                                         <span class="input-group-text"><i class="bi bi-calendar"></i></span>
                                       </div>
                                     </div>
@@ -702,347 +702,7 @@ if (empty($_SESSION['First_Name'])) {
                       </div>
                     </div>
 
-                    <!--------------------------------- IF ELSE STATEMENT TO DIFFERENTIATE CATEGORY FIELD FORM ---------------------------->
-                    <!-- Kategori Aset - KOMPUTER (ID = 32) -->
-                    <?php
-                    if ($fetched_row['kategori_aset'] == 32) {
-                    ?>
-                      <div class="col-lg-20" style="margin-top: 10px">
-                        <div class="col-md-12 mt-10" style="margin-top: 20px; border: 1px solid #899bbd; border-radius: 1px">
-                          <h5 class="card-title"><strong>ASSET INFORMATION</strong><br />
-                            <div class="row" style="margin-top: 10px">
-                              <div class="col-md-12">
-                                <div class="box-body">
-                                  <div class="row">
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Warranty Period:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-
-                      <!-- Kategori Aset - PERABOT (ID = 33) -->
-                    <?php
-                    } else if ($fetched_row['kategori_aset'] == 33) {
-                    ?>
-                      <div class="col-lg-20" style="margin-top: 10px">
-                        <div class="col-md-12 mt-10" style="margin-top: 20px; border: 1px solid #899bbd; border-radius: 1px">
-                          <h5 class="card-title"><strong>ASSET INFORMATION</strong><br />
-                            <div class="row" style="margin-top: 10px">
-                              <div class="col-md-12">
-                                <div class="box-body">
-                                  <div class="row">
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-
-                      <!-- Kategori Aset - KELENGKAPAN PEJABAT (ID = 34) -->
-                    <?php
-                    } else if ($fetched_row['kategori_aset'] == 34) {
-                    ?>
-                      <div class="col-lg-20" style="margin-top: 10px">
-                        <div class="col-md-12 mt-10" style="margin-top: 20px; border: 1px solid #899bbd; border-radius: 1px">
-                          <h5 class="card-title"><strong>ASSET INFORMATION</strong><br />
-                            <div class="row" style="margin-top: 10px">
-                              <div class="col-md-12">
-                                <div class="box-body">
-                                  <div class="row">
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-
-                      <!-- Kategori Aset - PERALATAN (ID = 35) -->
-                    <?php
-                    } else if ($fetched_row['kategori_aset'] == 35) {
-                    ?>
-                      <div class="col-lg-20" style="margin-top: 10px">
-                        <div class="col-md-12 mt-10" style="margin-top: 20px; border: 1px solid #899bbd; border-radius: 1px">
-                          <h5 class="card-title"><strong>ASSET INFORMATION</strong><br />
-                            <div class="row" style="margin-top: 10px">
-                              <div class="col-md-12">
-                                <div class="box-body">
-                                  <div class="row">
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Warranty Period:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-
-                      <!-- Kategori Aset - KEMUDAHAN (ID = 36) -->
-                    <?php
-                    } else if ($fetched_row['kategori_aset'] == 36) {
-                    ?>
-                      <div class="col-lg-20" style="margin-top: 10px">
-                        <div class="col-md-12 mt-10" style="margin-top: 20px; border: 1px solid #899bbd; border-radius: 1px">
-                          <h5 class="card-title"><strong>ASSET INFORMATION</strong><br />
-                            <div class="row" style="margin-top: 10px">
-                              <div class="col-md-12">
-                                <div class="box-body">
-                                  <div class="row">
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Warranty Period:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-
-                      <!-- Kategori Aset - KENDERAAN (ID = 37) -->
-                    <?php
-                    } else if ($fetched_row['kategori_aset'] == 37) {
-                    ?>
-                      <div class="col-lg-20" style="margin-top: 10px">
-                        <div class="col-md-12 mt-10" style="margin-top: 20px; border: 1px solid #899bbd; border-radius: 1px">
-                          <h5 class="card-title"><strong>ASSET INFORMATION</strong><br />
-                            <div class="row" style="margin-top: 10px">
-                              <div class="col-md-12">
-                                <div class="box-body">
-                                  <div class="row">
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Model:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Plate Number:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Colour:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                      <div class="form-group">
-                                        <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                      </div>
-
-                      <!-- If ada pertambahan kategori nanti -->
-                    <?php
-                    } else {
-                    ?>
+                    
                       <!-- Fill in asset information -->
                       <div class="col-lg-20" style="margin-top: 10px">
                         <div class="col-md-12 mt-10" style="margin-top: 20px; border: 1px solid #899bbd; border-radius: 1px">
@@ -1054,43 +714,43 @@ if (empty($_SESSION['First_Name'])) {
                                     <div class="col-md-5">
                                       <div class="form-group">
                                         <label for="exampleInputPassword1" class="title-label">Asset Name:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="nama_aset" name="nama_aset" placeholder="ASSET NAME" value="<?php echo $fetched_row['nama_aset']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
                                         <label for="exampleInputPassword1" class="title-label">Model:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="model" name="model" placeholder="MODEL" value="<?php echo $fetched_row['model']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
                                         <label for="exampleInputPassword1" class="title-label">Serial Number:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="no_siri" name="no_siri" placeholder="SERIAL NUMBER" value="<?php echo $fetched_row['no_siri']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
                                         <label for="exampleInputPassword1" class="title-label">Purchase Price:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="harga_beli" name="harga_beli" placeholder="PRICE" value="<?php echo 'RM ' . $fetched_row['harga_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
                                         <label for="exampleInputPassword1" class="title-label">Warranty Period:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="warranty" name="warranty" placeholder="WARRANTY" value="<?php echo $fetched_row['warranty']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
                                         <label for="exampleInputPassword1" class="title-label">Colour:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="warna" name="warna" placeholder="COLOUR" value="<?php echo $fetched_row['warna']; ?>" readonly>
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <div class="form-group">
                                         <label for="exampleInputPassword1" class="title-label">Year of Purchase:</label>
-                                        <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
+                                        <input type="text" class="form-control placeholder-label" id="tahun_beli" name="tahun_beli" placeholder="YEAR" value="<?php echo $fetched_row['tahun_beli']; ?>" readonly>
                                       </div>
                                     </div>
                                   </div>
@@ -1099,9 +759,6 @@ if (empty($_SESSION['First_Name'])) {
                             </div>
                         </div>
                       </div>
-                    <?php
-                    }
-                    ?>
 
                     <!-- Fill in user information -->
                     <div class="col-md-12 mt-10" style="margin-top: 20px; border: 1px solid #899bbd; border-radius: 1px">
@@ -1121,7 +778,7 @@ if (empty($_SESSION['First_Name'])) {
                                       $nama_kakitangan2 = "None";
                                     }
                                     ?>
-                                    <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="nama_kakitangan" name="nama_kakitangan" placeholder="STAFF NAME" value="<?php echo $nama_kakitangan2; ?>" readonly>
+                                    <input type="text" class="form-control placeholder-label" id="nama_kakitangan" name="nama_kakitangan" placeholder="STAFF NAME" value="<?php echo $nama_kakitangan2; ?>" readonly>
                                   </div>
                                 </div>
                                 <div class="col-md-5">
@@ -1145,7 +802,7 @@ if (empty($_SESSION['First_Name'])) {
                                       $lokasi_jabatan2 = "None";
                                     }
                                     ?>
-                                    <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="lokasi_jabatan" name="lokasi_jabatan" placeholder="DEPARTMENT LOCATION" value="<?php echo $lokasi_jabatan2; ?>" readonly>
+                                    <input type="text" class="form-control placeholder-label" id="lokasi_jabatan" name="lokasi_jabatan" placeholder="DEPARTMENT LOCATION" value="<?php echo $lokasi_jabatan2; ?>" readonly>
                                   </div>
                                 </div>
                               </div>
@@ -1188,25 +845,25 @@ if (empty($_SESSION['First_Name'])) {
                                 <div class="col-md-5">
                                   <div class="form-group">
                                     <label for="jenis" class="title-label">Supplier Name:</label>
-                                    <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="nama_pembekal" name="nama_pembekal" value="<?php echo $NamaPembekal; ?>" readonly>
+                                    <input type="text" class="form-control placeholder-label" id="nama_pembekal" name="nama_pembekal" value="<?php echo $NamaPembekal; ?>" readonly>
                                   </div>
                                 </div>
                                 <div class="col-md-5">
                                   <div class="form-group">
                                     <label for="jenis" class="title-label">Supplier Address:</label>
-                                    <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="alamat_pembekal" name="alamat_pembekal" value="<?php echo $emel_pembekal; ?>" readonly>
+                                    <input type="text" class="form-control placeholder-label" id="alamat_pembekal" name="alamat_pembekal" value="<?php echo $emel_pembekal; ?>" readonly>
                                   </div>
                                 </div>
                                 <div class="col-md-5">
                                   <div class="form-group">
                                     <label for="jenis" class="title-label">Supplier Email:</label>
-                                    <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="email_pembekal" name="email_pembekal" value="<?php echo $alamat_pembekal; ?>" readonly>
+                                    <input type="text" class="form-control placeholder-label" id="email_pembekal" name="email_pembekal" value="<?php echo $alamat_pembekal; ?>" readonly>
                                   </div>
                                 </div>
                                 <div class="col-md-5">
                                   <div class="form-group">
                                     <label for="jenis" class="title-label">Supplier Phone No.:</label>
-                                    <input type="text" style="font-size: 1.4rem; line-height: 1.2; height: 34px" class="form-control" id="notel_pembekal" name="notel_pembekal" value="<?php echo $notel_pembekal; ?>" readonly>
+                                    <input type="text" class="form-control placeholder-label" id="notel_pembekal" name="notel_pembekal" value="<?php echo $notel_pembekal; ?>" readonly>
                                   </div>
                                 </div>
                               </div>
