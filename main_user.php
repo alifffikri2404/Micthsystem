@@ -1244,15 +1244,15 @@ if (empty($_SESSION['First_Name'])) {
                     Outgoing Letter</button>
                 </li>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#assetreg-info">
                     Registered Asset</button>
-                </li>
+                </li> -->
 
                 <?php if ($_SESSION['admin_asset'] == "1") { ?>
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#assetreg-info">
-                    Asset Approval</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#assetpending-info">
+                    Asset Pending</button>
                 </li>
                 <?php } ?>
 
@@ -1656,6 +1656,215 @@ if (empty($_SESSION['First_Name'])) {
                   </div>
                 </div>
 
+                <!-- Asset Pending Tab -->
+                <div class="tab-pane fade pt-3" id="assetpending-info">
+                  <div class="row">
+                    <div class="col-12">
+
+                      <!-- Vertical Pills Tabs -->
+                      <div class="d-flex align-items-start">
+                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                          aria-orientation="vertical">
+                          <?php
+                          if ((isset($_SESSION['func_admin']) && $_SESSION['func_admin'] == 1) ||
+                            (isset($_SESSION['func_acc']) && $_SESSION['func_acc'] == 1) ||
+                            (isset($_SESSION['admin_asset']) && $_SESSION['admin_asset'] == 1)
+                          ) {
+                          ?>
+                            <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+                              data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
+                              aria-selected="true">Pending Asset</button>
+                          <?php
+                          }
+                          ?>
+
+
+
+                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages"
+                            aria-selected="false">My Asset</button>
+                        </div>
+                        <div class="tab-content" id="v-pills-tabContent">
+                          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                            aria-labelledby="v-pills-home-tab">
+                            <table class="table table-borderless" id="datatable2">
+                              <thead>
+                                <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Category</th>
+                                  <th scope="col">Sub-Category</th>
+                                  <th scope="col">Model</th>
+                                  <th scope="col">No.Asset</th>
+                                  <th scope="col">Action</th>
+                                </tr>
+                              </thead>
+                              <? include('db_conn.php');
+                              ?>
+                              <tbody id="reservation-assetpending-info">
+                                <!-- PHP-generated content -->
+                                <?php
+
+                                require('asetEd/configAsetTPS.php');
+                                if (isset($_SESSION['func_admin']) && $_SESSION['func_admin'] == 1) {
+                                  $sql1 = "SELECT * FROM asset_management_vba WHERE status IN ('Pending HRAD','Pending Account', 'Rejected')";
+                                } elseif (isset($_SESSION['admin_asset']) && $_SESSION['admin_asset'] == 1) {
+                                  $sql1 = "SELECT * FROM asset_management_vba WHERE status = 'Rejected'";
+                                } elseif (isset($_SESSION['func_acc']) && $_SESSION['func_acc'] == "1") {
+                                  $sql1 = "SELECT * FROM asset_management_vba WHERE status = 'Approved'";
+                                } else {
+                                  $sql1 = "SELECT * FROM asset_management_vba WHERE status IN ('Pending HRAD','Pending Account', 'Rejected')";
+                                }
+
+                                $result = mysqli_query($conn2, $sql1);
+
+                                if (!$result) {
+                                  die("Error in query execution: " . mysqli_error($conn2));
+                                }
+
+                                if ($result) {
+                                  $counter = 1;
+                                  while ($row = mysqli_fetch_assoc($result)) {
+                                    $Category = $row['Category'];
+                                    $Sub_Category = $row['Sub_Category'];
+                                    $Model = $row['Model'];
+                                    $harga = $row['harga'];
+                                    $Full_ID = $row['Full_ID (Concatenated ID)'];
+                                    $status = $row['status'];
+
+                                    $status_class = '';
+                                    switch ($status) {
+                                      case 'Pending HRAD':
+                                        $status_class = 'bg-orange';
+                                        break;
+                                      case 'Pending Account':
+                                        $status_class = 'bg-orange';
+                                        break;
+                                      case 'Rejected':
+                                        $status_class = 'bg-red';
+                                        break;
+                                      default:
+                                        $status_class = 'bg-default'; // Use a default class if none of the cases match
+                                        break;
+                                    }
+                                ?>
+                                    <tr>
+                                      <th scope="row"><?php echo $counter; ?></th>
+                                      <td><?php echo $Category; ?></td>
+                                      <td><?php echo $Sub_Category; ?></td>
+                                      <td><?php echo $Model; ?></td>
+                                      <td><?php echo $Full_ID; ?></td>
+                                      <td>
+                                        <form method="post">
+                                          <input type="hidden" name="view1" value="<?php echo $Full_ID; ?>">
+                                          <button type="submit" name="viewsubmit1" class="btn <?php echo $status_class; ?>">
+                                            <span><?php echo $status; ?></span>
+                                          </button>
+                                        </form>
+                                      </td>
+                                    </tr>
+                                <?php
+                                    $counter++;
+                                  }
+                                  mysqli_free_result($result);
+                                } else {
+                                  echo "Error: " . mysqli_error($conn2);
+                                }
+
+                                ?>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                            aria-labelledby="v-pills-profile-tab">
+
+                          </div>
+                          <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                            aria-labelledby="v-pills-messages-tab">
+                            <table class="table table-borderless" id="datatable2">
+                              <thead>
+                                <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Category</th>
+                                  <th scope="col">Sub-Category</th>
+                                  <th scope="col">Model</th>
+                                  <th scope="col">No.Asset</th>
+                                </tr>
+                              </thead>
+                              <? include('db_conn.php');
+                              ?>
+                              <tbody id="reservation-assetpending-info">
+                                <!-- PHP-generated content -->
+                                <?php
+                                require('asetEd/configAsetTPS.php');
+
+                                // Use a prepared statement for security
+                                $sql1 = "SELECT Category, Sub_Category, Model, harga, `Full_ID (Concatenated ID)` AS Full_ID, status 
+           FROM asset_management_vba 
+           WHERE nama_kakitangan = ?";
+                                $stmt = mysqli_prepare($conn2, $sql1);
+
+                                if ($stmt) {
+                                  mysqli_stmt_bind_param($stmt, "i", $_SESSION['emp_number']);
+                                  mysqli_stmt_execute($stmt);
+                                  $result = mysqli_stmt_get_result($stmt);
+
+                                  if ($result) {
+                                    $counter = 1;
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                      $Category = $row['Category'];
+                                      $Sub_Category = $row['Sub_Category'];
+                                      $Model = $row['Model'];
+                                      $harga = $row['harga'];
+                                      $Full_ID = $row['Full_ID'];
+
+                                      // Determine the CSS class based on the status
+                                      $status_class = '';
+                                      switch ($status) {
+                                        case 'Pending HRAD':
+                                          $status_class = 'bg-orange';
+                                          break;
+                                        case 'Pending Account':
+                                          $status_class = 'bg-orange';
+                                          break;
+                                        case 'Rejected':
+                                          $status_class = 'bg-red';
+                                          break;
+                                        default:
+                                          $status_class = 'bg-default';
+                                          break;
+                                      }
+                                ?>
+                                      <tr>
+                                        <th scope="row"><?php echo $counter; ?></th>
+                                        <td><?php echo htmlspecialchars($Category); ?></td>
+                                        <td><?php echo htmlspecialchars($Sub_Category); ?></td>
+                                        <td><?php echo htmlspecialchars($Model); ?></td>
+                                        <td><?php echo htmlspecialchars($Full_ID); ?></td>
+
+                                      </tr>
+                                <?php
+                                      $counter++;
+                                    }
+                                    mysqli_free_result($result);
+                                  } else {
+                                    echo "No results found.";
+                                  }
+                                  mysqli_stmt_close($stmt);
+                                } else {
+                                  echo "Error in query preparation: " . mysqli_error($conn2);
+                                }
+                                ?>
+                              </tbody>
+
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End Vertical Pills Tabs -->
+
+                    </div>
+                  </div>
+                </div>
               </div><!-- End Bordered Tabs -->
 
             </div>
