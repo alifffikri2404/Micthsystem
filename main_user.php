@@ -41,7 +41,7 @@ if (isset($_POST['viewsubmit'])) {
   exit();
 }
 
-$Internal_ID = $_SESSION['emp_number'];
+$Internal_ID = $_SESSION['emp_number']; // testing 1234 wedud
 $First_Name = ['First_Name'];
 $Last_Name = ['Last_Name'];
 $Email = ['Email'];
