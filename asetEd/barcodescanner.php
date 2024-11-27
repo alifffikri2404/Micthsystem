@@ -33,10 +33,10 @@
                     let response = JSON.parse(xhr.responseText);
                     if (response.status === 'success') {
                         let Full_ID = response.Full_ID.replace(/__SLASH__/g, '/');
-                        window.location.href = `../../updateasset.php?Full_ID=${encodeURIComponent(Full_ID)}&barcode=${encodeURIComponent(barcode)}`;
+                        window.location.href = `pages/forms/signpage.php?Full_ID=${encodeURIComponent(Full_ID)}&barcode=${encodeURIComponent(barcode)}`;
                     } else {
                         alert('Data not found.');
-                        window.location.href = 'validatebarcodescanner.php';
+                        window.location.href = 'pages/forms/signpage.php';
                     }
                 }
             };
