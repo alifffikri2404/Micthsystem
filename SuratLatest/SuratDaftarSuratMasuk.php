@@ -40,6 +40,7 @@ $s="CANCEL BY STAFF";
     header("Location: iout.php");
     exit();
     }
+  
 ?>
 
 <!DOCTYPE html>
@@ -611,7 +612,7 @@ $user_info = $result->fetch_assoc();
                                   <label for="exampleInputEmail1" style="font-weight: 400">Sender: *</label>
                                     <div class="input-group">
                                       <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                        class="form-control" id="InputPengirimSurat" name="InputPengirimSurat" value="" ><br>
+                                        class="form-control" id="InputPengirimSurat" name="InputPengirimSurat" value="<?php echo isset($_POST['InputPengirimSurat']) ? $_POST['InputPengirimSurat'] : ''; ?>" required><br>
                                     </div>
                                   </div>
                               </div>
@@ -620,7 +621,7 @@ $user_info = $result->fetch_assoc();
                                   <label for="exampleInputEmail1" style="font-weight: 400">Letter Reference No: *</label>
                                     <div class="input-group">
                                       <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                        class="form-control" id="InputNoRujukanSuratPengirim" name="InputNoRujukanSuratPengirim" value=""><br>
+                                        class="form-control" id="InputNoRujukanSuratPengirim" name="InputNoRujukanSuratPengirim" value="<?php echo isset($_POST['InputNoRujukanSuratPengirim']) ? $_POST['InputNoRujukanSuratPengirim'] : ''; ?>" required><br>
                                     </div>
                                   </div>
                               </div>
@@ -629,7 +630,7 @@ $user_info = $result->fetch_assoc();
                                 <label for="exampleInputEmail1" style="font-weight: 400">MICTH Reference No: *</label>
                                   <div class="input-group">
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                      class="form-control" id="InputNoRujukanSuratMICTH" name="InputNoRujukanSuratMICTH" value=""> <br>
+                                      class="form-control" id="InputNoRujukanSuratMICTH" name="InputNoRujukanSuratMICTH" value="<?php echo isset($_POST['InputNoRujukanSuratMICTH']) ? $_POST['InputNoRujukanSuratMICTH'] : ''; ?>" required><br>
                                   </div>
                                 </div>
                               </div>
@@ -637,8 +638,8 @@ $user_info = $result->fetch_assoc();
                                 <div class="form-group">
                                   <label for="exampleInputEmail1" style="font-weight: 400">Subject / Title of Letter: *</label>
                                     <div class="input-group" style="flex-grow: 1;">
-                                    <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8"
-                                      rows="3" cols="50" id="InputTajukSurat" name="InputTajukSurat" ></textarea>
+                                    <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8" 
+                                    rows="3" cols="50" id="InputTajukSurat" name="InputTajukSurat" required><?php echo isset($_POST['InputTajukSurat']) ? htmlspecialchars($_POST['InputTajukSurat'], ENT_QUOTES) : ''; ?></textarea>
                                   </div>
                                 </div>
                               </div>
@@ -647,7 +648,7 @@ $user_info = $result->fetch_assoc();
                                 <label for="action_by" style="font-weight: 400">Action By:</label>
                                   <div class="input-group">
                                   <select style="font-size: 1.4rem; line-height: 1.0; height: 34px; -webkit-appearance: menulist-button;
-                                    -moz-appearance: menulist-button; appearance: menulist-button;" class="form-control" id="InputTindakanOlehSurat" name="InputTindakanOlehSurat">
+                                    -moz-appearance: menulist-button; appearance: menulist-button;" class="form-control" id="InputTindakanOlehSurat" name="InputTindakanOlehSurat" required>
                                   <option value="" disabled selected>-- Department Involved --</option>
                                   <?php
                                      $sqlLT = "SELECT name FROM empdept ORDER BY name ASC";
@@ -663,7 +664,7 @@ $user_info = $result->fetch_assoc();
                                 
                                   <div class="input-group">
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                      class="form-control" placeholder= "Person-in-Charge" id="InputTindakanIndividu" name="InputTindakanIndividu" value=""> <br>
+                                      class="form-control" placeholder= "Person-in-Charge" id="InputTindakanIndividu" name="InputTindakanIndividu" value="<?php echo isset($_POST['InputTindakanIndividu']) ? $_POST['InputTindakanIndividu'] : ''; ?>"> <br>
                                   </div>
                                 </div>
                               </div>
@@ -673,7 +674,7 @@ $user_info = $result->fetch_assoc();
                                 <label for="exampleInputEmail1" style="font-weight: 400">Status: *</label>
                                   <div class="input-group">
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                      class="form-control" id="InputStatusSurat" name="InputStatusSurat" value=""> <br>
+                                      class="form-control" id="InputStatusSurat" name="InputStatusSurat" value="<?php echo isset($_POST['InputStatusSurat']) ? $_POST['InputStatusSurat'] : ''; ?>" required> <br>
                                   </div>
                                 </div>
                               </div>
@@ -709,7 +710,7 @@ $user_info = $result->fetch_assoc();
   
     
     //post setiap id didalam form
-    
+
     if(isset($_POST['submit']))
     {    
         //echo "mula post";
@@ -768,6 +769,7 @@ $user_info = $result->fetch_assoc();
             if(mysqli_num_rows($result11) > 0)
             {
               paparMesejBerjayaSimpan($InputNoRujukanSuratMICTH);
+              unset($_SESSION['submit']);
             }
             else
             {
@@ -817,34 +819,28 @@ $user_info = $result->fetch_assoc();
     
     //Keluarkan notification untuk mesej GAGAL
     function paparMesejGagalSimpan(){
+      echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
       echo '<script type="text/javascript">
-      Swal.fire({
+      swal({
           title: "Error!",
           text: "Oops! An error occurred, failed to add new record!",
           icon: "error",
-          confirmButtonText: "OK"
-      }).then((result) => {
-          if (result.isConfirmed) {
-              history.go(-1);
-          }
-      });
+          button: "OK"
+        })
       </script>';
       exit();
   }
     
     //Keluarkan notification untuk mesej GAGAL
     function paparMesejGagalSimpanalready(){
+      echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
       echo '<script type="text/javascript">
-      Swal.fire({
+      swal({
           title: "Error!",
           text: "Oops! The record has already been inserted.",
           icon: "error",
-          confirmButtonText: "OK"
-      }).then((result) => {
-          if (result.isConfirmed) {
-              history.go(-1);
-          }
-      });
+          button: "OK"
+          })
       </script>';
       exit();
   }
