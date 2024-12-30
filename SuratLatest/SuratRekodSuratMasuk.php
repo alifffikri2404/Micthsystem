@@ -114,6 +114,8 @@ if (empty($_SESSION['First_Name'])) {
   <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -635,6 +637,7 @@ if (empty($_SESSION['First_Name'])) {
                                   <th style="width: 10%;">Status</th>
                                   <th style="width: 10%;">Record By</th>
                                   <th style="width: 5%;">Update</th>
+                                  <th style="width: 5%;">Delete</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -643,23 +646,98 @@ if (empty($_SESSION['First_Name'])) {
                                 $i = 1 + $off;
                                 while ($rowAP = mysqli_fetch_array($resultAP)) {
                                   echo '
-                                <tr>
-                                  <td data-title="No." style="text-align:center">' . $i . '</td>
-                                  <td data-title="Date" >' . $rowAP['date'] . '</td>
-                                  <td data-title="Sender" >' . $rowAP['from_dpd'] . '</td>
-                                  <td data-title="Subject" >' . $rowAP['title'] . '</td>
-                                  <td data-title="Letter No." >' . $rowAP['no_surat_pengirim'] . '</td>
-                                  <td data-title="Reference No." >' . $rowAP['no_rujukan_micth'] . '</td>
-                                  <td data-title="Action" >' . $rowAP['tindakan'] . '</td>
-                                  <td data-title="Status" >' . $rowAP['status'] . '</td>
-                                  <td data-title="Record By" >' . $rowAP['direkodkan_oleh'] . '</td>
-                                  <td data-title="Tindakan" style="text-align:center">
-                                    <a href="SuratEditRekodMasuk.php?id='.$rowAP['id'].'">
-                                      <i class="fa fa-pencil"></i>
-                                </tr>';
+                                  <tr>
+                                    <td data-title="No." style="text-align:center">' . $i . '</td>
+                                    <td data-title="Date" >' . $rowAP['date'] . '</td>
+                                    <td data-title="Sender" >' . $rowAP['from_dpd'] . '</td>
+                                    <td data-title="Subject" >' . $rowAP['title'] . '</td>
+                                    <td data-title="Letter No." >' . $rowAP['no_surat_pengirim'] . '</td>
+                                    <td data-title="Reference No." >' . $rowAP['no_rujukan_micth'] . '</td>
+                                    <td data-title="Action" >' . $rowAP['tindakan'] . '</td>
+                                    <td data-title="Status" >' . $rowAP['status'] . '</td>
+                                    <td data-title="Record By" >' . $rowAP['direkodkan_oleh'] . '</td>
+                                    <td data-title="Tindakan" style="text-align:center">
+                                      <a href="SuratEditRekodMasuk.php?id='.$rowAP['id'].'">
+                                        <i class="fa fa-pencil"></i>
+                                      </a>
+                                    </td>
+                                    <td data-title="Delete" style="text-align:center">
+                                      <a href="#" onclick="confirmDelete(event, ' . $rowAP['id'] . ', \'' . $rowAP['no_rujukan_micth'] . '\')">
+                                        <i class="fa fa-trash" style="color:red"></i>
+                                      </a>
+                                    </td>
+                                  </tr>';
                                   $i++;
                                 }
                                 ?>
+                                  <script>
+                                  function confirmDelete(event, id, noRujukanMicth) {
+                                      // Prevent the default behavior
+                                      event.preventDefault();
+
+                                      // SweetAlert custom dialog with smaller title text
+                                      swal({
+                                          title: "", // Empty built-in title
+                                          icon: "warning",
+                                          buttons: false, // Disable built-in buttons to use custom HTML
+                                          content: (function() {
+                                              // Create container for custom content
+                                              const container = document.createElement("div");
+                                              container.style.textAlign = "center";
+
+                                              // Add custom title with smaller font
+                                              const title = document.createElement("h4");
+                                              title.textContent = `Delete "${noRujukanMicth}"?`;
+                                              title.style.fontSize = "20px"; // Smaller font size
+                                              title.style.fontWeight = "bold"; // Make the title bold
+                                              title.style.marginBottom = "10px";
+
+                                              // Add warning text
+                                              const textContent = document.createElement("p");
+                                              textContent.textContent = "This action cannot be undone.";
+                                              textContent.style.marginBottom = "20px";
+                                              textContent.style.fontSize = "16px";
+
+                                              // Add "Cancel" button
+                                              const cancelButton = document.createElement("button");
+                                              cancelButton.textContent = "Cancel";
+                                              cancelButton.style.backgroundColor = "#6c757d";
+                                              cancelButton.style.color = "white";
+                                              cancelButton.style.border = "none";
+                                              cancelButton.style.padding = "10px 20px";
+                                              cancelButton.style.fontSize = "14px";
+                                              cancelButton.style.cursor = "pointer";
+                                              cancelButton.style.marginRight = "10px";
+                                              cancelButton.addEventListener("click", function() {
+                                                  // Close SweetAlert without any action
+                                                  swal.close();
+                                              });
+
+                                              // Add "Delete" button
+                                              const deleteButton = document.createElement("button");
+                                              deleteButton.textContent = "Delete";
+                                              deleteButton.style.backgroundColor = "#d33";
+                                              deleteButton.style.color = "white";
+                                              deleteButton.style.border = "none";
+                                              deleteButton.style.padding = "10px 20px";
+                                              deleteButton.style.fontSize = "14px";
+                                              deleteButton.style.cursor = "pointer";
+                                              deleteButton.addEventListener("click", function() {
+                                                  // Redirect to delete script
+                                                  window.location.href = `SuratDeleteRekodMasuk.php?id=${id}`;
+                                              });
+
+                                              // Append title, text, and buttons to container
+                                              container.appendChild(title);
+                                              container.appendChild(textContent);
+                                              container.appendChild(cancelButton);
+                                              container.appendChild(deleteButton);
+
+                                              return container;
+                                          })()
+                                      });
+                                  }
+                                  </script>
                               </tbody>
                             </table>
                           <?php
@@ -671,11 +749,6 @@ if (empty($_SESSION['First_Name'])) {
                         </div>
                       </div>
                     </div>
-                    <script>
-                      function ConfirmDelete() {
-                        return confirm("Are you sure you want to delete this asset type?");
-                      }
-                    </script>
                   </div>
 
               </div>

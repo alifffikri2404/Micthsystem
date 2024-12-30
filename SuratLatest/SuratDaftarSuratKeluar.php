@@ -676,7 +676,7 @@ if (empty($_SESSION['First_Name'])) {
 
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400">Recipient / Department / Agency:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Recipient / Department / Agency:<span style="color: red; ">  *</span></label>
                             <div class="input-group">
                               <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="InputNamaPenerima" name="InputNamaPenerima" placeholder="Recipient Name" required><br>
                             </div>
@@ -706,7 +706,7 @@ if (empty($_SESSION['First_Name'])) {
                         ?>
                           <div class="col-md-5">
                             <div class="form-group">
-                              <label for="exampleInputEmail1" style="font-weight: 400">Issuing Department</label>
+                              <label for="exampleInputEmail1" style="font-weight: 400">Issuing Department :<span style="color: red; ">  *</span></label>
                               <select style="font-size: 1.4rem; line-height: 1.0; height: 34px; -webkit-appearance: menulist-button;
                        -moz-appearance: menulist-button; appearance: menulist-button;" class="form-control" id="department_pilihan" name="department_pilihan">
                                 <option value="" disabled selected>-- Department --</option>
@@ -725,7 +725,7 @@ if (empty($_SESSION['First_Name'])) {
 
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputEmail1" style="font-weight: 400">Subject / Title:</label>
+                            <label for="exampleInputEmail1" style="font-weight: 400">Subject / Title:<span style="color: red; ">  *</span></label>
                             <div class="input-group" style="flex-grow: 1;">
                               <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8" rows="3" cols="50" id="InputTajukSurat" name="InputTajukSurat" required></textarea>
                             </div>
@@ -733,7 +733,7 @@ if (empty($_SESSION['First_Name'])) {
                         </div>
                         <div class="col-md-5">
                           <div class="form-group">
-                            <label for="exampleInputPassword1" style="font-weight: 450">Delivery Method:</label>
+                            <label for="exampleInputPassword1" style="font-weight: 450">Delivery Method:<span style="color: red; ">  *</span></label>
                             <div class="radio">
                               <i style="font-size: 1.6rem; line-height: 1.0">
                                 <input type="checkbox" name="optionsRadios1[]" id="optionsRadios1" value="Email">
@@ -855,60 +855,69 @@ if (empty($_SESSION['First_Name'])) {
         $text = implode(',', $_POST['optionsRadios1']);
         
         $InputDateCvt = date("Y-m-d", strtotime($InputDate));
-
-
+    
         if (isset($admin_surat) && $admin_surat == 1) {
-          $department = isset($_POST['department_pilihan']) ? $_POST['department_pilihan'] : '';
+            $department = isset($_POST['department_pilihan']) ? $_POST['department_pilihan'] : '';
         } else {
-          $department = isset($_SESSION['Department']) ? $_SESSION['Department'] : '';
+            $department = isset($_SESSION['Department']) ? $_SESSION['Department'] : '';
         }
-
+    
         try {
-          $sqlAP = "SELECT id FROM tbl_surat_out_all ORDER BY id DESC";
-          $resultAP = mysqli_query($db, $sqlAP);
-
-          if (mysqli_num_rows($resultAP) > 0) {
-            $row = mysqli_fetch_array($resultAP);
-            $idnorujsurat = $row['id'];
-            $idnorujsuratF = $idnorujsurat + 1;
-            $idnorujsuratFF = $InputNoRujukanSuratAwal . $InputNoRujukanSuratTgh . $InputNoRujukanSuratAkhir . " (" . $idnorujsuratF . ")";
-
-            $sql1 = "INSERT INTO tbl_surat_out_all (tarikh_surat, no_ruj_surat, nama_pemohon, nama_penerima, tajuk_surat, kaedah_penghantaran, department_pemohon) 
-                 VALUES ('$InputDateCvt', '$idnorujsuratFF', '$InputNamaPemohon', '$InputNamaPenerima', '$InputTajukSurat', '$text', '$department')";
-            mysqli_query($db, $sql1);
-
-            $sql11 = "SELECT * FROM tbl_surat_out_all WHERE no_ruj_surat = '$idnorujsuratFF' AND tarikh_surat = '$InputDateCvt'";
-            $result11 = mysqli_query($db, $sql11);
-
-            if (mysqli_num_rows($result11) > 0) {
-              paparMesejBerjayaAset($idnorujsuratFF, $InputDateCvt, $InputNamaPemohon, $InputNamaPenerima, $InputTajukSurat, $text, $department);
+            $currentYear = date('Y'); // Get current year
+            $sqlAP = "SELECT id, no_ruj_surat FROM tbl_surat_out_all ORDER BY id DESC LIMIT 1";
+            $resultAP = mysqli_query($db, $sqlAP);
+    
+            if (mysqli_num_rows($resultAP) > 0) {
+                $row = mysqli_fetch_array($resultAP);
+                $lastNoRujukanSurat = $row['no_ruj_surat'];
+    
+                // Debugging: Check the last no_ruj_surat
+                echo "Last no_ruj_surat: " . $lastNoRujukanSurat . "<br>";
+    
+                // Adjust regex to match the format MICTH/DTM/DECYYYY (number)
+                preg_match('/\w+\/\w+\/\w+(\d{4})\s\((\d+)\)$/', $lastNoRujukanSurat, $matches);
+    
+                if (isset($matches[1]) && $matches[1] == $currentYear) {
+                    // If the year is the same as the current year, increment the last number
+                    $lastNumber = (int)$matches[2] + 1;
+                } else {
+                    // If the year is different, reset the last number to 1
+                    $lastNumber = 1;
+                }
+    
+                // Debugging: Check the lastNumber
+                echo "Last number to be used: " . $lastNumber . "<br>";
+    
+                // Generate the new no_ruj_surat
+                $idnorujsuratF = $InputNoRujukanSuratAwal . $InputNoRujukanSuratTgh . $InputNoRujukanSuratAkhir . " (" . $lastNumber . ")";
             } else {
-              paparMesejGagal1();
+                // If no records exist, start with the first record for the current year
+                $idnorujsuratF = $InputNoRujukanSuratAwal . $InputNoRujukanSuratTgh . $InputNoRujukanSuratAkhir . " (1)";
             }
-          } else {
-            $idnorujsuratFst = $InputNoRujukanSuratAwal . $InputNoRujukanSuratTgh . $InputNoRujukanSuratAkhir . " (1)";
+    
+            // Insert the new record
             $sql1 = "INSERT INTO tbl_surat_out_all (tarikh_surat, no_ruj_surat, nama_pemohon, nama_penerima, tajuk_surat, kaedah_penghantaran, department_pemohon) 
-                 VALUES ('$InputDateCvt', '$idnorujsuratFst', '$InputNamaPemohon', '$InputNamaPenerima', '$InputTajukSurat', '$text', '$department')";
+                     VALUES ('$InputDateCvt', '$idnorujsuratF', '$InputNamaPemohon', '$InputNamaPenerima', '$InputTajukSurat', '$text', '$department')";
             mysqli_query($db, $sql1);
-
-            $sql11 = "SELECT * FROM tbl_surat_out_all WHERE no_ruj_surat = '$idnorujsuratFst' AND tarikh_surat = '$InputDateCvt'";
+    
+            // Check if the insert was successful
+            $sql11 = "SELECT * FROM tbl_surat_out_all WHERE no_ruj_surat = '$idnorujsuratF' AND tarikh_surat = '$InputDateCvt'";
             $result11 = mysqli_query($db, $sql11);
-
+    
             if (mysqli_num_rows($result11) > 0) {
-              paparMesejBerjayaAset($idnorujsuratFst, $InputDateCvt, $InputNamaPemohon, $InputNamaPenerima, $InputTajukSurat, $text, $department);
+                paparMesejBerjayaAset($idnorujsuratF, $InputDateCvt, $InputNamaPemohon, $InputNamaPenerima, $InputTajukSurat, $text, $department);
             } else {
-              paparMesejGagal1();
+                paparMesejGagal1();
             }
-          }
         } catch (Exception $e) {
-          echo 'Caught exception insert: ', $e->getMessage(), "\n";
+            echo 'Caught exception insert: ', $e->getMessage(), "\n";
         }
-      } else {
+    } else {
         function died($error)
         {
-          paparMesejGagal();
+            paparMesejGagal();
         }
-      }
+    }
       ?>
     </section>
 

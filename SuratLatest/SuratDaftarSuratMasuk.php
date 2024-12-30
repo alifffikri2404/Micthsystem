@@ -576,6 +576,46 @@ $stmt->bind_param("i", $user_id); // Bind the user ID parameter
 $stmt->execute();
 $result = $stmt->get_result();
 $user_info = $result->fetch_assoc();
+
+$sql = "SELECT no_rujukan_micth FROM tbl_surat_in
+        WHERE no_rujukan_micth LIKE 'MICTH/CEO%' 
+        ORDER BY id DESC LIMIT 1";
+
+$result = $db->query($sql);
+
+if ($result && $result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $lastReference = $row['no_rujukan_micth'];
+} else {
+    $lastReference = null; // No previous record found
+}
+
+if ($lastReference) {
+  // Example: MICTH/CEO2024/NOV-01
+  preg_match('/MICTH\/CEO\d{4}\/([A-Z]+)-(\d+)/', $lastReference, $matches);
+  
+  // Extract the month and number from the reference
+  $lastMonth = isset($matches[1]) ? strtoupper($matches[1]) : '';
+  $lastNumber = isset($matches[2]) ? (int)$matches[2] : 0;
+
+  // Check if the month from the last reference matches the current month
+  if ($lastMonth !== strtoupper(date('M'))) {
+      $lastNumber = 0; // Reset if the months are different
+  }
+} else {
+  $lastNumber = 0; // Start from 0 if no records
+}
+
+$currentYear = date('Y');
+$currentMonth = strtoupper(date('M'));
+$bilangan = str_pad($lastNumber + 1, 2, "0", STR_PAD_LEFT);
+$newBilangan = str_pad($lastNumber + 1, 2, "0", STR_PAD_LEFT);
+
+// Create the reference number
+$InputNoRujukanSuratMICTH = "MICTH/CEO{$currentYear}/{$currentMonth}-{$newBilangan}";
+
+// Format the new reference number
+$newReference = "MICTH/CEO{$currentYear}/{$currentMonth}-{$bilangan}";
 ?>
    <section class="section dashboard">
     <div class="row">
@@ -600,7 +640,7 @@ $user_info = $result->fetch_assoc();
                     <form role="form" action="" method="post">
                               <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Registration Date: * </label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Registration Date: <span style="color: red; ">  *</span></label>
                                     <div class="input-group">
                                       <input type="date" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
                                         class="form-control" id="InputDate" name="InputDate" value="<?php echo date("Y-m-d"); ?>" required>
@@ -609,7 +649,7 @@ $user_info = $result->fetch_assoc();
                                 </div>
                               <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Sender: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Sender: <span style="color: red; ">  *</span></label>
                                     <div class="input-group">
                                       <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
                                         class="form-control" id="InputPengirimSurat" name="InputPengirimSurat" value="<?php echo isset($_POST['InputPengirimSurat']) ? $_POST['InputPengirimSurat'] : ''; ?>" required><br>
@@ -618,7 +658,7 @@ $user_info = $result->fetch_assoc();
                               </div>
                               <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Letter Reference No: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Letter Reference No: <span style="color: red; ">  *</span></label>
                                     <div class="input-group">
                                       <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
                                         class="form-control" id="InputNoRujukanSuratPengirim" name="InputNoRujukanSuratPengirim" value="<?php echo isset($_POST['InputNoRujukanSuratPengirim']) ? $_POST['InputNoRujukanSuratPengirim'] : ''; ?>" required><br>
@@ -627,16 +667,16 @@ $user_info = $result->fetch_assoc();
                               </div>
                               <div class="col-md-5">
                                 <div class="form-group">
-                                <label for="exampleInputEmail1" style="font-weight: 400">MICTH Reference No: *</label>
+                                <label for="exampleInputEmail1" style="font-weight: 400">MICTH Reference No: </label>
                                   <div class="input-group">
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                      class="form-control" id="InputNoRujukanSuratMICTH" name="InputNoRujukanSuratMICTH" value="<?php echo isset($_POST['InputNoRujukanSuratMICTH']) ? $_POST['InputNoRujukanSuratMICTH'] : ''; ?>" required><br>
+                                      class="form-control" id="InputNoRujukanSuratMICTH" name="InputNoRujukanSuratMICTH" value="<?php echo $InputNoRujukanSuratMICTH; ?>"readonly><br>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Subject / Title of Letter: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Subject / Title of Letter: <span style="color: red; ">  *</span></label>
                                     <div class="input-group" style="flex-grow: 1;">
                                     <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8" 
                                     rows="3" cols="50" id="InputTajukSurat" name="InputTajukSurat" required><?php echo isset($_POST['InputTajukSurat']) ? htmlspecialchars($_POST['InputTajukSurat'], ENT_QUOTES) : ''; ?></textarea>
@@ -645,33 +685,167 @@ $user_info = $result->fetch_assoc();
                               </div>
                               <div class="col-md-5">
                                 <div class="form-group">
-                                <label for="action_by" style="font-weight: 400">Action By:</label>
+                                  <label for="action_by" style="font-weight: 400">
+                                    Action By: <span style="color: red;">*</span>
+                                  </label>
                                   <div class="input-group">
-                                  <select style="font-size: 1.4rem; line-height: 1.0; height: 34px; -webkit-appearance: menulist-button;
-                                    -moz-appearance: menulist-button; appearance: menulist-button;" class="form-control" id="InputTindakanOlehSurat" name="InputTindakanOlehSurat" required>
-                                  <option value="" disabled selected>-- Department Involved --</option>
-                                  <?php
-                                     $sqlLT = "SELECT name FROM empdept ORDER BY name ASC";
-                                     $result = mysqli_query($db_login, $sqlLT); 
-                                      while ($rowLT = mysqli_fetch_array($result)) { 
-                                        if ($rowLT['name'] !== 'Super Admin') {
-                                          echo '<option value="'.$rowLT['name'].'">'. $rowLT['name'].'</option>';
+                                    <select
+                                      style="
+                                        font-size: 1.4rem;
+                                        line-height: 1.0;
+                                        height: 34px;
+                                        -webkit-appearance: menulist-button;
+                                        -moz-appearance: menulist-button;
+                                        appearance: menulist-button;
+                                      "
+                                      class="form-control"
+                                      id="InputTindakanOlehSurat"
+                                      name="InputTindakanOlehSurat"
+                                      onchange="filterStaffByDepartment()"
+                                      required
+                                    >
+                                      <option value="" disabled selected>-- Department Involved --</option>
+                                      <?php
+                                        $sqlLT = "SELECT name FROM empdept ORDER BY name ASC";
+                                        $result = mysqli_query($db_login, $sqlLT);
+                                        while ($rowLT = mysqli_fetch_array($result)) {
+                                          if ($rowLT['name'] !== 'Super Admin') {
+                                            echo '<option value="' . $rowLT['name'] . '">' . $rowLT['name'] . '</option>';
+                                          }
                                         }
-                                      }
-                                  ?>
-                                </select>
-                                </div><br>
-                                
-                                  <div class="input-group">
-                                    <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                      class="form-control" placeholder= "Person-in-Charge" id="InputTindakanIndividu" name="InputTindakanIndividu" value="<?php echo isset($_POST['InputTindakanIndividu']) ? $_POST['InputTindakanIndividu'] : ''; ?>"> <br>
+                                      ?>
+                                    </select>
+                                  </div>
+                                  <br />
+                                  <div class="input-group" style="position: relative;">
+                                    <input
+                                      type="text"
+                                      style="
+                                        font-size: 1.4rem;
+                                        line-height: 1.0;
+                                        height: 34px;
+                                        width: 100%;
+                                        -webkit-appearance: menulist-button;
+                                        -moz-appearance: menulist-button;
+                                        appearance: menulist-button;
+                                      "
+                                      class="form-control"
+                                      placeholder="Person-in-Charge"
+                                      id="InputTindakanIndividu"
+                                      name="InputTindakanIndividu"
+                                      oninput="filterStaff()"
+                                      autocomplete="off"
+                                    />
+                                    <input type="hidden" id="staffid" name="staffid" />
+                                    <div
+                                      id="suggestions"
+                                      class="suggestions"
+                                      style="
+                                        display: none;
+                                        position: absolute;
+                                        top: 38px;
+                                        width: 100%;
+                                        background-color: #fff;
+                                        border: 1px solid #ccc;
+                                        z-index: 1000;
+                                        border-radius: 4px;
+                                        max-height: 200px;
+                                        overflow-y: auto;
+                                      "
+                                    ></div>
                                   </div>
                                 </div>
                               </div>
 
+                              <script>
+                                let filteredStaffData = []; // Holds the staff filtered by department
+                                const staffData = [
+                                  <?php
+                                    $sqlAS = "SELECT empmaininfo.First_Name, empmaininfo.Last_Name, empmaininfo.Internal_Id, empdept.name as Department
+                                              FROM empmaininfo
+                                              INNER JOIN empdept ON empmaininfo.Department = empdept.dept_id
+                                              ORDER BY CAST(empdept.dept_id AS UNSIGNED) ASC";
+                                    require('../db_conn.php');
+
+                                    $resultA = mysqli_query($conn, $sqlAS);
+                                    $staffNames = [];
+
+                                    while ($rowL = mysqli_fetch_array($resultA)) {
+                                      $firstname = $rowL['First_Name'];
+                                      $staffID = $rowL['Internal_Id'];
+                                      $department = $rowL['Department'];
+                                      $staffNames[] = json_encode(['name' => $firstname, 'id' => $staffID, 'department' => $department]);
+                                    }
+                                    echo implode(',', $staffNames);
+                                  ?>
+                                ];
+
+                                function filterStaffByDepartment() {
+                                  const selectedDepartment = document.getElementById("InputTindakanOlehSurat").value;
+                                  filteredStaffData = staffData.filter((staff) => staff.department === selectedDepartment);
+                                  document.getElementById("InputTindakanIndividu").value = ""; // Clear person input
+                                  document.getElementById("staffid").value = ""; // Clear hidden input
+                                }
+
+                                function filterStaff() {
+                                  const input = document.getElementById("InputTindakanIndividu");
+                                  const filter = input.value.toLowerCase();
+                                  const suggestions = document.getElementById("suggestions");
+                                  suggestions.innerHTML = ""; // Clear previous suggestions
+
+                                  if (filter && filteredStaffData.length > 0) {
+                                    const filtered = filteredStaffData.filter((staff) =>
+                                      staff.name.toLowerCase().includes(filter)
+                                    );
+
+                                    if (filtered.length > 0) {
+                                      suggestions.style.display = "block"; // Show suggestions
+                                      filtered.forEach((staff) => {
+                                        const div = document.createElement("div");
+                                        div.innerText = staff.name;
+                                        div.style.padding = "10px";
+                                        div.style.cursor = "pointer";
+                                        div.style.borderBottom = "1px solid #ddd";
+
+                                        // Match styles with InputTindakanOlehSurat
+                                        div.style.fontSize = "1.4rem";
+                                        div.style.lineHeight = "1.0";
+                                        div.style.backgroundColor = "#fff";
+                                        div.style.color = "#333";
+                                        div.style.fontFamily = "Arial, sans-serif";
+
+                                        // Highlight hovered items
+                                        div.onmouseover = () => {
+                                          div.style.backgroundColor = "#007bff";  // Blue background on hover
+                                          div.style.color = "#fff";  // White text color on hover
+                                        };
+
+                                        div.onmouseout = () => {
+                                          div.style.backgroundColor = "#fff";  // Default white background
+                                          div.style.color = "#333";  // Default text color
+                                        };
+
+                                        div.onclick = () => selectStaff(staff); // Set the input value
+                                        suggestions.appendChild(div);
+                                      });
+                                    } else {
+                                      suggestions.style.display = "none"; // Hide if no match
+                                    }
+                                  } else {
+                                    suggestions.style.display = "none"; // Hide if input is empty or no department selected
+                                  }
+                                }
+
+                                function selectStaff(staff) {
+                                  document.getElementById("InputTindakanIndividu").value = staff.name;
+                                  document.getElementById("staffid").value = staff.id; // Set the Internal_Id in the hidden input
+                                  document.getElementById("suggestions").style.display = "none"; // Hide suggestions
+                                }
+                              </script>
+
                               <div class="col-md-5">
                                 <div class="form-group">
-                                <label for="exampleInputEmail1" style="font-weight: 400">Status: *</label>
+                                <label for="exampleInputEmail1" style="font-weight: 400">Status: <span style="color: red; ">  *</span></label>
                                   <div class="input-group">
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
                                       class="form-control" id="InputStatusSurat" name="InputStatusSurat" value="<?php echo isset($_POST['InputStatusSurat']) ? $_POST['InputStatusSurat'] : ''; ?>" required> <br>
@@ -679,9 +853,30 @@ $user_info = $result->fetch_assoc();
                                 </div>
                               </div>
 
+                            </div>
+                              <style>
+                                .suggestions {
+                                  border: 1px solid #ccc;
+                                  max-height: 150px;
+                                  overflow-y: auto;
+                                  background-color: white;
+                                  position: absolute;
+                                  z-index: 1000;
+                                }
 
-                                </div>
-                                </div>
+                                .suggestions div {
+                                  padding: 8px;
+                                  cursor: pointer;
+                                }
+
+                                .suggestions div:hover {
+                                  background-color: #f0f0f0;
+                                }
+                              </style>
+
+
+                            </div>
+                          </div>
 
                                 
                       <!-- /.box-body -->
@@ -704,146 +899,162 @@ $user_info = $result->fetch_assoc();
 
     </div>
 
-    <?php
-  
+<?php
+if (isset($_POST['submit'])) {
+    $InputDate = isset($_POST['InputDate']) ? $_POST['InputDate'] : '';
+    $InputPengirimSurat = isset($_POST['InputPengirimSurat']) ? $_POST['InputPengirimSurat'] : '';
+    $InputNoRujukanSuratPengirim = isset($_POST['InputNoRujukanSuratPengirim']) ? $_POST['InputNoRujukanSuratPengirim'] : '';
+    $InputNoRujukanSuratMICTH = isset($_POST['InputNoRujukanSuratMICTH']) ? $_POST['InputNoRujukanSuratMICTH'] : '';
+    $InputTajukSurat = isset($_POST['InputTajukSurat']) ? $_POST['InputTajukSurat'] : '';
+    $InputTindakanOlehSurat = isset($_POST['InputTindakanOlehSurat']) ? $_POST['InputTindakanOlehSurat'] : '';
+    $InputTindakanIndividu = isset($_POST['InputTindakanIndividu']) ? $_POST['InputTindakanIndividu'] : '';
+    $InputStatusSurat = isset($_POST['InputStatusSurat']) ? $_POST['InputStatusSurat'] : '';
+    $name = isset($_SESSION['First_Name']) ? $_SESSION['First_Name'] : '';
 
-  
-    
-    //post setiap id didalam form
+    $InputDateCvt = date("Y-m-d", strtotime($InputDate));
+    $CurrentDate = date("Y-m-d");
 
-    if(isset($_POST['submit']))
-    {    
-        //echo "mula post";
-      $InputDate = isset($_POST['InputDate']) ? $_POST['InputDate'] : '';
-      $InputPengirimSurat = isset($_POST['InputPengirimSurat']) ? $_POST['InputPengirimSurat'] : '';  
-      $InputNoRujukanSuratPengirim = isset($_POST['InputNoRujukanSuratPengirim']) ? $_POST['InputNoRujukanSuratPengirim'] : '';
-      $InputNoRujukanSuratMICTH = isset($_POST['InputNoRujukanSuratMICTH']) ? $_POST['InputNoRujukanSuratMICTH'] : '';
-      
-      
-      $InputTajukSurat = isset($_POST['InputTajukSurat']) ? $_POST['InputTajukSurat'] : '';
-      $InputTindakanOlehSurat = isset($_POST['InputTindakanOlehSurat']) ? $_POST['InputTindakanOlehSurat'] : '';
-      $InputTindakanIndividu = isset($_POST['InputTindakanIndividu']) ? $_POST['InputTindakanIndividu'] : '';
-      $InputStatusSurat = isset($_POST['InputStatusSurat']) ? $_POST['InputStatusSurat'] : '';
-    
-      $name = isset($_SESSION['First_Name']) ? $_SESSION['First_Name'] : '';
-    
-      $InputDateCvt = date("Y-m-d", strtotime($InputDate));  
-      $CurrentDate = date("Y-m-d");
-      
-      if (($InputTindakanOlehSurat <> "")&&($InputTindakanIndividu <> ""))
-      {
-        $finalInputTindakan = $InputTindakanOlehSurat."/".$InputTindakanIndividu;
-      }
-      else
-      {
-      $finalInputTindakan = $InputTindakanOlehSurat.$InputTindakanIndividu;
-      }
-    
-      try
-      {
-        //check no surat pengirim dh pernah simpan ke blum? tp refer no rujukan micth....          
-        $sql = "SELECT id FROM tbl_surat_in WHERE no_rujukan_micth = '$InputNoRujukanSuratMICTH'";
-        $result = mysqli_query($db, $sql);
-        
-        if (mysqli_num_rows($result) > 0) 
-        {
-          //surat dh daftar
-          paparMesejGagalSimpanalready();
-          
-          
-        }else{
-        
-          //surat belum pernah daftar
-          try
-          {
-        
-            $sql1 = "INSERT INTO tbl_surat_in(date, from_dpd, title, no_surat_pengirim, no_rujukan_micth, 
-            tindakan, status, direkodkan_oleh, tarikh_direkod) 
-            VALUES ('$InputDateCvt','$InputPengirimSurat','$InputTajukSurat','$InputNoRujukanSuratPengirim', '$InputNoRujukanSuratMICTH', 
-            '$finalInputTindakan', '$InputStatusSurat', '$name', '$CurrentDate')";  
-    
-            $query1 = mysqli_query($db, $sql1) or die("Error: " . mysqli_error($db));  
-    
-            $sql11 = "SELECT * FROM tbl_surat_in WHERE no_rujukan_micth = '$InputNoRujukanSuratMICTH' AND date = '$InputDateCvt'";
-            $result11 = mysqli_query($db, $sql11);
-            if(mysqli_num_rows($result11) > 0)
-            {
-              paparMesejBerjayaSimpan($InputNoRujukanSuratMICTH);
-              unset($_SESSION['submit']);
+    // Combine tindakan fields
+    $finalInputTindakan = trim($InputTindakanOlehSurat . "/" . $InputTindakanIndividu, "/");
+
+    // Generate No Rujukan Surat MICTH
+    $currentYear = date('Y');
+    $currentMonth = strtoupper(date('M'));
+    $sql = "SELECT no_rujukan_micth FROM tbl_surat_in WHERE no_rujukan_micth LIKE 'MICTH/CEO$currentYear/$currentMonth%' ORDER BY id DESC LIMIT 1";
+    $result = mysqli_query($db, $sql);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        preg_match('/-(\d+)$/', $row['no_rujukan_micth'], $matches);
+        $lastNumber = isset($matches[1]) ? (int)$matches[1] : 0;
+    } else {
+        $lastNumber = 0;
+    }
+
+    try {
+        // Check if No Rujukan Surat MICTH already exists
+        $sqlCheck = "SELECT id FROM tbl_surat_in WHERE no_rujukan_micth = '$InputNoRujukanSuratMICTH'";
+        $resultCheck = mysqli_query($db, $sqlCheck);
+
+        if (mysqli_num_rows($resultCheck) > 0) {
+            // Record already exists
+            paparMesejGagalSimpanalready();
+        } else {
+            // Insert the new record
+            $sqlInsert = "INSERT INTO tbl_surat_in(date, from_dpd, title, no_surat_pengirim, no_rujukan_micth, tindakan, status, direkodkan_oleh, tarikh_direkod) 
+                          VALUES ('$InputDateCvt', '$InputPengirimSurat', '$InputTajukSurat', '$InputNoRujukanSuratPengirim', '$InputNoRujukanSuratMICTH', '$finalInputTindakan', '$InputStatusSurat', '$name', '$CurrentDate')";
+
+            $queryInsert = mysqli_query($db, $sqlInsert);
+
+            if ($queryInsert) {
+                paparMesejBerjayaSimpan($InputNoRujukanSuratMICTH);
+                unset($_SESSION['submit']);
+            } else {
+                paparMesejGagalSimpan();
             }
-            else
-            {
-              paparMesejGagalSimpan();
-            }
-        
-          }
-          catch(Exception $e){
-            echo 'Caught exception check condition applied: ',  $e->getMessage(), "\n";
-          }
-        
         }
-        
-        
-    
-      }
-      catch(Exception $e){
-        echo 'Caught exception insert: ',  $e->getMessage(), "\n";
-      }
+    } catch (Exception $e) {
+        echo 'Caught exception: ', $e->getMessage(), "\n";
     }
-    else{       
-      // mesej gagal dipaparkan /
-       function died($error) 
-       {
+} else {
+    // Function to display failure message
+    function died($error) {
         paparMesejGagal();
-       }
     }
-    
-    function paparMesejBerjayaSimpan($InputNoRujukanSuratMICTH,){
-    
-      // Create the data preview string
-      $dataPreview = '';
-      $dataPreview .= 'MICTH Refference No: ' . $InputNoRujukanSuratMICTH . '\\n';
-    
-      echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
-      echo '<script type="text/javascript">
-      swal({
-          title: "Good job!",
-          text: "Data has been successfully inserted.\\n\\n' . $dataPreview . '",
-          icon: "success",
-          button: "Okay",
-        }).then(function() {
-          window.location = "SuratRekodSuratMasuk.php";
-        });
-      </script>';
-    }
-    
-    //Keluarkan notification untuk mesej GAGAL
-    function paparMesejGagalSimpan(){
-      echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
-      echo '<script type="text/javascript">
-      swal({
-          title: "Error!",
-          text: "Oops! An error occurred, failed to add new record!",
-          icon: "error",
-          button: "OK"
-        })
-      </script>';
-      exit();
-  }
-    
-    //Keluarkan notification untuk mesej GAGAL
-    function paparMesejGagalSimpanalready(){
-      echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
-      echo '<script type="text/javascript">
-      swal({
-          title: "Error!",
-          text: "Oops! The record has already been inserted.",
-          icon: "error",
-          button: "OK"
-          })
-      </script>';
-      exit();
-  }
+}
+
+function paparMesejBerjayaSimpan($InputNoRujukanSuratMICTH) {
+  $dataPreview = 'MICTH Reference No: ' . $InputNoRujukanSuratMICTH;
+
+  echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
+  echo '<script type="text/javascript">
+  swal({
+      title: "Data has been inserted",
+      icon: "success",
+      buttons: false, // Disable built-in buttons to use custom HTML
+      content: (function() {
+          // Create container for custom content
+          const container = document.createElement("div");
+          container.style.textAlign = "center";
+
+          // Add reference text
+          const textContent = document.createElement("p");
+          textContent.textContent = "' . $dataPreview . '";
+          textContent.style.marginBottom = "20px";
+          textContent.style.fontSize = "16px";
+
+          // Add "Copy to clipboard" button
+          const copyButton = document.createElement("button");
+          copyButton.textContent = "Copy to clipboard";
+          copyButton.style.backgroundColor = "#30a2db";
+          copyButton.style.color = "white";
+          copyButton.style.border = "none";
+          copyButton.style.padding = "10px 20px";
+          copyButton.style.fontSize = "14px";
+          copyButton.style.cursor = "pointer";
+          copyButton.style.marginRight = "10px";
+          copyButton.addEventListener("click", function() {
+              // Copy to clipboard
+              navigator.clipboard.writeText("' . $InputNoRujukanSuratMICTH . '").then(() => {
+                  copyButton.textContent = "Copied!";
+                  copyButton.style.backgroundColor = "#28a745"; // Change to green on success
+              }).catch(err => {
+                  copyButton.textContent = "Failed to copy";
+                  copyButton.style.backgroundColor = "#dc3545"; // Change to red on error
+              });
+          });
+
+          // Add "Okay" button
+          const okayButton = document.createElement("button");
+          okayButton.textContent = "Okay";
+          okayButton.style.backgroundColor = "#6c757d";
+          okayButton.style.color = "white";
+          okayButton.style.border = "none";
+          okayButton.style.padding = "10px 20px";
+          okayButton.style.fontSize = "14px";
+          okayButton.style.cursor = "pointer";
+          okayButton.addEventListener("click", function() {
+              // Close SweetAlert and redirect
+              swal.close();
+              window.location = "SuratRekodSuratMasuk.php";
+          });
+
+          // Append buttons to container
+          container.appendChild(textContent);
+          container.appendChild(copyButton);
+          container.appendChild(okayButton);
+
+          return container;
+      })()
+  });
+  </script>';
+}
+
+function paparMesejGagalSimpan() {
+    echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
+    echo '<script type="text/javascript">
+    swal({
+        title: "Error!",
+        text: "Oops! An error occurred, failed to add new record!",
+        icon: "error",
+        button: "OK"
+    })
+    </script>';
+    exit();
+}
+
+function paparMesejGagalSimpanalready() {
+    echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';
+    echo '<script type="text/javascript">
+    swal({
+        title: "Error!",
+        text: "Oops! The record has already been inserted.",
+        icon: "error",
+        button: "OK"
+    })
+    </script>';
+    exit();
+}
     
     ?>
     </section>
@@ -868,7 +1079,8 @@ $user_info = $result->fetch_assoc();
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 
-
+<!-- Clipboard.js -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

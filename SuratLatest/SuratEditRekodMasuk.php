@@ -612,7 +612,7 @@ $s="CANCEL BY STAFF";
                     <form role="form" action="" method="post">
                       <div class="col-md-5">
                         <div class="form-group">
-                          <label for="exampleInputEmail1" style="font-weight: 400">Registration Date: * </label>
+                          <label for="exampleInputEmail1" style="font-weight: 400">Registration Date: </label>
                             <div class="input-group">
                               <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px" class="form-control" id="InputDate" name="InputDate" value="<?php echo isset($record['date']) ? $record['date'] : ''; ?>" readonly>
                             </div>
@@ -620,7 +620,7 @@ $s="CANCEL BY STAFF";
                         </div>   
                               <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Recorded by: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Recorded by: </label>
                                     <div class="input-group">
                                       <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
                                         class="form-control" id="direkodkan_oleh" name="direkodkan_oleh" value="<?php echo isset($record['direkodkan_oleh']) ? $record['direkodkan_oleh'] : ''; ?>" readonly><br>
@@ -629,7 +629,7 @@ $s="CANCEL BY STAFF";
                                 </div>
                                 <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Sender: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Sender: <span style="color: red; ">  *</span></label>
                                     <div class="input-group" style="flex-grow: 1;">
                                     <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.5"
                                       rows="3" cols="50" id="from_dpd" name="from_dpd" required><?php echo isset($record['from_dpd']) ? htmlspecialchars($record['from_dpd']) : ''; ?></textarea>
@@ -638,7 +638,7 @@ $s="CANCEL BY STAFF";
                               </div>
                               <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Subject / Title: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Subject / Title: <span style="color: red; ">  *</span></label>
                                     <div class="input-group" style="flex-grow: 1;">
                                     <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.5"
                                       rows="3" cols="50" id="title" name="title" required><?php echo isset($record['title']) ? htmlspecialchars($record['title']) : ''; ?></textarea>
@@ -647,7 +647,7 @@ $s="CANCEL BY STAFF";
                               </div>
                                 <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Letter Reference No: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Letter Reference No:<span style="color: red; ">  *</span></label>
                                     <div class="input-group" style="flex-grow: 1;">
                                     <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8; height: 34px"
                                       rows="3" cols="50" id="no_surat_pengirim" name="no_surat_pengirim" required><?php echo isset($record['no_surat_pengirim']) ? htmlspecialchars($record['no_surat_pengirim']) : ''; ?></textarea>
@@ -656,25 +656,163 @@ $s="CANCEL BY STAFF";
                               </div>
                               <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">MICTH Reference No: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">MICTH Reference No: </label>
                                     <div class="input-group" style="flex-grow: 1;">
-                                    <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8; height: 34px"
-                                      rows="3" cols="50" id="no_rujukan_micth" name="no_rujukan_micth" required><?php echo isset($record['no_rujukan_micth']) ? htmlspecialchars($record['no_rujukan_micth']) : ''; ?></textarea>
+                                    <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8; height: 34px" readonly
+                                      rows="3" cols="50" id="no_rujukan_micth" name="no_rujukan_micth" required><?php echo isset($record['no_rujukan_micth']) ? htmlspecialchars($record['no_rujukan_micth']) : ''; ?> </textarea>
                                   </div>
                                 </div>
                               </div>
                               <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Action By: *</label>
-                                    <div class="input-group">
-                                      <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                        class="form-control" id="tindakan" name="tindakan" value="<?php echo isset($record['tindakan']) ? $record['tindakan'] : ''; ?>" readonly><br>
-                                    </div>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Action By: </label>
+                                  
+                                  <!-- Dropdown for Department -->
+                                  <div class="input-group">
+                                    <select
+                                      style="font-size: 1.4rem; line-height: 1.0; height: 34px"
+                                      class="form-control"
+                                      id="InputTindakanOlehSurat"
+                                      name="InputTindakanOlehSurat"
+                                      onchange="filterStaffByDepartment()"
+                                      required
+                                    >
+                                      <option value="" disabled>-- Department Involved --</option>
+                                      <?php
+                                        $selectedDepartment = ''; // To store the selected department
+                                        $selectedIndividual = ''; // To store the selected individual
+
+                                        // Check if $record['tindakan'] exists and split the data
+                                        if (isset($record['tindakan'])) {
+                                          $tindakanParts = explode('/', $record['tindakan']);
+                                          $selectedDepartment = $tindakanParts[0] ?? '';
+                                          $selectedIndividual = $tindakanParts[1] ?? '';
+                                        }
+
+                                        // Fetch departments and populate options
+                                        $sqlLT = "SELECT name FROM empdept ORDER BY name ASC";
+                                        $result = mysqli_query($db_login, $sqlLT);
+                                        while ($rowLT = mysqli_fetch_array($result)) {
+                                          if ($rowLT['name'] !== 'Super Admin') {
+                                            $isSelected = ($rowLT['name'] === $selectedDepartment) ? 'selected' : '';
+                                            echo '<option value="' . $rowLT['name'] . '" ' . $isSelected . '>' . $rowLT['name'] . '</option>';
+                                          }
+                                        }
+                                      ?>
+                                    </select>
+                                  </div>
+                                  <br />
+
+                                  <!-- Input for Individual -->
+                                  <div class="input-group" style="position: relative;">
+                                    <input
+                                      type="text"
+                                      style="font-size: 1.4rem; line-height: 1.0; height: 34px; width: 100%"
+                                      class="form-control"
+                                      placeholder="Person-in-Charge"
+                                      id="InputTindakanIndividu"
+                                      name="InputTindakanIndividu"
+                                      value="<?php echo htmlspecialchars($selectedIndividual); ?>"
+                                      oninput="filterStaff()"
+                                      autocomplete="off"
+                                    />
+                                    <input type="hidden" id="staffid" name="staffid" value="" />
+                                    <div
+                                      id="suggestions"
+                                      class="suggestions"
+                                      style="display: none; position: absolute; top: 38px; width: 100%; background-color: #fff; border: 1px solid #ccc; z-index: 1000; border-radius: 4px; max-height: 200px; overflow-y: auto;"
+                                    ></div>
                                   </div>
                                 </div>
+                              </div>
+
+                              <script>
+                                const staffData = [
+                                  <?php
+                                  $sqlAS = "SELECT empmaininfo.First_Name, empmaininfo.Last_Name, empmaininfo.Internal_Id, empdept.name AS Department 
+                                            FROM empmaininfo
+                                            INNER JOIN empdept ON empmaininfo.Department = empdept.dept_id
+                                            ORDER BY empdept.name ASC";
+                                  $resultA = mysqli_query($db_login, $sqlAS);
+                                  $staffEntries = [];
+
+                                  while ($rowL = mysqli_fetch_array($resultA)) {
+                                    $firstname = $rowL['First_Name'];
+                                    $staffID = $rowL['Internal_Id'];
+                                    $department = $rowL['Department'];
+                                    $staffEntries[] = json_encode(['name' => $firstname, 'id' => $staffID, 'department' => $department]);
+                                  }
+                                  echo implode(',', $staffEntries);
+                                  ?>
+                                ];
+
+                                function filterStaffByDepartment() {
+                                  const selectedDepartment = document.getElementById('InputTindakanOlehSurat').value;
+                                  const inputField = document.getElementById('InputTindakanIndividu');
+                                  inputField.value = ''; // Clear the individual input field
+                                  document.getElementById('suggestions').innerHTML = ''; // Clear any existing suggestions
+                                }
+
+                                function filterStaff() {
+                                  const input = document.getElementById('InputTindakanIndividu');
+                                  const filter = input.value.toLowerCase();
+                                  const selectedDepartment = document.getElementById('InputTindakanOlehSurat').value;
+                                  const suggestions = document.getElementById('suggestions');
+                                  suggestions.innerHTML = ''; // Clear previous suggestions
+
+                                  if (filter) {
+                                    const filteredStaff = staffData.filter(
+                                      (staff) =>
+                                        staff.department === selectedDepartment && staff.name.toLowerCase().includes(filter)
+                                    );
+
+                                    if (filteredStaff.length) {
+                                      suggestions.style.display = 'block'; // Show suggestions
+                                      filteredStaff.forEach((staff) => {
+                                        const div = document.createElement('div');
+                                        div.innerText = staff.name;
+                                        div.style.padding = '10px';
+                                        div.style.cursor = 'pointer';
+                                        div.style.borderBottom = '1px solid #ddd';
+
+                                        // Match styles with InputTindakanOlehSurat
+                                        div.style.fontSize = "1.4rem";
+                                        div.style.lineHeight = "1.0";
+                                        div.style.backgroundColor = "#fff";
+                                        div.style.color = "#333";
+                                        div.style.fontFamily = "Arial, sans-serif";
+
+                                        // Highlight hovered items
+                                        div.onmouseover = () => {
+                                          div.style.backgroundColor = "#007bff";  // Blue background on hover
+                                          div.style.color = "#fff";  // White text color on hover
+                                        };
+
+                                        div.onmouseout = () => {
+                                          div.style.backgroundColor = "#fff";  // Default white background
+                                          div.style.color = "#333";  // Default text color
+                                        };
+
+                                        div.onclick = () => selectStaff(staff); // Set the input value
+                                        suggestions.appendChild(div);
+                                      });
+                                    } else {
+                                      suggestions.style.display = 'none'; // Hide if no match
+                                    }
+                                  } else {
+                                    suggestions.style.display = 'none'; // Hide if input is empty
+                                  }
+                                }
+
+                                function selectStaff(staff) {
+                                  document.getElementById('InputTindakanIndividu').value = staff.name;
+                                  document.getElementById('staffid').value = staff.id; // Set the Internal_Id in the hidden input
+                                  document.getElementById('suggestions').style.display = 'none'; // Hide suggestions
+                                }
+                              </script>
                                 <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Status: *</label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Status: <span style="color: red; ">  *</span></label>
                                     <div class="input-group">
                                       <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
                                         class="form-control" id="status" name="status" value="<?php echo isset($record['status']) ? $record['status'] : ''; ?>" required><br>
@@ -705,7 +843,7 @@ $s="CANCEL BY STAFF";
     </div>
        <!-----------------------------------------------------------------------INSERT REKOD--------------------------------------------------------------------------------------------->
        <?php
-    function paparMesejBerjayaAset($no_surat_pengirim, $no_rujukan_micth) {
+    function paparMesejBerjayaAset($no_surat_pengirim, $no_rujukan_micth,) {
     // Create the data preview string
     $dataPreview = '';
     $dataPreview .= 'Letter Refference No: ' . $no_surat_pengirim . '\\n';
@@ -765,7 +903,9 @@ if (isset($_POST['update_item'])) {
   $tajuk_surat = isset($_POST['title']) ? $_POST['title'] : '';
   $no_surat_pengirim = isset($_POST['no_surat_pengirim']) ? $_POST['no_surat_pengirim'] : '';
   $no_rujukan_micth = isset($_POST['no_rujukan_micth']) ? $_POST['no_rujukan_micth'] : '';
-  $tindakan = isset($_POST['tindakan']) ? $_POST['tindakan'] : '';
+  $InputTindakanOlehSurat = isset($_POST['InputTindakanOlehSurat']) ? $_POST['InputTindakanOlehSurat'] : '';
+  $InputTindakanIndividu = isset($_POST['InputTindakanIndividu']) ? $_POST['InputTindakanIndividu'] : '';
+  $finalInputTindakan = trim($InputTindakanOlehSurat . "/" . $InputTindakanIndividu, "/");
   $statuss = isset($_POST['status']) ? $_POST['status'] : '';
 
   // Ensure $id is set correctly
@@ -779,7 +919,7 @@ if (isset($_POST['update_item'])) {
 
       // Prepare and bind parameters
       $stmt = $db->prepare($query);
-      $stmt->bind_param("ssssssi", $from_dpd, $tajuk_surat, $no_surat_pengirim, $no_rujukan_micth, $tindakan, $statuss, $id);
+      $stmt->bind_param("ssssssi", $from_dpd, $tajuk_surat, $no_surat_pengirim, $no_rujukan_micth, $finalInputTindakan, $statuss, $id);
 
       // Execute the query
       if ($stmt->execute()) {
