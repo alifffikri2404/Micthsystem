@@ -846,8 +846,8 @@ $s="CANCEL BY STAFF";
     function paparMesejBerjayaAset($no_surat_pengirim, $no_rujukan_micth,) {
     // Create the data preview string
     $dataPreview = '';
-    $dataPreview .= 'Letter Refference No: ' . $no_surat_pengirim . '\\n';
-    $dataPreview .= 'MICTH Refference No: ' . $no_rujukan_micth . '\\n';
+    $dataPreview .= 'Letter Reference No: ' . $no_surat_pengirim . '\\n';
+    $dataPreview .= 'MICTH Reference No: ' . $no_rujukan_micth . '\\n';
 
   
     echo '<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>';

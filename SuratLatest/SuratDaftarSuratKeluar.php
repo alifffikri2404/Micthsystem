@@ -870,10 +870,7 @@ if (empty($_SESSION['First_Name'])) {
             if (mysqli_num_rows($resultAP) > 0) {
                 $row = mysqli_fetch_array($resultAP);
                 $lastNoRujukanSurat = $row['no_ruj_surat'];
-    
-                // Debugging: Check the last no_ruj_surat
-                echo "Last no_ruj_surat: " . $lastNoRujukanSurat . "<br>";
-    
+      
                 // Adjust regex to match the format MICTH/DTM/DECYYYY (number)
                 preg_match('/\w+\/\w+\/\w+(\d{4})\s\((\d+)\)$/', $lastNoRujukanSurat, $matches);
     
@@ -883,10 +880,7 @@ if (empty($_SESSION['First_Name'])) {
                 } else {
                     // If the year is different, reset the last number to 1
                     $lastNumber = 1;
-                }
-    
-                // Debugging: Check the lastNumber
-                echo "Last number to be used: " . $lastNumber . "<br>";
+                }    
     
                 // Generate the new no_ruj_surat
                 $idnorujsuratF = $InputNoRujukanSuratAwal . $InputNoRujukanSuratTgh . $InputNoRujukanSuratAkhir . " (" . $lastNumber . ")";
