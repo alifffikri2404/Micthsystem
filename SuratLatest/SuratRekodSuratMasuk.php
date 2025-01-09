@@ -624,52 +624,62 @@ if (empty($_SESSION['First_Name'])) {
                           $resultAP = mysqli_query($db, $sqlAP);
                           if ($resultAP !== false && mysqli_num_rows($resultAP) > 0) {
                           ?>
-                            <table id="example1" class="table table-bordered table-striped">
-                              <thead>
-                                <tr>
-                                  <th style="width: 2%;">No.</th>
-                                  <th style="width: 7%;">Date</th>
-                                  <th style="width: 5%;">Sender</th>
-                                  <th style="width: 20%;">Subject</th>
-                                  <th style="width: 11%;">Letter No.</th>
-                                  <th style="width: 10%;">Reference No.</th>
-                                  <th style="width: 10%;">Action</th>
-                                  <th style="width: 10%;">Status</th>
-                                  <th style="width: 10%;">Record By</th>
+                          <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                              <tr>
+                                <th style="width: 2%;">No.</th>
+                                <th style="width: 7%;">Date</th>
+                                <th style="width: 5%;">Sender</th>
+                                <th style="width: 20%;">Subject</th>
+                                <th style="width: 11%;">Letter No.</th>
+                                <th style="width: 10%;">Reference No.</th>
+                                <th style="width: 10%;">Action</th>
+                                <th style="width: 10%;">Status</th>
+                                <th style="width: 10%;">Record By</th>
+
+                                <!-- Only show these columns if the user is an admin -->
+                                <?php if ($_SESSION['admin_surat'] == "1") { ?>
                                   <th style="width: 5%;">Update</th>
                                   <th style="width: 5%;">Delete</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <?php
-                                $off = 0;
-                                $i = 1 + $off;
-                                while ($rowAP = mysqli_fetch_array($resultAP)) {
+                                <?php } ?>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php
+                              $off = 0;
+                              $i = 1 + $off;
+                              while ($rowAP = mysqli_fetch_array($resultAP)) {
+                                echo '
+                                <tr>
+                                  <td data-title="No." style="text-align:center">' . $i . '</td>
+                                  <td data-title="Date">' . $rowAP['date'] . '</td>
+                                  <td data-title="Sender">' . $rowAP['from_dpd'] . '</td>
+                                  <td data-title="Subject">' . $rowAP['title'] . '</td>
+                                  <td data-title="Letter No.">' . $rowAP['no_surat_pengirim'] . '</td>
+                                  <td data-title="Reference No.">' . $rowAP['no_rujukan_micth'] . '</td>
+                                  <td data-title="Action">' . $rowAP['tindakan'] . '</td>
+                                  <td data-title="Status">' . $rowAP['status'] . '</td>
+                                  <td data-title="Record By">' . $rowAP['direkodkan_oleh'] . '</td>';
+
+                                // Only show the "Update" and "Delete" buttons if the user is an admin
+                                if ($_SESSION['admin_surat'] == "1") {
                                   echo '
-                                  <tr>
-                                    <td data-title="No." style="text-align:center">' . $i . '</td>
-                                    <td data-title="Date" >' . $rowAP['date'] . '</td>
-                                    <td data-title="Sender" >' . $rowAP['from_dpd'] . '</td>
-                                    <td data-title="Subject" >' . $rowAP['title'] . '</td>
-                                    <td data-title="Letter No." >' . $rowAP['no_surat_pengirim'] . '</td>
-                                    <td data-title="Reference No." >' . $rowAP['no_rujukan_micth'] . '</td>
-                                    <td data-title="Action" >' . $rowAP['tindakan'] . '</td>
-                                    <td data-title="Status" >' . $rowAP['status'] . '</td>
-                                    <td data-title="Record By" >' . $rowAP['direkodkan_oleh'] . '</td>
-                                    <td data-title="Tindakan" style="text-align:center">
-                                      <a href="SuratEditRekodMasuk.php?id='.$rowAP['id'].'">
-                                        <i class="fa fa-pencil"></i>
-                                      </a>
-                                    </td>
-                                    <td data-title="Delete" style="text-align:center">
-                                      <a href="#" onclick="confirmDelete(event, ' . $rowAP['id'] . ', \'' . $rowAP['no_rujukan_micth'] . '\')">
-                                        <i class="fa fa-trash" style="color:red"></i>
-                                      </a>
-                                    </td>
-                                  </tr>';
-                                  $i++;
+                                  <td data-title="Tindakan" style="text-align:center">
+                                    <a href="SuratEditRekodMasuk.php?id=' . $rowAP['id'] . '">
+                                      <i class="fa fa-pencil"></i>
+                                    </a>
+                                  </td>
+                                  <td data-title="Delete" style="text-align:center">
+                                    <a href="#" onclick="confirmDelete(event, ' . $rowAP['id'] . ', \'' . $rowAP['no_rujukan_micth'] . '\')">
+                                      <i class="fa fa-trash" style="color:red"></i>
+                                    </a>
+                                  </td>';
                                 }
-                                ?>
+
+                                echo '</tr>';
+                                $i++;
+                              }
+                              ?>
                                   <script>
                                   function confirmDelete(event, id, noRujukanMicth) {
                                       // Prevent the default behavior
