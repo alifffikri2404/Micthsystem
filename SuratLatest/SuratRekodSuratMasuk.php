@@ -628,13 +628,14 @@ if (empty($_SESSION['First_Name'])) {
                             <thead>
                               <tr>
                                 <th style="width: 2%;">No.</th>
-                                <th style="width: 7%;">Date</th>
-                                <th style="width: 5%;">Sender</th>
+                                <th style="width: 10%;">Registration Date</th>
+                                <th style="width: 7%;">Receive Date</th>
+                                <th style="width: 10%;">Sender</th>
                                 <th style="width: 20%;">Subject</th>
                                 <th style="width: 11%;">Letter No.</th>
                                 <th style="width: 10%;">Reference No.</th>
                                 <th style="width: 10%;">Action</th>
-                                <th style="width: 10%;">Status</th>
+                                <th style="width: 7%;">Status</th>
                                 <th style="width: 10%;">Record By</th>
 
                                 <!-- Only show these columns if the user is an admin -->
@@ -653,6 +654,7 @@ if (empty($_SESSION['First_Name'])) {
                                 <tr>
                                   <td data-title="No." style="text-align:center">' . $i . '</td>
                                   <td data-title="Date">' . $rowAP['date'] . '</td>
+                                  <td data-title="Date">' . $rowAP['tarikh_terima'] . '</td>
                                   <td data-title="Sender">' . $rowAP['from_dpd'] . '</td>
                                   <td data-title="Subject">' . $rowAP['title'] . '</td>
                                   <td data-title="Letter No.">' . $rowAP['no_surat_pengirim'] . '</td>

@@ -647,15 +647,15 @@ $newReference = "MICTH/CEO{$currentYear}/{$currentMonth}-{$bilangan}";
                                     </div>
                                   </div>
                                 </div>
-                              <div class="col-md-5">
+                                <div class="col-md-5">
                                 <div class="form-group">
-                                  <label for="exampleInputEmail1" style="font-weight: 400">Sender: <span style="color: red; ">  *</span></label>
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Receive Date: <span style="color: red; ">  *</span></label>
                                     <div class="input-group">
-                                      <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
-                                        class="form-control" id="InputPengirimSurat" name="InputPengirimSurat" value="<?php echo isset($_POST['InputPengirimSurat']) ? $_POST['InputPengirimSurat'] : ''; ?>" required><br>
+                                      <input type="date" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
+                                        class="form-control" id="InputReceiveDate" name="InputReceiveDate" value="<?php echo date("Y-m-d"); ?>" required>
                                     </div>
                                   </div>
-                              </div>
+                                </div>
                               <div class="col-md-5">
                                 <div class="form-group">
                                   <label for="exampleInputEmail1" style="font-weight: 400">Letter Reference No: <span style="color: red; ">  *</span></label>
@@ -671,6 +671,15 @@ $newReference = "MICTH/CEO{$currentYear}/{$currentMonth}-{$bilangan}";
                                   <div class="input-group">
                                     <input type="text" style="font-size: 1.4rem; line-height: 1.0; height: 34px"
                                       class="form-control" id="InputNoRujukanSuratMICTH" name="InputNoRujukanSuratMICTH" value="<?php echo $InputNoRujukanSuratMICTH; ?>"readonly><br>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-5">
+                                <div class="form-group">
+                                  <label for="exampleInputEmail1" style="font-weight: 400">Sender: <span style="color: red; ">  *</span></label>
+                                    <div class="input-group">
+                                      <textarea class="form-control" style="font-size: 1.4rem; line-height: 1.8"
+                                        rows="3" cols="50" id="InputPengirimSurat" name="InputPengirimSurat" value="<?php echo isset($_POST['InputPengirimSurat']) ? $_POST['InputPengirimSurat'] : ''; ?>" required></textarea><br>
                                   </div>
                                 </div>
                               </div>
@@ -902,6 +911,7 @@ $newReference = "MICTH/CEO{$currentYear}/{$currentMonth}-{$bilangan}";
 <?php
 if (isset($_POST['submit'])) {
     $InputDate = isset($_POST['InputDate']) ? $_POST['InputDate'] : '';
+    $InputReceiveDate = isset($_POST['InputReceiveDate']) ? $_POST['InputReceiveDate'] : '';
     $InputPengirimSurat = isset($_POST['InputPengirimSurat']) ? $_POST['InputPengirimSurat'] : '';
     $InputNoRujukanSuratPengirim = isset($_POST['InputNoRujukanSuratPengirim']) ? $_POST['InputNoRujukanSuratPengirim'] : '';
     $InputNoRujukanSuratMICTH = isset($_POST['InputNoRujukanSuratMICTH']) ? $_POST['InputNoRujukanSuratMICTH'] : '';
@@ -941,8 +951,8 @@ if (isset($_POST['submit'])) {
             paparMesejGagalSimpanalready();
         } else {
             // Insert the new record
-            $sqlInsert = "INSERT INTO tbl_surat_in(date, from_dpd, title, no_surat_pengirim, no_rujukan_micth, tindakan, status, direkodkan_oleh, tarikh_direkod) 
-                          VALUES ('$InputDateCvt', '$InputPengirimSurat', '$InputTajukSurat', '$InputNoRujukanSuratPengirim', '$InputNoRujukanSuratMICTH', '$finalInputTindakan', '$InputStatusSurat', '$name', '$CurrentDate')";
+            $sqlInsert = "INSERT INTO tbl_surat_in(date, from_dpd, title, no_surat_pengirim, no_rujukan_micth, tindakan, status, direkodkan_oleh, tarikh_direkod, tarikh_terima) 
+                          VALUES ('$InputDateCvt', '$InputPengirimSurat', '$InputTajukSurat', '$InputNoRujukanSuratPengirim', '$InputNoRujukanSuratMICTH', '$finalInputTindakan', '$InputStatusSurat', '$name', '$CurrentDate', '$InputReceiveDate')";
 
             $queryInsert = mysqli_query($db, $sqlInsert);
 
